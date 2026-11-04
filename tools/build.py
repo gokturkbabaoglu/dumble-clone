@@ -43,15 +43,16 @@ th{{background:#f2f4f6;font-size:13px}} tr:last-child td{{border-bottom:none}}
 .wrap{{overflow-x:auto}}
 </style></head><body><main>
 <h1>LM386 Dumble tarzı amfi — şema ve pertinaks yerleşimi</h1>
-<p class="sub">Revizyon 3 · 3 Kasım 2026 · Proje raporundaki netlist'ten sadeleştirildi</p>
+<p class="sub">Revizyon 4 · 4 Kasım 2026 · Proje raporundaki netlist'ten sadeleştirildi</p>
 
 <h2>Bu revizyonda ne değişti</h2>
 <ul class="chg">
+<li><b>Revizyon 4:</b> Rd (2,2k), RM (2,2k) ve Rb (560 Ω) tek dirence indi; LM386 pin 7'ye C11 (10 µF) ve pin 6–4 arasına C12 (100 nF) eklendi; kabine sarı güç LED'i (2,2k ile) eklendi.</li>
 <li><b>Anahtarlar:</b> S1 = açma/kapama, S2 = Bright/Dark, S3 = hoparlör aç/kapa.</li>
-<li><b>Bright/Dark sadeleşti:</b> C8 artık source ile Y noktası arasında. Y, 1k‖1k ve C9 üzerinden GND'ye gidiyor. S2 sadece Y'yi GND'ye kısa devre ediyor (2 kablo). Kapalı = Dark, açık = Bright. Seviye farkı ortalarda ≈ 6 dB, tizde ≈ 3–4 dB (önceden 12 dB).</li>
-<li><b>Tone yerine Shape (ISF tarzı):</b> Köprülü-T orta frekans çentiği (CT1, CT2, RT, RM) ve onunla düz sinyal arasında geçiş yapan VR3. Sol uç: oyuk mid (US), sağ uç: düz, orta frekanslar önde (UK).</li>
+<li><b>Bright/Dark sadeleşti:</b> C8 artık source ile Y noktası arasında. Y, Rb (560 Ω) ve C9 üzerinden GND'ye gidiyor. S2 sadece Y'yi GND'ye kısa devre ediyor (2 kablo). Kapalı = Dark, açık = Bright. Seviye farkı ortalarda ≈ 6 dB, tizde ≈ 3–4 dB (önceden 12 dB).</li>
+<li><b>Tone yerine Shape (ISF tarzı):</b> Köprülü-T orta frekans çentiği (CT1, CT2, RT 10k, RM 2,2k) ve onunla düz sinyal arasında geçiş yapan VR3. Sol uç: oyuk mid (US), sağ uç: düz, orta frekanslar önde (UK).</li>
 <li><b>Gain potu B1k:</b> Kazanç 41–200 kat, dönüşe daha eşit yayılıyor.</li>
-<li><b>VR4 trim kalktı:</b> Drain direnci sabit 2 kΩ (iki 1k seri).</li>
+<li><b>VR4 trim kalktı:</b> Drain direnci sabit 2,2 kΩ.</li>
 <li><b>D1 kart dışında:</b> J2 (+) ile S1 arasında, makaronlu.</li>
 <li><b>Sinyal yolu soldan sağa:</b> Güç ve hoparlör toprağı sağ uçtan giriyor, hoparlör akımı preamp toprağından geçmiyor.</li>
 </ul>
@@ -82,7 +83,8 @@ th{{background:#f2f4f6;font-size:13px}} tr:last-child td{{border-bottom:none}}
 <li>Dirençler dik (bir bacak bükülü), Rf ve Rg yatık. Dik dirençte gövde, çizimde daire olan deliğin üstünde durur.</li>
 <li>U1'in çentiği sola bakar. 1. bacak sol altta (G21).</li>
 <li>Q1'in düz yüzü yukarı (Rd'lere) bakar. Bu durumda soldan sağa G-S-D olur. Lehimlemeden önce multimetreyle bacakları doğrula. Farklıysa transistörü çevir.</li>
-<li>Elektrolitiklerde + işaretine dikkat et (C1, C2, C6, C8). C8'in + bacağı source tarafında (J7).</li>
+<li>Elektrolitiklerde + işaretine dikkat et (C1, C2, C6, C8, C11). C8'in + bacağı source tarafında (J7), C11'in + bacağı pin 7 tarafında (B22).</li>
+<li>C11 ve C12'nin altında, 3. satır boyunca GND yolu ile 4. satırdaki çıkış yolu yan yana gidiyor; bu iki yol arasında lehim köprüsü olmadığını kontrol et.</li>
 <li>Alt yüzde çalışırken ayna görüntüsünü (alttaki çizim) kullan.</li>
 <li>Bitince süreklilik moduyla kontrol et: H5 (gate) – GND, G23 (pin 3) – GND ve +12 V – GND arasında kısa devre olmamalı.</li>
 </ul></div>
@@ -119,6 +121,7 @@ th{{background:#f2f4f6;font-size:13px}} tr:last-child td{{border-bottom:none}}
 <tr><td>Gain (VR1)</td><td>Sadece 2. ve 3. bacak kullanılır, 1. bacak boş. Saat yönü = daha fazla kazanç.</td></tr>
 <tr><td>Güç</td><td>J2 (+) → D1 anot. D1 katot (çizgili uç) → S1 yan bacak. S1 orta bacak → ped 11. Makaron geçir. Adaptörün merkez ucunun + olduğunu ölçerek doğrula.</td></tr>
 <tr><td>Hoparlör</td><td>S3 uç bacak → hoparlör (+). Hoparlör (−) → ped 14.</td></tr>
+<tr><td>Güç LED'i</td><td>S1 orta bacak → RLED 2,2k → LED uzun bacak (anot). LED kısa bacak (katot) → J2 (−).</td></tr>
 <tr><td>Pot gövdeleri</td><td>Hepsi birbirine ve VR2'nin 1. bacağına (GND).</td></tr>
 </table></div>
 

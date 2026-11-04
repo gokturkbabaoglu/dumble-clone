@@ -21,8 +21,7 @@
 <rect x="193" y="88" width="14" height="60" fill="#fff" stroke="#1f2933" stroke-width="1.8"/>
 <path d="M200,148 L200,190" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <text x="178" y="112" font-size="11" text-anchor="end" font-weight="700" fill="#1f2933">Rd</text>
-<text x="178" y="126" font-size="11" text-anchor="end" font-weight="400" fill="#1f2933">2k</text>
-<text x="178" y="139" font-size="10" text-anchor="end" font-weight="400" fill="#1f2933">(1k+1k)</text>
+<text x="178" y="126" font-size="11" text-anchor="end" font-weight="400" fill="#1f2933">2,2k</text>
 <path d="M185,182 L185,238" fill="none" stroke="#1f2933" stroke-width="3" stroke-linejoin="round"/>
 <path d="M185,190 L200,190" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M185,230 L200,230" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
@@ -74,7 +73,7 @@
 <path d="M280,338 L300,338" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M284,342 L296,342" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M288,346 L292,346" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
-<text x="290" y="362" font-size="10" text-anchor="middle" font-weight="400" fill="#1f2933">Rb 1k‖1k</text>
+<text x="290" y="362" font-size="10" text-anchor="middle" font-weight="400" fill="#1f2933">Rb 560</text>
 <path d="M322,262 L322,292" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M310,292 L334,292" fill="none" stroke="#1f2933" stroke-width="2.4" stroke-linejoin="round"/>
 <path d="M310,300 L334,300" fill="none" stroke="#1f2933" stroke-width="2.4" stroke-linejoin="round"/>
@@ -125,8 +124,7 @@
 <path d="M418,246 L422,246" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <text x="398" y="162" font-size="9" text-anchor="middle" font-weight="400" fill="#1f2933">CT1</text>
 <text x="446" y="162" font-size="9" text-anchor="middle" font-weight="400" fill="#1f2933">CT2</text>
-<text x="434" y="214" font-size="9" text-anchor="start" font-weight="400" fill="#1f2933">RM 2k</text>
-<text x="434" y="226" font-size="8" text-anchor="start" font-weight="400" fill="#1f2933">(1k+1k)</text>
+<text x="434" y="214" font-size="9" text-anchor="start" font-weight="400" fill="#1f2933">RM 2,2k</text>
 <path d="M380,180 L380,145 L392,145" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <rect x="392" y="138" width="66" height="14" fill="#fff" stroke="#1f2933" stroke-width="1.8"/>
 <path d="M458,145 L470,145 L470,180" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
@@ -140,13 +138,13 @@
 <path d="M425,289 L428.1,296.4 L421.9,296.4 Z" fill="#1f2933"/>
 <path d="M425,306 L425,318 L530,318 L530,180 L560,180" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <text x="425" y="336" font-size="10" text-anchor="middle" font-weight="700" fill="#1f2933">VR3 SHAPE 22k</text>
-<text x="425" y="349" font-size="9" text-anchor="middle" font-weight="400" fill="#555">sol: US (oyuk mid) · sağ: UK</text>
+<text x="425" y="349" font-size="9" text-anchor="middle" font-weight="400" fill="#555">sol: Fender · sağ: Marshall</text>
 <g transform="translate(90,0)">
 <rect x="455" y="172" width="78" height="124" rx="8" fill="#eef4fb" stroke="#9bb8d6" stroke-dasharray="4 3"/>
 <rect x="628" y="396" width="72" height="54" rx="8" fill="#eef4fb" stroke="#9bb8d6" stroke-dasharray="4 3"/>
 <rect x="892" y="218" width="128" height="100" rx="8" fill="#eef4fb" stroke="#9bb8d6" stroke-dasharray="4 3"/>
 <rect x="806" y="358" width="112" height="76" rx="8" fill="#eef4fb" stroke="#9bb8d6" stroke-dasharray="4 3"/>
-<rect x="968" y="28" width="196" height="70" rx="8" fill="#eef4fb" stroke="#9bb8d6" stroke-dasharray="4 3"/>
+<rect x="946" y="28" width="218" height="150" rx="8" fill="#eef4fb" stroke="#9bb8d6" stroke-dasharray="4 3"/>
 <path d="M470,180 L470,196" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <rect x="463" y="196" width="14" height="74" fill="#fff" stroke="#1f2933" stroke-width="1.8"/>
 <path d="M470,270 L470,284" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
@@ -182,7 +180,27 @@
 <text x="580" y="326" font-size="11" text-anchor="start" font-weight="700" fill="#1f2933">1</text>
 <text x="678" y="326" font-size="11" text-anchor="end" font-weight="700" fill="#1f2933">8</text>
 <text x="694" y="246" font-size="11" text-anchor="end" font-weight="700" fill="#1f2933">5</text>
-<text x="658" y="200" font-size="10" text-anchor="middle" font-weight="400" fill="#666">7 boş</text>
+<text x="664" y="186" font-size="11" text-anchor="start" font-weight="700" fill="#1f2933">7</text>
+<path d="M660,170 L660,146 L720,146 L720,156" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M708,156 L732,156" fill="none" stroke="#1f2933" stroke-width="2.4" stroke-linejoin="round"/>
+<path d="M708,167 Q720,161 732,167" fill="none" stroke="#1f2933" stroke-width="2.4"/>
+<text x="702" y="154" font-size="12" text-anchor="middle" font-weight="700" fill="#1f2933">+</text>
+<path d="M720,164 L720,178" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M720,178 L720,186" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M710,186 L730,186" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M714,190 L726,190" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M718,194 L722,194" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="734" y="164" font-size="10" text-anchor="start" font-weight="400" fill="#1f2933">C11 10µ</text>
+<circle cx="630" cy="118" r="3.3" fill="#1f2933"/>
+<path d="M630,118 L598,118 L598,126" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M586,126 L610,126" fill="none" stroke="#1f2933" stroke-width="2.4" stroke-linejoin="round"/>
+<path d="M586,134 L610,134" fill="none" stroke="#1f2933" stroke-width="2.4" stroke-linejoin="round"/>
+<path d="M598,134 L598,142" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M598,142 L598,150" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M588,150 L608,150" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M592,154 L604,154" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M596,158 L600,158" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="588" y="134" font-size="10" text-anchor="end" font-weight="400" fill="#1f2933">C12 100n</text>
 <path d="M575,330 L575,422" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M575,422 L590,422" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M590,408 L590,436" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
@@ -271,6 +289,23 @@
 <path d="M854,424 L866,424" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M858,428 L862,428" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <text x="862" y="376" font-size="10" text-anchor="middle" font-weight="700" fill="#1f2933">J3 KULAKLIK</text>
+<circle cx="970" cy="60" r="3.3" fill="#1f2933"/>
+<path d="M970,60 L970,76" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<rect x="963" y="76" width="14" height="30" fill="#fff" stroke="#1f2933" stroke-width="1.8"/>
+<path d="M970,106 L970,118" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M961,118 L979,118 L970,132 Z" fill="#fff" stroke="#1f2933" stroke-width="1.8"/>
+<path d="M961,132 L979,132" fill="none" stroke="#1f2933" stroke-width="2" stroke-linejoin="round"/>
+<path d="M982,122 L994,112" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M994,112 L990.3,119.1 L986.3,114.3 Z" fill="#1f2933"/>
+<path d="M984,130 L996,120" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M996,120 L992.3,127.1 L988.3,122.3 Z" fill="#1f2933"/>
+<path d="M970,132 L970,146" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M970,146 L970,154" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M960,154 L980,154" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M964,158 L976,158" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M968,162 L972,162" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
+<text x="986" y="94" font-size="9" text-anchor="start" font-weight="400" fill="#1f2933">RLED 2,2k</text>
+<text x="1002" y="136" font-size="9" text-anchor="start" font-weight="400" fill="#1f2933">LED1 sarı</text>
 <path d="M996,60 L1004,60" fill="none" stroke="#1f2933" stroke-width="1.8" stroke-linejoin="round"/>
 <circle cx="1007" cy="60" r="3.2" fill="#fff" stroke="#1f2933" stroke-width="1.6"/>
 <circle cx="1045" cy="60" r="3.2" fill="#fff" stroke="#1f2933" stroke-width="1.6"/>

@@ -2,7 +2,7 @@
 
 BF245B JFET preamp, ISF tarzı Shape filtresi ve LM386 güç katından oluşan, 12 V ile çalışan küçük bir pratik amfisi. Adalı pertinaks üzerine kurulur; pot, anahtar ve jaklar küçük bir kabinde.
 
-**Durum:** Revizyon 3 — tasarım tamam, parçalar elde. Sıradaki adım breadboard denemesi ve kartın lehimlenmesi.
+**Durum:** Revizyon 4 — tasarım tamam, parçalar elde (yeni hoparlör alınacak). Sıradaki adım breadboard denemesi ve kartın lehimlenmesi.
 
 ![Şema](images/sema.svg)
 
@@ -13,15 +13,23 @@ BF245B JFET preamp, ISF tarzı Shape filtresi ve LM386 güç katından oluşan, 
 | Volume | VR2 B100k | Saat yönü = açılır | LM386'ya giren sinyal |
 | Gain | VR1 B1k | Saat yönü = açılır | LM386 kazancı, 41–200 kat |
 | Shape | VR3 B22k | Sol = Fender, sağ = Marshall | Sol: oyuk ortalar; sağ: düz, ortalar önde |
-| S1 | Sürgülü anahtar | — | Aç/kapa |
+| S1 | Sürgülü anahtar | — | Aç/kapa (sarı güç LED'i) |
 | S2 | Sürgülü anahtar | Kapalı = Dark | Dark: dolgun; Bright: ortalar ≈ 6 dB kısık, daha parlak |
 | S3 | Sürgülü anahtar | — | Hoparlörü keser, kulaklık çalışır |
 
 - Besleme: 12 V 2 A adaptör (ters polarite koruması 1N4007)
-- Çıkış: 8 Ω hoparlöre yaklaşık 0,7–1 W temiz, en fazla ≈ 1,3 W (mevcut hoparlör 0,5 W)
+- Çıkış: 8 Ω hoparlöre yaklaşık 0,7–1 W temiz, en fazla ≈ 1,3 W. Önerilen hoparlör: 8 Ω, 3–5 W, 3–4 inç full range
 - Kulaklık çıkışı: 3,5 mm stereo, kanal başına 1 kΩ seri
 
 **Sinyal yolu:** gitar → Q1 BF245B (Bright/Dark) → Shape (köprülü-T çentik + VR3 geçiş) → Volume → LM386 (Gain) → hoparlör / kulaklık
+
+## Revizyon geçmişi
+
+| Rev | Değişiklik |
+|---|---|
+| 4 | Rd 2,2k, RM 2,2k, Rb 560 Ω (tek direnç); LM386 pin 7'ye C11 10 µF, pin 6'ya C12 100 nF; sarı güç LED'i |
+| 3 | Bright/Dark kısmi bypass (≈6 dB fark), ISF tarzı Shape, gain potu B1k, 18×38 kart, kart dışı bağlantı şeması |
+| 2 | Anahtar görevleri düzeltildi, VR4 trim kaldırıldı, D1 kart dışına alındı |
 
 ## Pertinaks yerleşimi
 

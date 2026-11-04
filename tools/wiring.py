@@ -176,6 +176,16 @@ add(f'<rect x="{dx1+8}" y="207" width="44" height="36" rx="10" fill="none" strok
 text(1060, 200, 'D1 1N4007 (makaronlu)', 9.5, 'middle', 600)
 text(1060, 256, 'çizgi S1 tarafında', 9, 'middle', 400, '#555')
 
+# LED from S1 middle (switched +12) to J2 −
+add('<circle cx="988" cy="350" r="3.3" fill="#c62828"/>')
+line([(988, 350), (1010, 350)], RED)
+add('<rect x="1010" y="344" width="28" height="12" fill="#fff" stroke="#555" stroke-width="1.6"/>')
+line([(1038, 350), (1048, 350)], RED)
+add('<path d="M1048,342 L1048,358 L1062,350 Z" fill="#facc15" stroke="#555" stroke-width="1.4"/>'); line([(1062, 342), (1062, 358)], '#555', 2)
+line([(1062, 350), (1085, 350), (1085, 374)], BLK)
+add('<circle cx="1085" cy="374" r="3.3" fill="#222"/>')
+text(1024, 338, 'RLED 2,2k', 9, 'middle', 600); text(1055, 372, 'LED (uzun bacak sol)', 9, 'middle', 600, '#a16207')
+
 # B7 speaker (13 -> S3 middle, 14 -> SP −)
 gk = (870, 450)
 line([pad(13), (pad(13)[0], 452), (gk[0], 452)], C['sig4']); line([pad(14), (pad(14)[0], 458), (gk[0], 458)], BLK)
