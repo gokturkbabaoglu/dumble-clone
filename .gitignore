@@ -1,4 +1,6 @@
 __pycache__/
-*.png
-tools/*.svg
-tools/index.html
+*.pkl
+*.log
+tools/pl_*.json
+tools/rsa_*.json
+tools/base*.json
