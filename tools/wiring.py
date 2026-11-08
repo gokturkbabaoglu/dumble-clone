@@ -1,221 +1,199 @@
-"""Off-board wiring diagram (inside-cabinet view)."""
-import math
-from layout import wires as PADS
-
-O = []
-def add(s): O.append(s)
-def line(pts, col='#333', w=2.2, dash=None):
-    d = ' '.join(f'{"M" if i == 0 else "L"}{x:.1f},{y:.1f}' for i, (x, y) in enumerate(pts))
-    add(f'<path d="{d}" fill="none" stroke="{col}" stroke-width="{w}" stroke-linecap="round" stroke-linejoin="round"{f" stroke-dasharray=\"{dash}\"" if dash else ""}/>')
-def text(x, y, s, size=12, anchor='start', weight=400, col='#1f2933'):
-    add(f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" text-anchor="{anchor}" font-weight="{weight}" fill="{col}">{s}</text>')
-def twisted(p1, p2, cols, amp=4.5, period=16):
-    (x1, y1), (x2, y2) = p1, p2
-    L = math.hypot(x2 - x1, y2 - y1); ux, uy = (x2 - x1) / L, (y2 - y1) / L; nx, ny = -uy, ux
-    n = len(cols); steps = max(int(L / 2), 2)
-    for k, c in enumerate(cols):
-        ph = 2 * math.pi * k / n
-        pts = []
-        for i in range(steps + 1):
-            t = i / steps; s = t * L
-            env = min(1, s / 10, (L - s) / 10)
-            off = amp * env * math.sin(2 * math.pi * s / period + ph)
-            pts.append((x1 + ux * s + nx * off, y1 + uy * s + ny * off))
-        line(pts, c, 2.2)
-
-# board geometry
-BX, BY, PP = 300, 300, 17
-def pad(i):
-    x, y = PADS[i - 1][0], PADS[i - 1][1]
-    return (BX + (x - 0.5) * PP, BY + (y - 0.5) * PP)
-
-RED, BLK = '#c62828', '#222'
-C = {'sig': '#1565c0', 'sig2': '#2e7d32', 'sig3': '#8e24aa', 'sig4': '#ef6c00', 'wh': '#9e9e9e'}
-
-# ---------- board ----------
-add(f'<rect x="{BX-8}" y="{BY-8}" width="{31*PP+16}" height="{14*PP+16}" rx="8" fill="#e8d3a6" stroke="#9c7c43"/>')
-for c in range(1, 32):
-    for r in range(1, 15):
-        add(f'<circle cx="{BX+(c-0.5)*PP}" cy="{BY+(r-0.5)*PP}" r="1.6" fill="#b49460"/>')
-text(BX + 31 * PP / 2, BY + 14 * PP / 2 + 5, 'KART (parça yüzü, üstten)', 15, 'middle', 700, '#8a6d3b')
-text(BX + 31 * PP / 2, BY + 14 * PP / 2 + 24, 'Pedlerin yeri için yerleşim çizimine bak', 11, 'middle', 400, '#8a6d3b')
-
-# ---------- component icons ----------
-def pot_rear(cx, cy, name, val, note1, note2, col):
-    """rear view: lug 3 left, 2 middle, 1 right. returns lug coords dict"""
-    add(f'<circle cx="{cx}" cy="{cy}" r="32" fill="#f4f6f8" stroke="#555" stroke-width="2"/>')
-    add(f'<circle cx="{cx}" cy="{cy}" r="8" fill="#ddd" stroke="#777"/>')
-    lugs = {}
-    for k, n in ((-22, 3), (0, 2), (22, 1)):
-        x = cx + k; y = cy + 30
-        add(f'<rect x="{x-5}" y="{y}" width="10" height="20" rx="2" fill="#cfd4d9" stroke="#555"/>')
-        add(f'<circle cx="{x}" cy="{y+14}" r="2.6" fill="#fff" stroke="#555"/>')
-        text(x, y + 34, str(n), 12, 'middle', 800, '#333')
-        lugs[n] = (x, y + 14)
-    text(cx, cy - 66, f'{name} · {val}', 14, 'middle', 800, col)
-    text(cx, cy - 50, f'{note1} {note2}', 10.5, 'middle', 600, '#333')
-    lugs['body'] = (cx + 30, cy - 10)
-    return lugs
-
-def slide_sw(cx, cy, name, col, labels=('', 'orta', '')):
-    add(f'<rect x="{cx-34}" y="{cy-14}" width="68" height="28" rx="4" fill="#f4f6f8" stroke="#555" stroke-width="2"/>')
-    add(f'<rect x="{cx-10}" y="{cy-6}" width="20" height="12" rx="2" fill="#bbb"/>')
-    lugs = {}
-    for k, key in ((-20, 'a'), (0, 'm'), (20, 'b')):
-        x = cx + k; y = cy + 14
-        add(f'<rect x="{x-3.5}" y="{y}" width="7" height="16" fill="#cfd4d9" stroke="#555"/>')
-        add(f'<circle cx="{x}" cy="{y+11}" r="2.4" fill="#fff" stroke="#555"/>')
-        lugs[key] = (x, y + 11)
-    text(cx, cy - 22, name, 13, 'middle', 800, col)
-    text(cx, cy + 44, labels[1], 9.5, 'middle', 600, '#555')
-    return lugs
-
-def lug_dot(x, y): add(f'<circle cx="{x}" cy="{y}" r="3.5" fill="#fff" stroke="#333" stroke-width="1.6"/>')
-
-# pots (top)
-VR3 = pot_rear(450, 130, 'VR3 SHAPE', 'B22k', 'önden sol: Fender,', 'sağ: Marshall', '#0369a1')
-VR2 = pot_rear(620, 130, 'VR2 VOLUME', 'B100k', 'saat yönü:', 'ses açılır', '#0369a1')
-VR1 = pot_rear(790, 130, 'VR1 GAIN', 'B1k', 'saat yönü:', 'gain açılır', '#047857')
-
-# J1 input jack (left)
-def jack_mono(cx, cy):
-    add(f'<rect x="{cx-30}" y="{cy-26}" width="60" height="52" rx="6" fill="#f4f6f8" stroke="#555" stroke-width="2"/>')
-    add(f'<circle cx="{cx}" cy="{cy}" r="10" fill="#fff" stroke="#555"/>')
-    t = (cx + 30, cy - 12); s = (cx + 30, cy + 12)
-    lug_dot(*t); lug_dot(*s)
-    text(cx + 22, cy - 15, 'uç', 9.5, 'end', 600); text(cx + 22, cy + 21, 'gövde', 9.5, 'end', 600)
-    return {'tip': t, 'sl': s}
-J1 = jack_mono(110, 420); text(110, 382, 'J1 GİRİŞ 6,35 mm', 13, 'middle', 800, '#c2410c')
-
-S2 = slide_sw(150, 590, 'S2 BRIGHT/DARK', '#7c3aed')
-
-# power (right top)
-S1 = slide_sw(990, 300, 'S1 AÇ/KAPA', '#b91c1c')
-def dcjack(cx, cy):
-    add(f'<rect x="{cx-28}" y="{cy-24}" width="56" height="48" rx="6" fill="#f4f6f8" stroke="#555" stroke-width="2"/>')
-    add(f'<circle cx="{cx}" cy="{cy}" r="9" fill="#fff" stroke="#555"/><circle cx="{cx}" cy="{cy}" r="2.5" fill="#555"/>')
-    p = (cx - 28, cy - 10); m = (cx - 28, cy + 12)
-    lug_dot(*p); lug_dot(*m)
-    text(cx - 20, cy - 13, '+ merkez', 9, 'start', 600); text(cx - 20, cy + 22, '− gövde', 9, 'start', 600)
-    return {'p': p, 'm': m}
-J2 = dcjack(1135, 300); text(1135, 264, 'J2 12 V DC', 13, 'middle', 800, '#b91c1c')
-
-# speaker + S3
-S3 = slide_sw(990, 450, 'S3 HOPARLÖR', '#a16207')
-add('<rect x="1100" y="425" width="22" height="50" fill="#f4f6f8" stroke="#555" stroke-width="2"/><path d="M1122,425 L1150,405 L1150,495 L1122,475 Z" fill="#f4f6f8" stroke="#555" stroke-width="2"/>')
-SPp = (1100, 437); SPm = (1100, 463); lug_dot(*SPp); lug_dot(*SPm)
-text(1094, 433, '+', 12, 'end', 800, RED); text(1094, 475, '−', 13, 'end', 800)
-text(1125, 515, 'SP1 8 Ω', 13, 'middle', 800, '#a16207')
-
-# J3 headphones
-def jack_st(cx, cy):
-    add(f'<rect x="{cx-34}" y="{cy-26}" width="68" height="52" rx="6" fill="#f4f6f8" stroke="#555" stroke-width="2"/>')
-    add(f'<circle cx="{cx}" cy="{cy}" r="8" fill="#fff" stroke="#555"/>')
-    L_ = (cx - 34, cy - 14); R_ = (cx - 34, cy); G_ = (cx - 34, cy + 14)
-    for p, n in ((L_, 'L (uç)'), (R_, 'R (halka)'), (G_, 'gövde')):
-        lug_dot(*p); text(p[0] + 8, p[1] + 3.5, n, 9, 'start', 600)
-    return {'L': L_, 'R': R_, 'G': G_}
-J3 = jack_st(1010, 620); text(1010, 582, 'J3 KULAKLIK 3,5 mm', 13, 'middle', 800, '#be185d')
-
-# ---------- wiring ----------
-def badge(i, col):
-    x, y = pad(i)
-    add(f'<circle cx="{x}" cy="{y}" r="8" fill="#fff" stroke="{col}" stroke-width="2.6"/>')
-    text(x, y + 3.6, str(i), 9.5, 'middle', 800, col)
-
-# B1 input (1 tip, 2 sleeve) -> J1
-g = (262, 432); h = (172, 420)
-line([pad(1), (pad(1)[0], 432), (g[0]+8, 432)], C['sig']); line([pad(2), (pad(2)[0], 440), (g[0]+8, 440)], BLK)
-twisted((g[0]+8, 436), h, [C['sig'], BLK])
-line([h, (150, 420), (150, J1['tip'][1]), J1['tip']], C['sig']); line([h, (155, 424), (155, J1['sl'][1]), J1['sl']], BLK)
-
-# B2 S2 (3 Y, 4 GND)
-line([pad(3), (pad(3)[0], 560), (440, 560)], C['sig3']); line([pad(4), (pad(4)[0]+6, 560), (440, 566)], BLK)
-twisted((440, 563), (240, 620), [C['sig3'], BLK])
-line([(240, 620), S2['m']], C['sig3']); line([(240, 620), (228, 640), (S2['b'][0], 640), S2['b']], BLK)
-text(150, 668, 'orta + bir yan bacak; sürgü o yandayken = Dark', 9.5, 'middle', 600, '#7c3aed')
-text(S2['a'][0], 668, '', 9)
-
-# B3 shape (5 -> lug3, 6 -> lug1)
-gs = (520, 280)
-line([pad(5), (pad(5)[0], 286), (gs[0]-4, 286)], C['sig']); line([pad(6), (pad(6)[0], 280), (gs[0]+4, 280)], C['sig2'])
-twisted(gs, (450, 205), [C['sig'], C['sig2']])
-line([(450, 205), (VR3[3][0], 190), VR3[3]], C['sig']); line([(450, 205), (VR3[1][0], 190), VR3[1]], C['sig2'])
-# jumper VR3 lug2 -> VR2 lug3
-line([VR3[2], (VR3[2][0], 196), (VR2[3][0], 196), VR2[3]], C['sig4'], 2.6)
-text((VR3[2][0] + VR2[3][0]) / 2, 191, 'kısa tel', 9.5, 'middle', 600, C['sig4'])
-
-# B4 volume (7 -> lug2, 8 GND -> lug1)
-gv = (682, 270)
-line([pad(7), (pad(7)[0] - 3, gv[1] + 4)], C['sig']); line([pad(8), (pad(8)[0] + 4, gv[1] + 4)], BLK)
-twisted((gv[0], gv[1] + 4), (630, 210), [C['sig'], BLK])
-line([(630, 210), (VR2[2][0], 200), VR2[2]], C['sig']); line([(630, 210), (VR2[1][0], 204), VR2[1]], BLK)
-
-# B5 gain (9 -> lug2, 10 -> lug3)
-gg = (740, 262)
-line([pad(9), (pad(9)[0], 330), (gg[0] - 4, 330), (gg[0] - 4, gg[1])], C['sig2']); line([pad(10), (pad(10)[0] + 34, pad(10)[1]), (gg[0] + 4, pad(10)[1]), (gg[0] + 4, gg[1])], C['sig'])
-twisted(gg, (785, 210), [C['sig2'], C['sig']])
-line([(785, 210), (VR1[2][0], 200), VR1[2]], C['sig2']); line([(785, 210), (VR1[3][0], 202), VR1[3]], C['sig'])
-text(VR1[1][0] + 8, VR1[1][1] + 26, '1 boş', 9.5, 'start', 600, '#888')
-text(VR3[2][0] + 10, VR3[2][1] + 26, '', 9)
-
-text(620, 32, 'Pot gövdelerini çıplak telle birbirine ve VR2 1. bacağa (GND) bağla', 10, 'middle', 600, '#666')
-
-# B6 power (11 +12 -> S1 side, 12 GND -> J2 −)
-gp = (870, 330)
-line([pad(11), (pad(11)[0], 286), (gp[0], 286), (gp[0], gp[1] - 4)], RED); line([pad(12), (pad(12)[0] + 30, pad(12)[1]), (gp[0] + 8, pad(12)[1]), (gp[0] + 8, gp[1] - 4)], BLK)
-twisted((gp[0] + 4, gp[1] - 6), (985, 372), [RED, BLK])
-line([(985, 372), S1['m']], RED)
-line([(985, 372), (1085, 374), (1085, J2['m'][1]), J2['m']], BLK)
-# D1 between J2+ and S1 middle
-dx1, dx2 = 1040, 1075
-line([J2['p'], (1090, J2['p'][1]), (1090, 225), (dx2 + 8, 225)], RED)
-add(f'<path d="M{dx2},215 L{dx2},235 L{dx1+18},225 Z" fill="#222"/>'); line([(dx1 + 18, 213), (dx1 + 18, 237)], '#222', 2.6)
-line([(dx1 + 18, 225), (944, 225), (944, 345), (S1['a'][0], 345), S1['a']], RED)
-add(f'<rect x="{dx1+8}" y="207" width="44" height="36" rx="10" fill="none" stroke="#888" stroke-dasharray="3 3"/>')
-text(1060, 200, 'D1 1N4007 (makaronlu)', 9.5, 'middle', 600)
-text(1060, 256, 'çizgi S1 tarafında', 9, 'middle', 400, '#555')
-
-# LED from S1 middle (switched +12) to J2 −
-add('<circle cx="988" cy="350" r="3.3" fill="#c62828"/>')
-line([(988, 350), (1010, 350)], RED)
-add('<rect x="1010" y="344" width="28" height="12" fill="#fff" stroke="#555" stroke-width="1.6"/>')
-line([(1038, 350), (1048, 350)], RED)
-add('<path d="M1048,342 L1048,358 L1062,350 Z" fill="#facc15" stroke="#555" stroke-width="1.4"/>'); line([(1062, 342), (1062, 358)], '#555', 2)
-line([(1062, 350), (1085, 350), (1085, 374)], BLK)
-add('<circle cx="1085" cy="374" r="3.3" fill="#222"/>')
-text(1024, 338, 'RLED 2,2k', 9, 'middle', 600); text(1055, 372, 'LED (uzun bacak sol)', 9, 'middle', 600, '#a16207')
-
-# B7 speaker (13 -> S3 middle, 14 -> SP −)
-gk = (870, 450)
-line([pad(13), (pad(13)[0], 452), (gk[0], 452)], C['sig4']); line([pad(14), (pad(14)[0], 458), (gk[0], 458)], BLK)
-twisted((gk[0], 455), (948, 495), [C['sig4'], BLK])
-line([(948, 495), S3['m']], C['sig4']); line([(948, 495), (1070, 497), (1070, SPm[1]), SPm], BLK)
-line([S3['b'], (S3['b'][0], 480), (1060, 480), (1060, SPp[1]), SPp], C['sig4'])
-
-# B8 headphones (15 L, 16 R, 17 GND)
-gh = (850, 560)
-line([pad(15), (pad(15)[0], gh[1] - 6)], C['sig']); line([pad(16), (pad(16)[0], gh[1])], C['sig3']); line([pad(17), (pad(17)[0], gh[1] + 6)], BLK)
-line([(pad(15)[0], gh[1] - 6), (gh[0], gh[1] - 6)], C['sig']); line([(pad(16)[0], gh[1]), (gh[0], gh[1])], C['sig3']); line([(pad(17)[0], gh[1] + 6), (gh[0], gh[1] + 6)], BLK)
-twisted(gh, (945, 620), [C['sig'], C['sig3'], BLK], amp=5)
-line([(945, 620), (955, J3['L'][1]), J3['L']], C['sig']); line([(945, 620), J3['R']], C['sig3']); line([(945, 620), (955, J3['G'][1]), J3['G']], BLK)
-
-# badges on top
-groups = {1: '#c2410c', 2: '#c2410c', 3: '#7c3aed', 4: '#7c3aed', 5: '#0369a1', 6: '#0369a1', 7: '#0369a1', 8: '#0369a1',
-          9: '#047857', 10: '#047857', 11: '#b91c1c', 12: '#b91c1c', 13: '#a16207', 14: '#a16207', 15: '#be185d', 16: '#be185d', 17: '#be185d'}
-for i, c in groups.items(): badge(i, c)
-
-# legend
-LY = 712
-twisted((30, LY), (90, LY), ['#1565c0', '#222'])
-text(98, LY + 4, '= burgulu (örülmüş) kablo grubu', 11.5, 'start', 600)
-line([(330, LY), (370, LY)], RED); text(376, LY + 4, '+12 V', 11.5, 'start', 600)
-line([(430, LY), (470, LY)], BLK); text(476, LY + 4, 'GND', 11.5, 'start', 600)
-text(30, LY + 26, 'Potlar ARKADAN (lehim tarafından) çizildi: arkadan bakınca 3 solda, 1 sağda. Önden bakınca 1 solda, 3 sağda olur.', 11.5, 'start', 600, '#b45309')
-
-def wiring_svg():
-    return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" class="sch" font-family="Inter,Arial,sans-serif">'
-            '<rect width="1200" height="750" fill="#fff"/>' + '\n'.join(O) + '</svg>')
-
-if __name__ == '__main__':
-    open('wiring.svg', 'w').write(wiring_svg()); print('ok')
+import matplotlib; matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle, Circle, Polygon, FancyBboxPatch
+import numpy as np
+R='#d62728'; Bk='#222222'; Bl='#1f77b4'; Y='#e6a700'; G='#2ca02c'; O='#ff7f0e'; V='#8e44ad'; W='#9aa0a6'
+def _resample(pts):
+    pts=np.array(pts,float); seg=np.sqrt(((pts[1:]-pts[:-1])**2).sum(1)); L=seg.sum()
+    t=np.linspace(0,L,max(80,int(L*8))); cum=np.concatenate([[0],np.cumsum(seg)])
+    P=np.array([np.interp(t,cum,pts[:,0]),np.interp(t,cum,pts[:,1])]).T
+    return P,t,L
+def line(ax,pts,c,lw=1.9,ls='-',z=3):
+    pts=np.array(pts,float); ax.plot(pts[:,0],pts[:,1],color=c,lw=lw,ls=ls,solid_capstyle='round',zorder=z)
+def bundle(ax,starts,ends,cols,via=None,pitch=4.0,amp=1.5,lw=1.9):
+    """starts/ends: lists of points; cols: colors. wires converge, twist along path, then split."""
+    s0=np.mean(np.array(starts,float),0); e0=np.mean(np.array(ends,float),0)
+    path=[s0]+(via or [])+[e0]
+    P,t,L=_resample(path)
+    # entry/exit points of the twisted section
+    a=P[min(len(P)-1,int(len(P)*0.12))]; b=P[max(0,int(len(P)*0.88))]
+    Pt,tt,Lt=_resample([a]+[np.array(v) for v in (via or [])]+[b])
+    d=np.gradient(Pt,axis=0); n=np.stack([-d[:,1],d[:,0]],1); n/=np.linalg.norm(n,axis=1,keepdims=True)+1e-9
+    k=len(cols)
+    for i,c in enumerate(cols):
+        off=amp*np.sin(2*np.pi*tt/pitch+2*np.pi*i/k)
+        Q=Pt+n*off[:,None]
+        ax.plot(Q[:,0],Q[:,1],color=c,lw=lw,zorder=3,solid_capstyle='round')
+        line(ax,[starts[i],Q[0]],c,lw); line(ax,[Q[-1],ends[i]],c,lw)
+def pad(ax,x,y,label,vert=True):
+    ax.add_patch(Circle((x,y),1.9,fc='#d9a441',ec='#7a5a12',lw=0.8,zorder=5)); ax.add_patch(Circle((x,y),0.6,fc='white',zorder=6))
+    if vert: ax.text(x,y+3,label,fontsize=6.4,rotation=90,ha='center',va='bottom',color='#5b2c00',zorder=6)
+    else: ax.text(x+3,y,label,fontsize=6.4,ha='left',va='center',color='#5b2c00',zorder=6)
+def lugbox(ax,x,y,label=None,num=None):
+    ax.add_patch(Rectangle((x-1.2,y-5),2.4,5.6,fc='#e0c27a',ec='#7a5a12',lw=0.8,zorder=4))
+    ax.add_patch(Circle((x,y-0.6),0.7,fc='white',zorder=5))
+    if num: ax.text(x,y-6.3,num,fontsize=6.6,ha='center',va='top',fontweight='bold',zorder=5)
+    if label: ax.text(x,y-6.3,label,fontsize=5.6,ha='center',va='top',zorder=5)
+    return (x,y)
+def potrear(ax,x,y,name,val,notes=None):
+    ax.add_patch(Circle((x,y-8),11,fc='#c8ccd2',ec='#555',lw=1.2,zorder=2))
+    ax.add_patch(Circle((x,y-8),4.2,fc='#9aa0a8',ec='#555',lw=0.8,zorder=2))
+    L={}
+    for i,dx in enumerate([-5,0,5]):
+        L[i+1]=lugbox(ax,x+dx,y+5,num=str(i+1))
+    ax.text(x,y-21,f'{name}\n{val}',fontsize=7.3,ha='center',va='top',fontweight='bold')
+    if notes: ax.text(x,y-29,notes,fontsize=5.6,ha='center',va='top',color='#444')
+    return L
+def capsym(ax,p,q,label):
+    m=((p[0]+q[0])/2,(p[1]+q[1])/2)
+    line(ax,[p,q],'#555',1.3)
+    ax.add_patch(Rectangle((m[0]-2.6,m[1]-1.4),5.2,2.8,fc='#f6e3a1',ec='#7a5a12',lw=0.8,zorder=4))
+    ax.text(m[0],m[1]+2,label,fontsize=6,ha='center',va='bottom',zorder=5)
+def base(title,sub,xlim=(0,428),ylim=(-40,172)):
+    fig,ax=plt.subplots(figsize=(21,10.5))
+    ax.set_xlim(*xlim); ax.set_ylim(*ylim); ax.set_aspect('equal'); ax.axis('off')
+    ax.text(xlim[0]+2,ylim[1]-2,title,fontsize=14,fontweight='bold',va='top')
+    ax.text(xlim[0]+2,ylim[1]-10,sub,fontsize=8,va='top',color='#333')
+    return fig,ax
+def legend(ax,x,y,items,title='Renkler / kurallar'):
+    h=6+len(items)*5.2
+    ax.add_patch(FancyBboxPatch((x,y-h),110,h,boxstyle='round,pad=1',fc='white',ec='#999',lw=0.8,zorder=6))
+    ax.text(x+2,y-2,title,fontsize=7.3,fontweight='bold',va='top',zorder=7)
+    for i,(c,t) in enumerate(items):
+        yy=y-8.5-i*5.2
+        if c: ax.plot([x+2,x+9],[yy,yy],color=c,lw=2.4,zorder=7,ls='--' if c==G else '-')
+        ax.text(x+11,yy,t,fontsize=6.3,va='center',zorder=7)
+# ============ IMAGE 4 ============
+fig,ax=base('Ön Panel Kablolaması — sinyal, kulaklık ve hoparlör',
+ 'Görünüm: kutunun İÇİNDEN ön panelin ARKASINA bakış (pot bacakları yukarıda, karta doğru). Bu yüzden sıra önden bakışa göre TERS: GİRİŞ en sağda.\n'
+ 'Kart da aynı yönden çizildi: ön kenardaki kablo noktaları arkadan görüldüğü sırayla.')
+BX0,BX1,BY=12,302,128
+ax.add_patch(Rectangle((BX0,BY-6),BX1-BX0,30,fc='#f4efe2',ec='black',lw=1.4,zorder=1))
+ax.text(BX1-2,BY+21.5,'KART — ön kenar (arkadan bakış)',fontsize=7,ha='right',va='top',color='#444')
+def xd(xu): return 20+(88-xu)*3.2
+PP={'P_IN':(4,'GİRİŞ uç'),'P_ING':(8,'GİRİŞ şase'),'P_GIN':(16,'GAIN 3'),'P_GW':(20,'GAIN 2'),'P_GG':(24,'GAIN 1/GND'),
+    'P_US':(40,'ISF 1 (US)'),'P_UK':(44,'ISF 3 (UK)'),'P_VW':(56,'VOL 2'),'P_VG':(60,'VOL 1/GND'),
+    'P_SPK':(68,'ÇIKIŞ→jak uç'),'P_HPS':(72,'jak sleeve'),'P_SPKG':(76,'hop. −')}
+P={}
+for k,(xu,lab) in PP.items():
+    P[k]=(xd(xu),BY); pad(ax,*P[k],lab)
+PY=22
+ax.add_patch(Rectangle((BX0-4,PY-36),BX1-BX0+8,4,fc='#7f8c8d',ec='black',lw=1,zorder=1))
+ax.text((BX0+BX1)/2,PY-37.5,'ÖN PANEL (iç yüzü) — önden bakan kişi bu parçaları soldan sağa  GİRİŞ · GAIN · SW1 · ISF · VOLUME · KULAKLIK  sırasıyla görür',fontsize=7.2,ha='center',va='top',color='#333')
+# input jack
+jx=284
+ax.add_patch(Rectangle((jx-8,PY-26),16,26,fc='#cfd3d8',ec='#555',lw=1.2,zorder=2))
+ax.text(jx,PY-14,'GİRİŞ\n6.35 mm',fontsize=6.6,ha='center',va='center',fontweight='bold')
+jt=lugbox(ax,jx-4,PY+5,label='uç'); js=lugbox(ax,jx+4,PY+5,label='şase')
+bundle(ax,[P['P_IN'],P['P_ING']],[jt,js],[R,Bk],via=[(286,95),(285,60)])
+ax.text(296,80,'BURGULU ÇİFT\nkısa tut,\nhoparlör ve\nbesleme\nkablolarından\nuzak geçir',fontsize=6,ha='left',va='center',color=R)
+# gain pot
+gx=244; GL=potrear(ax,gx,PY,'GAIN','B100K (veya A100K)')
+bundle(ax,[P['P_GIN'],P['P_GW'],P['P_GG']],[GL[3],GL[2],GL[1]],[Y,Bl,Bk],via=[(242,95),(244,62)])
+# SW1
+sx=210
+ax.add_patch(Rectangle((sx-8,PY-16),16,16,fc='#cfd3d8',ec='#555',lw=1.2,zorder=2))
+ax.text(sx,PY-8,'SW1\nON-OFF-ON',fontsize=6.2,ha='center',va='center',fontweight='bold')
+sa=lugbox(ax,sx-5,PY+5,label='A'); sc=lugbox(ax,sx,PY+5,label='orta'); sb=lugbox(ax,sx+5,PY+5,label='B')
+line(ax,[sc,(sc[0],PY+16),(GL[2][0],PY+16),GL[2]],Bl,1.6)
+line(ax,[sb,(sb[0],PY+12),(GL[3][0]+4,PY+12),(GL[3][0]+4,PY+8),GL[3]],'#555',1.3)
+ax.add_patch(Rectangle((sb[0]+6,PY+10.6),5.2,2.8,fc='#f6e3a1',ec='#7a5a12',lw=0.8,zorder=4)); ax.text(sb[0]+8.6,PY+13.8,'470p',fontsize=6,ha='center',va='bottom')
+line(ax,[sa,(sa[0],PY+20),(GL[1][0]-3,PY+20),(GL[1][0]-3,PY+8),GL[1]],'#555',1.3)
+ax.add_patch(Rectangle((sa[0]+8,PY+18.6),5.2,2.8,fc='#f6e3a1',ec='#7a5a12',lw=0.8,zorder=4)); ax.text(sa[0]+10.6,PY+21.8,'3.3n',fontsize=6,ha='center',va='bottom')
+ax.text(sx,PY-19,'Kol A tarafına itilince orta–B bağlanır (BRIGHT),\nB tarafına itilince orta–A (DARK), ortada boş.\nYön ters gelirse 470p ile 3.3n\'yi yer değiştir.',fontsize=5.6,ha='center',va='top',color='#444')
+# ISF pot
+ix=168; IL=potrear(ax,ix,PY,'ISF','B250K','saat yönü → UK')
+bundle(ax,[P['P_US'],P['P_UK']],[IL[1],IL[3]],[O,V],via=[(168,95),(168,62)])
+# volume
+vx=124; VL=potrear(ax,vx,PY,'VOLUME','B500K (veya A100K)','saat yönü → ses artar')
+line(ax,[IL[2],(IL[2][0],PY+24),(VL[3][0],PY+24),VL[3]],G,1.9)
+ax.text((IL[2][0]+VL[3][0])/2,PY+25,'ISF orta → VOL 3 (kısa tel)',fontsize=6,ha='center',va='bottom',color=G)
+bundle(ax,[P['P_VW'],P['P_VG']],[VL[2],VL[1]],[Bl,Bk],via=[(118,95),(122,62)])
+# pot body ground (optional)
+for x0 in (vx,ix,gx):
+    ax.add_patch(Circle((x0+7,PY-14),0.9,fc='#2ca02c',zorder=6))
+line(ax,[(vx+7,PY-14),(ix+7,PY-14),(gx+7,PY-14)],G,1.4,ls='--',z=5)
+line(ax,[VL[1],(VL[1][0]-4,PY+8),(VL[1][0]-4,PY-14),(vx+7,PY-14)],G,1.4,ls='--',z=5)
+ax.text(ix,PY-27,'',fontsize=5)
+# HP jack PJ-324M rear
+hx=78
+ax.add_patch(Rectangle((hx-13,PY-18),26,18,fc='#2f2f2f',ec='#111',lw=1.2,zorder=2))
+ax.text(hx,PY-9,'KULAKLIK 3.5 mm\nPJ-324M',fontsize=6.2,ha='center',va='center',color='white',fontweight='bold')
+HP={}
+for name,dx in [('S',-10),('T',-5),('T-NC',0),('R',5),('R-NC',10)]:
+    HP[name]=lugbox(ax,hx+dx,PY+5,label=name)
+line(ax,[HP['T'],(HP['T'][0],PY+10),(HP['R'][0],PY+10),HP['R']],'#555',1.4)
+ax.text(hx,PY+11,'T–R köprü',fontsize=5.6,ha='center',va='bottom')
+bundle(ax,[P['P_SPK'],P['P_HPS']],[HP['T'],HP['S']],[R,Bk],via=[(76,95),(74,58)])
+ax.text(hx,PY-21,'Bacak isimleri işlevseldir: multimetreyle bul\n(T-NC: fiş yokken T ile kısa, fiş takılınca açılır).\nR-NC boş kalır.',fontsize=5.6,ha='center',va='top',color='#444')
+# speaker
+spx,spy=30,62
+ax.add_patch(Circle((spx,spy),13,fc='#ddd',ec='#555',lw=1.2,zorder=2)); ax.add_patch(Circle((spx,spy),5,fc='#bbb',ec='#555',zorder=2))
+ax.text(spx,spy-16,'HOPARLÖR 4Ω 6.5"',fontsize=7,ha='center',va='top',fontweight='bold')
+sp_p=(spx+6,spy+11); sp_m=(spx-6,spy+11)
+ax.text(sp_p[0],sp_p[1]+1.5,'+',fontsize=9,color=R,ha='center',va='bottom',fontweight='bold'); ax.text(sp_m[0],sp_m[1]+1.5,'−',fontsize=9,ha='center',va='bottom',fontweight='bold')
+for p in (sp_p,sp_m): ax.add_patch(Rectangle((p[0]-1.4,p[1]-1.4),2.8,2.8,fc='#e0c27a',ec='#7a5a12',zorder=4))
+jn=(hx-17,PY+30)
+line(ax,[P['P_SPKG'],(P['P_SPKG'][0],PY+60),jn],Bk)
+line(ax,[HP['T-NC'],(HP['T-NC'][0],PY+14),(hx-13,PY+30)],R)
+bundle(ax,[(hx-13,PY+30),jn],[sp_p,sp_m],[R,Bk],pitch=4.5)
+ax.text(58,40,'hoparlör kablosu\nburgulu çift',fontsize=6,color='#444',ha='center')
+legend(ax,312,150,[(R,'kırmızı: sinyal/çıkış (+)'),(Bk,'siyah: GND / şase'),(Y,'sarı: GAIN 3 (giriş ucu)'),(Bl,'mavi: pot orta ucu (wiper)'),(O,'turuncu / mor: ISF uçları'),
+ (G,'yeşil kesik: pot gövdeleri → VOL 1 (isteğe bağlı)'),(None,'Burgu: yaklaşık 1 tur / 1.5–2 cm, sıkı.'),(None,'Pot kabloları birlikte, hoparlör ve besleme'),(None,'kablolarından en az 2–3 cm uzakta geçsin.')],title='Renkler ve kurallar')
+fig.savefig('../images/4_panel_kablolama.png',dpi=160,bbox_inches='tight',facecolor='white')
+print('ok4')
+# ============ IMAGE 5: power, LED, grounding ============
+fig,ax=base('Besleme, LED ve Topraklama Kablolaması',
+ 'Görünüm: kartın sağ kenarı (üstten bakış). DC jak arka panelde, güç anahtarı ve LED ön panelde.',xlim=(0,330),ylim=(-30,168))
+# board right part (top view)
+ax.add_patch(Rectangle((150,40),70,90,fc='#f4efe2',ec='black',lw=1.4,zorder=1))
+ax.text(152,44,'KART (sağ kenar, üstten)',fontsize=7,va='bottom',color='#444')
+pv=(214,122); pg=(214,113); la=(214,72); lk=(214,63)
+for p,l in [(pv,'+12V (anahtar)'),(pg,'GND (DC jak)'),(la,'LED +'),(lk,'LED −')]:
+    ax.add_patch(Circle(p,1.9,fc='#d9a441',ec='#7a5a12',lw=0.8,zorder=5)); ax.add_patch(Circle(p,0.6,fc='white',zorder=6))
+    ax.text(p[0]-3,p[1],l,fontsize=6.6,ha='right',va='center',color='#5b2c00',zorder=6)
+ax.text(185,95,'TDA2003 +\nsoğutucu\n(kartın arka kenarı)',fontsize=6.3,ha='center',color='#666')
+# back panel with DC jack
+ax.add_patch(Rectangle((300,60),5,85,fc='#7f8c8d',ec='black',lw=1)); ax.text(308,102,'ARKA PANEL',fontsize=7,rotation=90,va='center')
+ax.add_patch(Rectangle((282,108),16,20,fc='#cfd3d8',ec='#555',lw=1.2,zorder=2)); ax.text(290,118,'DC JAK\n5.5/2.1',fontsize=6.3,ha='center',va='center',fontweight='bold')
+dcp=(283,124); dcn=(283,113); dcs=(283,108.5)
+for p,l in [(dcp,'orta pin (+)'),(dcn,'gövde (−)')]:
+    ax.add_patch(Rectangle((p[0]-4,p[1]-1.2),5,2.4,fc='#e0c27a',ec='#7a5a12',zorder=4)); ax.text(p[0]-1.5,p[1]+2,l,fontsize=5.6,ha='center',va='bottom')
+# fuse holder
+ax.add_patch(Rectangle((246,128),18,6,fc='#eee',ec='#555',lw=1.1,zorder=2)); ax.text(255,136,'SİGORTA 1A yavaş (T)',fontsize=6.3,ha='center',va='bottom')
+# front panel: power switch + LED
+ax.add_patch(Rectangle((60,-12),5,150,fc='#7f8c8d',ec='black',lw=1)); ax.text(57,60,'ÖN PANEL',fontsize=7,rotation=90,va='center',ha='right')
+ax.add_patch(Rectangle((68,98),14,18,fc='#cfd3d8',ec='#555',lw=1.2,zorder=2)); ax.text(75,107,'GÜÇ\nanahtarı\nSW2',fontsize=6.2,ha='center',va='center',fontweight='bold')
+sw1=(83,112); sw2=(83,102)
+for p in (sw1,sw2): ax.add_patch(Rectangle((p[0],p[1]-1.2),4.5,2.4,fc='#e0c27a',ec='#7a5a12',zorder=4))
+sw1=(87,112); sw2=(87,102)
+# LED
+ax.add_patch(Circle((74,66),4,fc='#ffe066',ec='#a68a00',lw=1.2,zorder=2)); ax.text(74,59,'LED (sarı)',fontsize=6.3,ha='center',va='top',fontweight='bold')
+lA=(86,69); lK=(86,63)
+line(ax,[(77,68),lA],'#888',1.4); line(ax,[(77,64),lK],'#888',1.4)
+ax.text(87,72,'uzun bacak (+)',fontsize=5.6,va='bottom'); ax.text(87,60,'kısa bacak / düz kenar (−)',fontsize=5.6,va='top')
+# wires
+line(ax,[dcp,(272,124),(272,131),(264,131)],R)
+line(ax,[(246,131),(238,131)],R)
+bundle(ax,[(238,131),pv],[sw1,sw2],[R,O],via=[(200,136),(130,118)],pitch=5)
+ax.text(165,134,'güç anahtarına giden ve dönen iki tel birlikte burgulu',fontsize=6.2,ha='center',va='bottom',color='#444')
+ax.text(150,112,'kırmızı: sigortadan anahtara\nturuncu: anahtardan karta (+12V)',fontsize=5.8,ha='center',va='top',color='#444')
+line(ax,[dcn,pg],Bk)
+ax.text(250,110.5,'GND: DC jak gövdesi → kart\n(tek tel, kısa, tek nokta)',fontsize=6.2,ha='center',va='top')
+bundle(ax,[lA,lK],[la,lk],[R,Bk],via=[(130,66),(190,68)],pitch=5)
+ax.text(150,58,'LED çifti burgulu (kritik değil)',fontsize=6,ha='center',va='top',color='#444')
+# notes box
+notes=['TOPRAKLAMA KURALLARI',
+'1. DC jakın gövdesi (−) karta SADECE "GND (DC jak)" noktasından bağlanır.',
+'2. Giriş jakının şasesi sadece "GİRİŞ şase" noktasına gider; başka bir yere bağlama.',
+'3. Jak gövdelerini ve pot gövdelerini birbirine ya da ayrıca toprağa bağlama.',
+'   (İstisna: pot gövdeleri tek bir telle VOL 1/GND\'ye bağlanabilir, bkz. ön panel görseli.)',
+'4. İç yüzeye bakır bant/folyo koyarsan, tek bir telle "GND (DC jak)" noktasına bağla.',
+'5. Besleme ve hoparlör kablolarını giriş ve pot kablolarından en az 2–3 cm uzakta geçir;',
+'   kesişmeleri gerekiyorsa dik açıyla kesiştir.',
+'6. Adaptör fişinin orta ucu + olmalı (etiketinde ⊖–◉–⊕ işareti). Ters bağlansa D1 korur.']
+ax.add_patch(FancyBboxPatch((70,-26),240,44,boxstyle='round,pad=1',fc='white',ec='#999',lw=0.8))
+for i,t in enumerate(notes):
+    ax.text(73,15-i*4.6,t,fontsize=6.9 if i else 7.6,fontweight='bold' if i==0 else 'normal',va='top')
+fig.savefig('../images/5_besleme_kablolama.png',dpi=160,bbox_inches='tight',facecolor='white')
+print('ok5')
