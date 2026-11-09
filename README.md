@@ -2,7 +2,7 @@
 
 12 V ile çalışan, 4 Ω 6,5" full range hoparlör süren küçük bir pratik amfisi. Volume, Gain, ISF (US ↔ UK karakter) kontrolleri, Dark/Normal/Bright anahtarı ve kesicili 3,5 mm kulaklık çıkışı var. Devre tek yüzlü baskı devre üzerine kurulur; pot, anahtar ve jaklar ön panelde, karta kabloyla bağlanır.
 
-**Durum:** Revizyon 5 — sıfırdan yeniden tasarım (önceki LM386 + pertinaks sürümünün yerini alır). Tasarım ve kart çizimi tamam; parçalar alınıyor. Devre henüz denenmedi.
+**Durum:** Revizyon 5 — sıfırdan yeniden tasarım (önceki LM386 + pertinaks sürümünün yerini alır). Parçalar alındı. **Güncel kart: [`v2/`](v2/README.md)** — elde olan parçalara göre yeniden çizildi (165 × 114 mm). Bu sayfadaki kart (v1) eski sürümdür. Parça görselleri [`parca-gorselleri/`](parca-gorselleri/README.md) klasöründe. Devre henüz denenmedi.
 
 ![Şema](images/1_devre_semasi.png)
 
