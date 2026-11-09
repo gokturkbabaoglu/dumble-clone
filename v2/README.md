@@ -44,4 +44,4 @@ Python 3 + numpy, scipy, Pillow, matplotlib. Komutlar `tools/` içinde çalışt
 - `final2.py c121.json <tohum sayısı>`: son yönlendirme, GND dolgusu, doğrulama → `final_geom.pkl`.
 - `draw_pcb2.py final_geom.pkl [çıktı klasörü]`: kart görselleri ve toner PDF'i.
 - `schem2.py`, `wiring2.py`: şema ve kablolama çizimleri.
-- `c121.json`: son yerleşim. `final_geom.pkl` (7,6 MB) repoda yok; `final2.py c121.json` ile yeniden üretilir.
+- `c121.json`: son yerleşim. `final_geom.pkl` (7,6 MB) sıkıştırılmış olarak `final_geom_kart-v2.zip` içinde; açıp `draw_pcb2.py final_geom.pkl` ile kullanılır ya da `final2.py c121.json` ile yeniden üretilir.
