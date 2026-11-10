@@ -143,6 +143,14 @@ Bakır yüzü (alttan bakış):
 - **Sigorta ★ 1 A normal (hızlı)**: tasarımda yavaş atan öngörülmüştü. Açılışta atarsa 1–2 A yavaş atan sigortaya geç.
 - **Elektrolitikler**: hepsi yeni, 25 V (en az 16 V gerekli; görünüm aynı olsun diye hepsi yenilendi).
 
+**Montaj ve kart yapımı malzemeleri**
+
+- TR1: 10k çok turlu trimer, 3296W tipi.
+- Elektrolitikler 105 °C, aynı seri; C1, C7, C25 için mümkünse low ESR.
+- TDA2003 için termal macun, M3 vida/somun; kartı kutuya sabitlemek için M3 aralayıcılar.
+- Hoparlör kablosu 0,5–0,75 mm² ikili (≈50 cm); DC jak kablosu 0,5 mm² kırmızı/siyah (≈30 cm, burgulanacak); köprü teli izoleli tek damar (≈1 m); makaron; kablo bağı.
+- Kart yapımı: perklorür ya da sodyum persülfat, parlak kâğıt (toner transfer), aseton/tiner, matkap uçları 0,8 / 1,0 / 1,2 / 1,5 mm ve montaj delikleri için 3,2 mm.
+
 ## Araçlar
 
 Python 3 + numpy, scipy, Pillow, matplotlib. Komutlar `tools/` içinde çalıştırılır; çıktılar `out/` klasörüne yazılır.
