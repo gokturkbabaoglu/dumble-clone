@@ -88,7 +88,7 @@ Bakır yüzü (alttan bakış):
 | 470k | 1 | R21 |
 | 1M | 1 | R6 |
 
-**Kondansatörler**
+**Kondansatörler** (elektrolitiklerin hepsi yeni alındı, 25 V)
 
 | Değer | Tür | Adet | Referanslar |
 |---|---|---|---|
@@ -117,9 +117,9 @@ Bakır yüzü (alttan bakış):
 | LM386 + DIP-8 soket | 1 | U1 |
 | TDA2003 + klips soğutucu | 1 | U2 (soğutucu kartın arka kenarından taşar) |
 | 1N5822 | 1 | D1 |
-| LED (+ R3 2,2k) | 1 | D2 |
+| Sarı LED (+ R3 2,2k) | 1 | D2 |
 | 10k trimer | 1 | TR1 (drain ≈7 V'a ayarlanır) |
-| B100K / B250K / B500K pot, 16 mm | 1/1/1 | RV1 / RV2 / RV3 |
+| B100K / B250K / B500K pot, 16 mm (WH148 tipi) | 1/1/1 | RV1 / RV2 / RV3 |
 | 6,35 mm mono jak | 1 | J1 |
 | PJ-324M | 1 | J2 |
 | Vidalı klemens, 2'li | 2 | TB1, TB2 |
@@ -129,16 +129,19 @@ Bakır yüzü (alttan bakış):
 | Panel DC jak, 3 uçlu | 1 | — |
 | Bakır plaket 20 × 20 cm | 1 | — |
 | M3 vida / mesafe | 3 | MH1–MH3 |
-| 4 Ω hoparlör, 12 V / 2 A adaptör | 1 + 1 | — |
+| 4 Ω 6,5" full range kâğıt hoparlör | 1 | Kablolar hoparlörün üzerinde lehimlenir, karta TB2 ile bağlanır |
+| 12 V / 2 A adaptör | 1 | — |
+| Kutu ve pot düğmeleri | — | 3D baskı |
 
 **Düzenleme notları**
 
 - **R5 33k → 22k + 10k seri ★**: ters U şeklinde R5 deliklerine. Tek 33k R18'e gider.
 - **R20 = 120k + 10k, R22 = 22k + 2,2k**: kart bu çiftlere göre çizildi.
-- **C15a ★ = 330p (331), C15b ★ boş.** Tasarım 220p + 33p idi. US yığınında tiz biraz artar. 220p bulunursa geri dönülür.
+- **C15a ★ = 330p (331), C15b ★ boş.** Tasarım 220p + 33p idi. 330p, tasarımın kabul aralığında (220–330p); US yığınında tiz biraz artar. 220p bulunursa geri dönülür.
 - **C22 ★ = 1 µF elektrolitik**: + ucu TDA2003 tarafına (TIN). Kartta 5 mm ve 7,5 mm iki delik var.
 - **Potlar B ★**: A pot alınmadı; Gain için R7 15k (slider–GND) takılır.
-- **Sigorta ★ 1 A normal**: açılışta atarsa 1,6–2 A gecikmeli.
+- **Sigorta ★ 1 A normal (hızlı)**: tasarımda yavaş atan öngörülmüştü. Açılışta atarsa 1–2 A yavaş atan sigortaya geç.
+- **Elektrolitikler**: hepsi yeni, 25 V (en az 16 V gerekli; görünüm aynı olsun diye hepsi yenilendi).
 
 ## Araçlar
 
