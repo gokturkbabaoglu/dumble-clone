@@ -1,0 +1,12 @@
+MODE=0 VIN=.03         | SPK: 0.088Vpk THD   0.0% H2   0.0% H3   0.0% | O386: 0.272Vpk THD   0.1% H2   0.0% H3   0.0% | DRAIN: 0.044Vpk THD   0.4% H2   0.1% H3   0.2%
+MODE=0 VIN=.18         | SPK: 0.526Vpk THD   0.1% H2   0.1% H3   0.0% | O386: 1.633Vpk THD   0.1% H2   0.1% H3   0.0% | DRAIN: 0.265Vpk THD   0.1% H2   0.1% H3   0.0%
+MODE=0 VIN=.33         | SPK: 0.965Vpk THD   0.3% H2   0.3% H3   0.0% | O386: 2.993Vpk THD   0.2% H2   0.2% H3   0.0% | DRAIN: 0.485Vpk THD   0.2% H2   0.2% H3   0.0%
+MODE=1 VIN=.03         | SPK: 0.645Vpk THD   1.4% H2   1.4% H3   0.0% | O386: 2.001Vpk THD   1.0% H2   1.0% H3   0.0% | DRAIN: 0.324Vpk THD   1.0% H2   1.0% H3   0.0%
+MODE=1 VIN=.18         | SPK: 1.816Vpk THD  50.6% H2   9.7% H3  46.0% | O386: 5.623Vpk THD  29.5% H2   6.4% H3  26.6% | DRAIN: 1.909Vpk THD   5.9% H2   5.8% H3   0.2%
+MODE=1 VIN=.33         | SPK: 1.951Vpk THD  63.4% H2  13.8% H3  51.9% | O386: 6.043Vpk THD  37.5% H2   9.1% H3  30.1% | DRAIN: 3.363Vpk THD  11.4% H2  11.4% H3   0.9%
+MODE=2 VIN=.03         | SPK: 0.266Vpk THD   0.2% H2   0.2% H3   0.0% | O386: 0.824Vpk THD   0.2% H2   0.2% H3   0.0% | DRAIN: 0.134Vpk THD   0.2% H2   0.1% H3   0.0%
+MODE=2 VIN=.18         | SPK: 1.592Vpk THD   1.5% H2   1.5% H3   0.1% | O386: 4.939Vpk THD   1.0% H2   1.0% H3   0.0% | DRAIN: 0.801Vpk THD   1.0% H2   1.0% H3   0.0%
+MODE=2 VIN=.33         | SPK: 1.736Vpk THD  41.3% H2   7.0% H3  39.4% | O386: 5.375Vpk THD  24.1% H2   4.6% H3  22.9% | DRAIN: 1.459Vpk THD   1.8% H2   1.8% H3   0.1%
+MODE=3 VIN=.03         | SPK: 0.186Vpk THD   0.1% H2   0.1% H3   0.0% | O386: 0.576Vpk THD   0.1% H2   0.1% H3   0.0% | DRAIN: 0.093Vpk THD   0.2% H2   0.1% H3   0.1%
+MODE=3 VIN=.18         | SPK: 1.114Vpk THD   0.7% H2   0.7% H3   0.0% | O386: 3.455Vpk THD   0.5% H2   0.5% H3   0.0% | DRAIN: 0.560Vpk THD   0.5% H2   0.5% H3   0.0%
+MODE=3 VIN=.33         | SPK: 1.694Vpk THD  22.4% H2   6.3% H3  20.8% | O386: 5.249Vpk THD  13.2% H2   4.2% H3  12.0% | DRAIN: 1.023Vpk THD   0.9% H2   0.9% H3   0.0%

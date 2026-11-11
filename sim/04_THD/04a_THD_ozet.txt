@@ -1,0 +1,6 @@
+GAIN=.1 C9V=1p         | SPK: 0.108Vpk THD   0.1% H2   0.1% H3   0.0% | O386: 0.336Vpk THD   0.1% H2   0.1% H3   0.0% | DRAIN: 0.153Vpk THD   0.1% H2   0.0% H3   0.0%
+GAIN=.1 C9V=22u        | SPK: 0.790Vpk THD   4.8% H2   4.8% H3   0.1% | O386: 2.452Vpk THD   3.2% H2   3.2% H3   0.1% | DRAIN: 1.117Vpk THD   3.2% H2   3.2% H3   0.1%
+GAIN=.55 C9V=1p        | SPK: 0.321Vpk THD   0.1% H2   0.1% H3   0.0% | O386: 0.996Vpk THD   0.1% H2   0.1% H3   0.0% | DRAIN: 0.146Vpk THD   0.1% H2   0.1% H3   0.0%
+GAIN=.55 C9V=22u       | SPK: 1.703Vpk THD  31.9% H2   9.3% H3  30.0% | O386: 5.273Vpk THD  18.8% H2   6.2% H3  17.4% | DRAIN: 1.062Vpk THD   3.2% H2   3.2% H3   0.0%
+GAIN=1 C9V=1p          | SPK: 1.242Vpk THD   0.1% H2   0.1% H3   0.0% | O386: 3.854Vpk THD   0.1% H2   0.1% H3   0.0% | DRAIN: 0.100Vpk THD   0.1% H2   0.1% H3   0.0%
+GAIN=1 C9V=22u         | SPK: 1.978Vpk THD  65.9% H2   5.5% H3  55.0% | O386: 6.131Vpk THD  39.2% H2   3.6% H3  31.9% | DRAIN: 0.708Vpk THD   4.2% H2   1.2% H3   3.1%
