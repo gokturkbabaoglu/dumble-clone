@@ -1,0 +1,265 @@
+* amp_models.lib  -  12V gitar amfisi (dumble-clone) icin modeller
+* Micro-Cap 12.2.0 ile kullanilmak uzere toplandi, 2026-11-10
+*
+* ---------------------------------------------------------------
+* BF245B  - datasheet tipik degerlerinden kurulan NJF modeli (YAKLASIK)
+*   NXP/onsemi BF245B: IDSS 6-15 mA, VGS(ID=200uA, VDS=15V) -1.6..-3.8 V
+*   Secilen: IDSS = 10 mA, VTO = -2.5 V  ->  BETA = IDSS/VTO^2 = 1.6 mA/V^2
+*   Kontrol: ID=200uA'de VGS = -2.5*(1-sqrt(0.02)) = -2.15 V (aralikta)
+*   CGS/CGD/KF/AF Micro-Cap jfet.lib "Process 50" kaydindan alindi.
+*   (jfet.lib'deki BF245B kaydi BETA=286m -> IDSS~2.7 A, kullanilmadi)
+* ---------------------------------------------------------------
+.MODEL BF245B_DS NJF (VTO=-2.5 BETA=1.6m LAMBDA=20m IS=10f RS=10 RD=10
++ CGD=1.542479p CGS=2.567003p PB=1.0 KF=7.905907f AF=499.953m)
+*
+* ---------------------------------------------------------------
+* LM386EE - EasyEDA / signality.co.uk, last edited 150611
+* Kaynak: sci.electronics.design "LM386 & Spice" (2015), Andy Fierman
+* https://www.electronics-related.com/showthread/sci.electronics.design/492438-4.php
+* IC pins:       2   3   7   1   8   5   6   4
+* ---------------------------------------------------------------
+.SUBCKT LM386EE inn inp byp g1 g8 out vs gn4
+Q1 gn4 INN q1e gn4 PNP1EE
+R1 INN gn4 50k
+Q2 gn4 INP q2e gn4 PNP1EE
+R2 INP gn4 50k
+Q3 gn4 q1e q4e gn4 PNP1EE
+Q4 q4c q1e q4e gn4 PNP1EE
+Q5 gn4 q2e q6e gn4 PNP1EE
+Q6 q15b q2e q6e gn4 PNP1EE
+Q7 q4c q4c gn4 gn4 NPNEE
+Q8 q15b q4c gn4 gn4 NPNEE
+R3 q4e q1e 28.25k
+R4 g0 q4e 100
+R5 q2e q6e 28.25k
+R6 G1 q6e 100
+R7 G8 g0 150
+R8 G1 G8 1.35k
+R9 OUT G1 15k
+R10 BYP g0 15k
+R11 q10c BYP 15k
+Q9 gn4 q10c q10b gn4 PNP1EE
+Q10 q10c q10b VS gn4 PNP1EE
+Q11 q11c q10b VS gn4 PNP1EE
+Q12 q12c q10b VS gn4 PNP1EE
+Q13 gn4 q4c q11c gn4 PNP2EE
+Q14 q18b q11c q14e gn4 NPNEE
+R12 q14e gn4 1k
+Q15 gn4 q15b q12c gn4 PNP2EE
+Q16 q18b q12c q17b gn4 NPNEE
+Q17 q23b q17b gn4 gn4 NPNEE
+C2 q23b gn4 1p
+Q18 q18b q18b VS gn4 PNP2EE
+Q19 comp q18b VS gn4 PNP2EE
+Q20 q25b q18b VS gn4 PNP2EE
+Q21 comp comp q22b gn4 NPNEE 5
+C1 comp q15b 15p
+R13 q25b comp 10
+Q22 q25b q22b q23b gn4 NPNEE 5
+Q23 q24b q23b q23e gn4 PNP2EE
+Q24 q23e q24b gn4 gn4 NPNEE 100
+R14 OUT q23e 4
+Q25 VS q25b q25e gn4 NPNEE 100
+R15 q25e OUT 4
+.MODEL NPNEE NPN(IS=1E-14 VAF=100 BF=400 IKF=0.4 XTB=1.5 BR=4 CJC=1E-12 ITF=1 VTF=2 XTF=3)
+.MODEL PNP1EE PNP(IS=1E-14 VAF=100 BF=100 IKF=0.4 XTB=1.5 BR=4 CJC=1E-12 ITF=1 VTF=2 XTF=3)
+.MODEL PNP2EE PNP(IS=1E-14 VAF=100 BF=200 IKF=0.4 XTB=1.5 BR=4 CJC=1E-12 ITF=1 VTF=2 XTF=3)
+.ENDS LM386EE
+*
+* NOT: Orijinalde transistorlerin alt ucu (substrate) ve emitorler "0"
+* (global toprak) baglidir; burada pin 4 (gn4) kullanildi. Devrede pin 4
+* topraga bagli oldugu icin sonuc ayni.
+*
+* ---------------------------------------------------------------
+* LM386DD - "No-Frills LM386 Model", Dave Dilatush, 1995-05-30
+* Kaynak: sci.electronics.design "LM386 & Spice" (2015), J. Thompson repost
+* https://www.electronics-related.com/showthread/sci.electronics.design/492438-1.php
+* IC pins: 2 3 7 1 8 5 6 4
+* ---------------------------------------------------------------
+.SUBCKT LM386DD inn inp byp g1 g8 out vs gn4
+q1 gn4 inn 10011 ddpnp
+r1 inn gn4 50k
+q2 gn4 inp 10012 ddpnp
+r2 inp gn4 50k
+q3 10013 10011 10008 ddpnp
+q4 10014 10012 g1 ddpnp
+r3 vs byp 15k
+r4 byp 10008 15k
+r5 10008 g8 150
+r6 g8 g1 1.35k
+r7 g1 out 15k
+q5 10013 10013 gn4 ddnpn 1.1
+q6 10014 10013 gn4 ddnpn
+q7 10017 10014 gn4 ddnpn 10
+c1 10014 10017 15pf
+i1 10002 vs dc 5m
+q8 10004 10002 vs ddpnp
+q9 10002 10002 vs ddpnp
+q10 10018 10017 out ddpnp 10
+q11 10004 10004 10009 ddnpn 100
+q12 10009 10009 10017 ddnpn 100
+q13 vs 10004 out ddnpn 100
+q14 out 10018 gn4 ddnpn 100
+.MODEL ddnpn NPN(Is=10f Xti=3 Eg=1.11 Vaf=100
++ Bf=150 Ise=0 Ne=1.5 Ikf=0 Nk=.5 Xtb=1.5 Var=100
++ Br=1 Isc=0 Nc=2 Ikr=0 Rc=0 Cjc=2p Mjc=.3333
++ Vjc=.75 Fc=.5 Cje=5p Mje=.3333 Vje=.75 Tr=10n
++ Tf=1n Itf=1 Xtf=0 Vtf=10)
+.MODEL ddpnp PNP(Is=10f Xti=3 Eg=1.11 Vaf=100
++ Bf=40 Ise=0 Ne=1.5 Ikf=0 Nk=.5 Xtb=1.5 Var=100
++ Br=1 Isc=0 Nc=2 Ikr=0 Rc=0 Cjc=2p Mjc=.3333
++ Vjc=.75 Fc=.5 Cje=5p Mje=.3333 Vje=.75 Tr=100n
++ Tf=10n Itf=1 Xtf=0 Vtf=10)
+.ENDS LM386DD
+*
+* ---------------------------------------------------------------
+* TDA2003 - SPICE MODELING by JIM THOMPSON, analog-innovations.com (c) 2014
+* Topluluk modeli, yari-davranissal (YAKLASIK).
+* Kaynak: KiCad forumu, "Anyone successfully simulated a TDA2003 amplifier?"
+* https://forum.kicad.info/t/anyone-successfully-simulated-a-tda2003-amplifier/66080
+* Forumdaki metinde satir sonlari ve '*' (carpma) isaretleri kaybolmustu;
+* satirlar ve carpmalar yeniden kuruldu. holger'in duzeltmesi uygulandi
+* (G_G1 icindeki "5A" -> "5").
+* Dogrulama: Jim Thompson'in orijinal dosyasi (analog-innovations.com/TDA2003.zip,
+* web.archive.org 2015-02-12 kaydi) ile satir satir ayni oldugu kontrol edildi.
+* Pinler: 1=IN+  2=IN-  3=GND  4=OUT  5=VPLUS
+* ---------------------------------------------------------------
+.SUBCKT TDA2003 1 2 3 4 5
+R_R6 1 N_1 150K
+RCON_TAG2 1 0 1G
+V_VOS2 N_2 2 0.65V
+R_R8 5 N_3 20K
+V_VOS1 N_1 3 1.3V
+F_F1 2 3 VF_F1 0.5
+VF_F1 N_3 3 1.8V
+D_D1 N_4 N_5 DJT
+RCON_TAG3 N_6 0 1G
+G_G1 N_7 N_6 VALUE={5*TANH(450*V(N_8,N_6))}
+R_R7 2 4 20K
+F_F3 N_4 5 VF_F3 1
+VF_F3 5 N_7 0
+D_D2 5 N_4 DJT
+R_RNOF1 5 4 1G
+RFUD1 N_9 N_8 1
+RFUD2 N_8 0 1G
+RCON_TAG4 N_9 0 1G
+R_RNOF2 4 3 1G
+C_COUT 4 3 5pF
+F_F2 5 3 VF_F2 1
+VF_F2 N_5 5 0
+X_U1 1 N_2 N_9 5 3 OpAmpConfigRails PARAMS: GDC=100K GBW=10 SLEW=1
++ ROUT=100 PM=45 VMP=0.65 VMN=0.65 W=10m
+R_ROUT N_6 4 120m
+.MODEL DJT D
+.ENDS TDA2003
+*
+* ---------------------------------------------------------------
+* TDA2003_DS - Jim Thompson (2014) TDA2003 yapisi + ST datasheet duzeltmeleri
+* Neden: Orijinal model cikis DC'sini ic 20k geri beslemeyle Vs/2'ye
+* oturtuyor; datasheet uygulama devresindeki dis 220 ohm (R1) bu ayari
+* bozuyor ve cikis ~0.7 V'ta kaliyor. Asagidaki degisiklikler ST TDA2003
+* datasheet'inden (Vs=14.4 V, Tamb=25 C) alinan degerlere gore yapildi:
+*  - Bos cikis gerilimi Vo = 6.9 V typ -> Vo/Vs = 0.479 (cok yavas
+*    suzulmus besleme uzerinden izlenir)
+*  - SVR = 36 dB @100 Hz (Gv=40 dB devresinde) -> girise indirgenmis
+*    besleme katsayisi 2.8e-4
+*  - Bos akim Id = 44 mA @14.4 V (besleme ile oransal)
+*  - Pin 1 giris direnci 150 k (orijinalde de var)
+*  - Acik cevrim kazanci 80 dB @1 kHz, 60 dB @10 kHz -> GDC=100k, GBW=10 MHz
+*    (orijinalde de ayni)
+*  - Satürasyon: Po = 6 W @4 ohm, THD %10 -> taraf basina ~1.1 V dusum
+*    (VMP=VMN=0.95 V + 120 mohm cikis direnci)
+*  - Giris gurultusu eN = 1 uV (22 Hz-22 kHz) ~ 6.7 nV/rtHz -> 2.7k seri direnc
+* Pinler: 1=IN+ 2=IN- 3=GND 4=OUT 5=VS
+* ---------------------------------------------------------------
+.SUBCKT TDA2003_DS 1 2 3 4 5
+R_R6 1 N_1 150K
+RCON_TAG2 1 0 1G
+V_VOS1 N_1 3 1.3V
+R_SF 5 N_SF 1MEG
+C_SF N_SF 3 1u
+E_VOS2 N_2 3 VALUE={V(2,3)+1.3-0.479*V(N_SF,3)+2.8E-4*V(5,N_SF)}
+R_EN N_2 N_2N 2.7k
+D_D1 N_4 N_5 DJT
+RCON_TAG3 N_6 0 1G
+G_G1 N_7 N_6 VALUE={5*TANH(450*V(N_8,N_6))}
+R_R7 2 4 20K
+F_F3 N_4 5 VF_F3 1
+VF_F3 5 N_7 0
+D_D2 5 N_4 DJT
+R_RNOF1 5 4 1G
+RFUD1 N_9 N_8 1
+RFUD2 N_8 0 1G
+RCON_TAG4 N_9 0 1G
+R_RNOF2 4 3 1G
+C_COUT 4 3 5pF
+F_F2 5 3 VF_F2 1
+VF_F2 N_5 5 0
+G_IQ 5 3 VALUE={44m*V(5,3)/14.4}
+X_U1 1 N_2N N_9 5 3 OpAmpConfigRails PARAMS: GDC=100K GBW=10 SLEW=1
++ ROUT=100 PM=45 VMP=0.95 VMN=0.95 W=10m
+R_ROUT N_6 4 120m
+.MODEL DJT D
+.ENDS TDA2003_DS
+*
+.SUBCKT OpAmpConfigRails INP INN OUT VP VN PARAMS: GDC=100K GBW=10 SLEW=1
++ ROUT=100 PM=45 VMP=0.5 VMN=0.5 W=10m
+.PARAM PI=3.141593 PMR={PM/180*PI} GBR={GBW*1E6*2*PI} DELT={(90-PM)/90}
+.PARAM OMEGAZ={GBR/DELT} PROCPM={(1-TAN(PMR/2))/(1+TAN(PMR/2))}
+.PARAM LL={(PROCPM-DELT)/GBR/GBR/(PROCPM-(1/DELT))}
+.PARAM RR={(1-OMEGAZ*OMEGAZ*LL)/OMEGAZ}
+RRR VP VN 100Meg
+G1 0 N2 N1 0 1
+G2 N2 0 N2 N3 1
+R1 N3 OUT {ROUT}
+R2 N2 0 {GDC}
+R3 N5 N4 {RR/(sqrt(LL))}
+XLIM N2 N3 VP VN SwingLimiter PARAMS: VMP={VMP} VMN={VMN} W={W}
+E2 N1 0 VALUE={LIMIT(V(N4),-(SLEW)/(2*PI*GBW),SLEW/(2*PI*GBW))}
+E3 N5 0 INP INN 1
+RE3 N5 0 100K
+E4 0 N6 INP INN 1
+RE4 N6 0 100K
+C1 0 N2 {1/(2*PI*GBW*1E6)}
+C2 N4 N7 {sqrt(LL)}
+L1 N7 N6 {sqrt(LL)}
+.ENDS OpAmpConfigRails
+*
+.SUBCKT MOST_POS A B OUT COM PARAMS: W=0.1
+E1 OUT COM VALUE={(TANH(V(A,B)/(0.679*W))*V(A,B)+V(A)+V(B))/2}
+.ENDS MOST_POS
+*
+.SUBCKT MOST_NEG A B OUT COM PARAMS: W=0.1
+E1 OUT COM VALUE={(TANH(V(B,A)/(0.679*W))*V(A,B)+V(A)+V(B))/2}
+.ENDS MOST_NEG
+*
+.SUBCKT SwingLimiter IN OUT VP VN PARAMS: VMP=0.5 VMN=0.5 W=10m
+X_U1 N_1 N_2 OUT 0 MOST_NEG PARAMS: W={W}
+V_VOS2 N_3 VN {VMN}
+V_VOS1 VP N_2 {VMP}
+X_U2 IN N_3 N_1 0 MOST_POS PARAMS: W={W}
+.ENDS SwingLimiter
+*
+* ---------------------------------------------------------------
+* Micro-Cap sarmalayicilari (wrapper) - generic sembollere baglamak icin
+* Opamp_subckt_7 dugum sirasi: PinA PinB PinG PinE PinF PinC PinD
+*   PinA=+in -> pin3 (inp)   PinB=-in -> pin2 (inn)   PinG=ust -> pin6 (vs)
+*   PinE=alt sag -> pin8 (g8) PinF=cikis -> pin5 (out)
+*   PinC=alt sol -> pin1 (g1) PinD=alt orta -> pin7 (byp)
+*   pin4 (gnd) = global toprak (0)
+* Opamp_subckt_5 dugum sirasi: 1=+in 2=-in 3=V+ 4=V- 5=cikis
+*   TDA2003: IN+=1  IN-=2  VS=3  GND=4  OUT=5
+* ---------------------------------------------------------------
+.SUBCKT LM386EE_W PinA PinB PinG PinE PinF PinC PinD
+X1 PinB PinA PinD PinC PinE PinF PinG 0 LM386EE
+.ENDS LM386EE_W
+*
+.SUBCKT LM386DD_W PinA PinB PinG PinE PinF PinC PinD
+X1 PinB PinA PinD PinC PinE PinF PinG 0 LM386DD
+.ENDS LM386DD_W
+*
+* TDA2003_W artik datasheet duzeltmeli TDA2003_DS modelini kullanir.
+* Orijinal Jim Thompson modeli icin X1 satirinda TDA2003 yazin.
+.SUBCKT TDA2003_W 1 2 3 4 5
+X1 1 2 4 5 3 TDA2003_DS
+.ENDS TDA2003_W

@@ -1,0 +1,1948 @@
+********************************************************************************
+***                       Micro-Cap 12.2.0.5 (32 bit)                        ***
+***                                                                          ***
+***                                                                          ***
+***                    AC Analysis of 06d_TDA_kararlilik                     ***
+***                           11.11.2026 17:35:48                            ***
+********************************************************************************
+Limits
+======
+Frequency Range          Log 10Meg,10
+Number of Points         301
+Temperature              Linear 27
+Maximum Change %         5
+Noise Input              NONE
+Noise Output             2
+Run Options              Normal
+State Variables          Zero
+Operating Point          On
+Auto Scale Ranges        On
+Accumulate Plots         Off
+Ignore Expression Errors Off
+
+
+*****************************************************
+***                Temperature=27                 ***
+*****************************************************
+
+Temperature=27
+
+DC Operating Point Voltages
+===========================
+Node                         Voltage  Node                         Voltage 
+1                            12.000   V12                          11.782  
+V2                           11.259   V3                           10.699  
+IN                            0.000   GATE                        282.561n 
+DRAIN                         6.895   SRC                           1.930  
+GAININ                        2.235m  GAINW                         2.235m 
+11                            1.192   O386                          5.662  
+13                            1.194   14                            5.649  
+15                            1.194   16                            5.662  
+X                             0.000   18                            0.000  
+USOUT                         0.000   20                            0.000  
+21                            0.000   22                            0.000  
+Y                             0.000   24                            0.000  
+UKOUT                         0.000   26                            0.000  
+27                            0.000   28                            0.000  
+ISFW                          0.000   30                            0.000  
+Z                             0.000   TIN                           1.300  
+TNEG                          5.643   TOUT                          5.643  
+35                            5.643   36                            5.643  
+SPK                           0.000   HPS                           0.000  
+U1.X1.Q1E                   558.490m  U1.X1.Q2E                   560.700m 
+U1.X1.Q4E                     1.162   U1.X1.Q4C                   603.812m 
+U1.X1.Q6E                     1.164   U1.X1.Q15B                  535.035m 
+U1.X1.G0                      1.192   U1.X1.Q10C                   10.105  
+U1.X1.Q10B                   10.635   U1.X1.Q11C                    1.229  
+U1.X1.Q12C                    1.161   U1.X1.Q18B                   10.618  
+U1.X1.Q14E                  590.214m  U1.X1.Q17B                  659.028m 
+U1.X1.Q23B                    5.146   U1.X1.COMP                    6.227  
+U1.X1.Q25B                    6.221   U1.X1.Q22B                    5.764  
+U1.X1.Q24B                  547.011m  U1.X1.Q23E                    5.656  
+U1.X1.Q25E                    5.670   U2.X1.N_1                     1.300  
+U2.X1.N_SF                   11.782   U2.X1.N_2                     1.300  
+U2.X1.X_U1.INN                1.300   U2.X1.N_4                    11.442  
+U2.X1.N_5                    11.782   U2.X1.N_6                     5.643  
+U2.X1.N_7                    11.782   U2.X1.X_U1.OUT                5.643  
+U2.X1.N_8                     5.643   U2.X1.X_U1.XLIM.X_U2.A        5.643  
+U2.X1.X_U1.XLIM.X_U1.OUT      5.643   U2.X1.X_U1.N5                56.432u 
+U2.X1.X_U1.N4                56.432u  U2.X1.X_U1.N1                56.432u 
+U2.X1.X_U1.N6               -56.432u  U2.X1.X_U1.N7               -56.432u 
+U2.X1.X_U1.XLIM.X_U2.OUT      5.643   U2.X1.X_U1.XLIM.X_U1.B       10.832  
+U2.X1.X_U1.XLIM.X_U2.B      950.000m 
+
+DC Operating Point Inductor Current
+===================================
+                Inductor     Current 
+U2.X1.X_U1.L1             1.300E-050 
+
+
+Operating Point for Devices of Type Diode
+=========================================
+Instance:                            D1                 U2.X1.D_D1
+Using model:                     1N5822                  U2.X1.DJT
+
+Capacitance Terms:
+CAP                            403.657p                     0.000 
+
+Current Terms:
+ID                              41.228m                  -350.158f
+
+Resistance Terms:
+REQ                            553.465m                   999.999G
+
+Voltage Terms:
+VD                             218.303m                  -340.158m
+
+Power DC Terms:
+PD                               9.000m                   119.109f
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Id                              41.228m                  -350.158f
+
+Condition:
+State                               OFF                        OFF
+
+Device Variables:
+area                             1.000                      1.000 
+ic                               0.000                      0.000 
+
+
+Instance:                    U2.X1.D_D2
+Using model:                  U2.X1.DJT
+
+Capacitance Terms:
+CAP                              0.000 
+
+Current Terms:
+ID                               5.149n
+
+Resistance Terms:
+REQ                            5.023MEG
+
+Voltage Terms:
+VD                             340.158m
+
+Power DC Terms:
+PD                               1.752n
+PS                               0.000 
+
+DC Pin Currents:
+Id                               5.149n
+
+Condition:
+State                               OFF
+
+Device Variables:
+area                             1.000 
+ic                               0.000 
+
+
+
+Operating Point for Devices of Type Bipolar Junction Transistors NPN
+====================================================================
+Instance:                      U1.X1.Q7                   U1.X1.Q8
+Using model:                U1.X1.NPNEE                U1.X1.NPNEE
+
+Beta Terms:
+BETADC                         399.862                    399.587 
+BETAAC                         399.622                    399.347 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                              1.000p                     1.032p
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                               5.318m                     5.314m
+
+Current Terms:
+IB                             344.159n                   344.159n
+IC                             137.616u                   137.521u
+
+Resistance Terms:
+RPI                             75.152K                    75.152K
+RX                               0.000                      0.000 
+RO                             726.658K                   726.656K
+
+Voltage Terms:
+VBE                            603.812m                   603.812m
+VBC                              0.000                     68.777m
+VCE                            603.812m                   535.035m
+
+Frequency Terms:
+FT                           846.309MEG                 819.304MEG
+
+Power DC Terms:
+PD                              83.302u                    73.787u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                             344.159n                   344.159n
+Ic                             137.616u                   137.521u
+Ie                            -137.960u                  -137.866u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q14                  U1.X1.Q16
+Using model:                U1.X1.NPNEE                U1.X1.NPNEE
+
+Beta Terms:
+BETADC                         436.966                    437.983 
+BETAAC                         436.276                    437.719 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            423.448f                   422.506f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                              22.732m                   112.229u
+
+Current Terms:
+IB                               1.348u                     6.629n
+IC                             588.867u                     2.903u
+
+Resistance Terms:
+RPI                             19.192K                   3.900MEG
+RX                               0.000                      0.000 
+RO                             185.761K                  37.698MEG
+
+Voltage Terms:
+VBE                            639.117m                   501.667m
+VBC                             -9.388                     -9.457 
+VCE                             10.028                      9.959 
+
+Frequency Terms:
+FT                               8.544G                  42.276MEG
+
+Power DC Terms:
+PD                               5.906m                    28.918u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                               1.348u                     6.629n
+Ic                             588.867u                     2.903u
+Ie                            -590.214u                    -2.910u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q17                  U1.X1.Q21
+Using model:                U1.X1.NPNEE                U1.X1.NPNEE
+
+Beta Terms:
+BETADC                         416.738                    399.999 
+BETAAC                         415.432                    399.895 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            526.598f                     5.000p
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                              46.742m                   116.145u
+
+Current Terms:
+IB                               2.910u                     7.512n
+IC                               1.213m                     3.005u
+
+Resistance Terms:
+RPI                              8.888K                   3.443MEG
+RX                               0.000                      0.000 
+RO                              86.158K                  33.277MEG
+
+Voltage Terms:
+VBE                            659.028m                   463.265m
+VBC                             -4.487                      0.000 
+VCE                              5.146                    463.265m
+
+Frequency Terms:
+FT                              14.127G                   3.697MEG
+
+Power DC Terms:
+PD                               6.242m                     1.395u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                               2.910u                     7.512n
+Ic                               1.213m                     3.005u
+Ie                              -1.216m                    -3.012u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        OFF
+
+Device Variables:
+area                             1.000                      5.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q22                  U1.X1.Q24
+Using model:                U1.X1.NPNEE                U1.X1.NPNEE
+
+Beta Terms:
+BETADC                         401.587                    420.419 
+BETAAC                         401.242                    420.300 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                              4.273p                    50.745p
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                              46.731m                    62.210m
+
+Current Terms:
+IB                               3.012u                     3.828u
+IC                               1.210m                     1.609m
+
+Resistance Terms:
+RPI                              8.586K                     6.756K
+RX                               0.000                      0.000 
+RO                              83.043K                    65.307K
+
+Voltage Terms:
+VBE                            618.294m                   547.011m
+VBC                           -457.209m                    -5.109 
+VCE                              1.076                      5.656 
+
+Frequency Terms:
+FT                               1.741G                 195.112MEG
+
+Power DC Terms:
+PD                               1.303m                     9.105m
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                               3.012u                     3.828u
+Ic                               1.210m                     1.609m
+Ie                              -1.213m                    -1.613m
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             5.000                    100.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q25
+Using model:                U1.X1.NPNEE
+
+Beta Terms:
+BETADC                         420.131 
+BETAAC                         420.009 
+
+Capacitance Terms:
+CPI                              0.000 
+CMU                             50.950p
+CBX                              0.000 
+CJS                              0.000 
+
+Conductance Terms:
+GM                              73.697m
+
+Current Terms:
+IB                               4.538u
+IC                               1.907m
+
+Resistance Terms:
+RPI                              5.699K
+RX                               0.000 
+RO                              55.090K
+
+Voltage Terms:
+VBE                            551.412m
+VBC                             -5.038 
+VCE                              5.589 
+
+Frequency Terms:
+FT                           230.209MEG
+
+Power DC Terms:
+PD                              10.659m
+PS                               0.000 
+
+DC Pin Currents:
+Ib                               4.538u
+Ic                               1.907m
+Ie                              -1.911m
+Is                               0.000 
+
+Condition:
+State                               LIN
+
+Device Variables:
+area                           100.000 
+vbe                              0.000 
+vce                              0.000 
+
+
+
+Operating Point for Devices of Type Bipolar Junction Transistors PNP
+====================================================================
+Instance:                      U1.X1.Q1                   U1.X1.Q2
+Using model:               U1.X1.PNP1EE               U1.X1.PNP1EE
+
+Beta Terms:
+BETADC                          99.994                     99.996 
+BETAAC                          99.962                     99.964 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                              1.000p                   999.018f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                             922.449u                   921.540u
+
+Current Terms:
+IB                             238.674n                   238.434n
+IC                              23.866u                    23.842u
+
+Resistance Terms:
+RPI                            108.366K                   108.475K
+RX                               0.000                      0.000 
+RO                             4.190MEG                   4.194MEG
+
+Voltage Terms:
+VBE                           -558.490m                  -558.464m
+VBC                              0.000                      2.235m
+VCE                           -558.490m                  -560.700m
+
+Frequency Terms:
+FT                           146.812MEG                 146.812MEG
+
+Power DC Terms:
+PD                              13.462u                    13.502u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                            -238.674n                  -238.434n
+Ic                             -23.866u                   -23.842u
+Ie                              24.105u                    24.081u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                      U1.X1.Q3                   U1.X1.Q4
+Using model:               U1.X1.PNP1EE               U1.X1.PNP1EE
+
+Beta Terms:
+BETADC                         100.524                     99.921 
+BETAAC                         100.464                     99.861 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            832.216f                     1.021p
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                               5.314m                     5.283m
+
+Current Terms:
+IB                               1.368u                     1.368u
+IC                             137.537u                   136.711u
+
+Resistance Terms:
+RPI                             18.904K                    18.904K
+RX                               0.000                      0.000 
+RO                             731.137K                   731.136K
+
+Voltage Terms:
+VBE                           -603.653m                  -603.653m
+VBC                            558.490m                   -45.322m
+VCE                             -1.162                   -558.331m
+
+Frequency Terms:
+FT                               1.016G                 823.629MEG
+
+Power DC Terms:
+PD                             160.664u                    77.156u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                              -1.368u                    -1.368u
+Ic                            -137.537u                  -136.711u
+Ie                             138.905u                   138.079u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                      U1.X1.Q5                   U1.X1.Q6
+Using model:               U1.X1.PNP1EE               U1.X1.PNP1EE
+
+Beta Terms:
+BETADC                         100.527                     99.992 
+BETAAC                         100.467                     99.932 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            831.753f                   988.958f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                               5.280m                     5.252m
+
+Current Terms:
+IB                               1.359u                     1.359u
+IC                             136.647u                   135.920u
+
+Resistance Terms:
+RPI                             19.027K                    19.027K
+RX                               0.000                      0.000 
+RO                             735.918K                   735.918K
+
+Voltage Terms:
+VBE                           -603.485m                  -603.485m
+VBC                            560.700m                    25.665m
+VCE                             -1.164                   -629.150m
+
+Frequency Terms:
+FT                               1.010G                 845.212MEG
+
+Power DC Terms:
+PD                             159.902u                    86.334u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                              -1.359u                    -1.359u
+Ic                            -136.647u                  -135.920u
+Ie                             138.006u                   137.279u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                      U1.X1.Q9                  U1.X1.Q10
+Using model:               U1.X1.PNP1EE               U1.X1.PNP1EE
+
+Beta Terms:
+BETADC                         110.107                    100.456 
+BETAAC                         110.075                    100.356 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            414.009f                   838.247f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                             339.785u                    11.473m
+
+Current Terms:
+IB                              79.836n                     2.957u
+IC                               8.791u                   297.026u
+
+Resistance Terms:
+RPI                            323.955K                     8.747K
+RX                               0.000                      0.000 
+RO                            12.525MEG                   338.455K
+
+Voltage Terms:
+VBE                           -530.167m                  -623.584m
+VBC                             10.105                    530.167m
+VCE                            -10.635                     -1.154 
+
+Frequency Terms:
+FT                           130.621MEG                     2.178G
+
+Power DC Terms:
+PD                              93.532u                   344.538u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                             -79.836n                    -2.957u
+Ic                              -8.791u                  -297.026u
+Ie                               8.870u                   299.983u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q11                  U1.X1.Q12
+Using model:               U1.X1.PNP1EE               U1.X1.PNP1EE
+
+Beta Terms:
+BETADC                         109.325                    109.394 
+BETAAC                         109.219                    109.287 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            423.206f                   422.266f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                              12.486m                    12.494m
+
+Current Terms:
+IB                               2.957u                     2.957u
+IC                             323.251u                   323.454u
+
+Resistance Terms:
+RPI                              8.747K                     8.747K
+RX                               0.000                      0.000 
+RO                             338.455K                   338.455K
+
+Voltage Terms:
+VBE                           -623.584m                  -623.584m
+VBC                              9.406                      9.475 
+VCE                            -10.030                    -10.098 
+
+Frequency Terms:
+FT                               4.696G                     4.709G
+
+Power DC Terms:
+PD                               3.244m                     3.268m
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                              -2.957u                    -2.957u
+Ic                            -323.251u                  -323.454u
+Ie                             326.208u                   326.411u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q13                  U1.X1.Q15
+Using model:               U1.X1.PNP2EE               U1.X1.PNP2EE
+
+Beta Terms:
+BETADC                         201.048                    200.909 
+BETAAC                         200.836                    200.697 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            822.917f                   837.198f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                              12.371m                    12.431m
+
+Current Terms:
+IB                               1.593u                     1.602u
+IC                             320.310u                   321.845u
+
+Resistance Terms:
+RPI                             16.234K                    16.146K
+RX                               0.000                      0.000 
+RO                             314.082K                   312.371K
+
+Voltage Terms:
+VBE                           -625.519m                  -625.660m
+VBC                            603.812m                   535.035m
+VCE                             -1.229                     -1.161 
+
+Frequency Terms:
+FT                               2.393G                     2.363G
+
+Power DC Terms:
+PD                             394.764u                   374.566u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                              -1.593u                    -1.602u
+Ic                            -320.310u                  -321.845u
+Ie                             321.903u                   323.447u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q18                  U1.X1.Q19
+Using model:               U1.X1.PNP2EE               U1.X1.PNP2EE
+
+Beta Terms:
+BETADC                         199.709                    208.477 
+BETAAC                         199.367                    208.122 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                              1.000p                   529.837f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                              22.503m                    23.491m
+
+Current Terms:
+IB                               2.919u                     2.919u
+IC                             583.012u                   608.608u
+
+Resistance Terms:
+RPI                              8.860K                     8.860K
+RX                               0.000                      0.000 
+RO                             171.523K                   171.523K
+
+Voltage Terms:
+VBE                           -641.182m                  -641.182m
+VBC                              0.000                      4.390 
+VCE                           -641.182m                    -5.032 
+
+Frequency Terms:
+FT                               3.581G                     7.056G
+
+Power DC Terms:
+PD                             375.689u                     3.064m
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                              -2.919u                    -2.919u
+Ic                            -583.012u                  -608.608u
+Ie                             585.931u                   611.528u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+Instance:                     U1.X1.Q20                  U1.X1.Q23
+Using model:               U1.X1.PNP2EE               U1.X1.PNP2EE
+
+Beta Terms:
+BETADC                         208.489                    209.209 
+BETAAC                         208.134                    209.142 
+
+Capacitance Terms:
+CPI                              0.000                      0.000 
+CMU                            529.631f                   522.933f
+CBX                              0.000                      0.000 
+CJS                              0.000                      0.000 
+
+Conductance Terms:
+GM                              23.492m                   147.974u
+
+Current Terms:
+IB                               2.919u                    18.299n
+IC                             608.644u                     3.828u
+
+Resistance Terms:
+RPI                              8.860K                   1.413MEG
+RX                               0.000                      0.000 
+RO                             171.523K                  27.322MEG
+
+Voltage Terms:
+VBE                           -641.182m                  -509.993m
+VBC                              4.396                      4.599 
+VCE                             -5.038                     -5.109 
+
+Frequency Terms:
+FT                               7.059G                  45.036MEG
+
+Power DC Terms:
+PD                               3.068m                    19.567u
+PS                               0.000                      0.000 
+
+DC Pin Currents:
+Ib                              -2.919u                   -18.299n
+Ic                            -608.644u                    -3.828u
+Ie                             611.563u                     3.847u
+Is                               0.000                      0.000 
+
+Condition:
+State                               LIN                        LIN
+
+Device Variables:
+area                             1.000                      1.000 
+vbe                              0.000                      0.000 
+vce                              0.000                      0.000 
+
+
+
+Operating Point for Devices of Type Jfet NJF
+============================================
+Instance:                            Q1
+Using model:                  BF245B_DS
+
+Capacitance Terms:
+CGS                              1.498p
+CGD                            549.169f
+
+Conductance Terms:
+GM                               1.984m
+GDS                             10.182u
+
+Current Terms:
+ID                             559.517u
+
+Voltage Terms:
+VGS                             -1.930 
+VDS                              4.964 
+VGD                             -6.895 
+
+Power DC Terms:
+PD                               2.778m
+PS                               0.000 
+
+DC Pin Currents:
+Ig                              -8.845p
+Id                             559.517u
+Is                            -559.517u
+
+Condition:
+State                               SAT
+
+Device Variables:
+area                             1.000 
+vds                              0.000 
+vgs                              0.000 
+
+
+
+Operating Point for Devices of Type Resistor
+============================================
+Instance:                             R1                         R2
+V                               522.780m                   559.517m
+Power DC Terms:
+PD                                2.733m                   313.059u
+
+DC Pin Currents:
+Ir                                5.228m                   559.517u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                             R5                         R6
+V                              -282.561n                   282.561n
+Power DC Terms:
+PD                                0.002f                 7.984E-020
+
+DC Pin Currents:
+Ir                               -8.562p                   282.561f
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                             R4                        TR1
+V                                 3.805                      1.930 
+Power DC Terms:
+PD                                2.129m                     1.080m
+
+DC Pin Currents:
+Ir                              559.517u                   559.517u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                           RV1A                       RV1B
+V                                 0.000                      2.235m
+Power DC Terms:
+PD                                0.000                     99.920p
+
+DC Pin Currents:
+Ir                                0.000                     44.699n
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                             R7                         R8
+V                                 2.235m                     0.000 
+Power DC Terms:
+PD                              333.134p                     0.000 
+
+DC Pin Currents:
+Ir                              149.027n                     0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                             R9                        R10
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R13                        R11
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R14                        R15
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R16                        R12
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R17                        R19
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R18                        R20
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R21                        R22
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                           RV2A                       RV2B
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                           RV3A                       RV3B
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R23                        R24
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R26                        R25
+V                                 0.000                     39.080f
+Power DC Terms:
+PD                                0.000                  6.942E-030
+
+DC Pin Currents:
+Ir                                0.000                      0.178f
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R27                       RSPK
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            R28                        R29
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                            RHP                   U1.X1.R1
+V                                 0.000                      0.000 
+Power DC Terms:
+PD                                0.000                      0.000 
+
+DC Pin Currents:
+Ir                                0.000                      0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                       U1.X1.R2                   U1.X1.R3
+V                                 2.235m                   603.653m
+Power DC Terms:
+PD                               99.940p                    12.899u
+
+DC Pin Currents:
+Ir                               44.708n                    21.368u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                       U1.X1.R4                   U1.X1.R5
+V                                29.835m                  -603.485m
+Power DC Terms:
+PD                                8.901u                    12.892u
+
+DC Pin Currents:
+Ir                              298.353u                   -21.362u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                       U1.X1.R6                   U1.X1.R7
+V                                29.665m                   187.009u
+Power DC Terms:
+PD                                8.800u                   233.149p
+
+DC Pin Currents:
+Ir                              296.647u                     1.247u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                       U1.X1.R8                   U1.X1.R9
+V                                 1.683m                     4.468 
+Power DC Terms:
+PD                                2.098n                     1.331m
+
+DC Pin Currents:
+Ir                                1.247u                   297.894u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                      U1.X1.R10                  U1.X1.R11
+V                                 4.457                      4.457 
+Power DC Terms:
+PD                                1.324m                     1.324m
+
+DC Pin Currents:
+Ir                              297.106u                   297.106u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                      U1.X1.R12                  U1.X1.R13
+V                               590.214m                    -6.056m
+Power DC Terms:
+PD                              348.353u                     3.667u
+
+DC Pin Currents:
+Ir                              590.214u                  -605.596u
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                      U1.X1.R14                  U1.X1.R15
+V                                 6.453m                     7.645m
+Power DC Terms:
+PD                               10.411u                    14.611u
+
+DC Pin Currents:
+Ir                                1.613m                     1.911m
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                     U2.X1.R_R6            U2.X1.RCON_TAG2
+V                              -194.971u                     1.300 
+Power DC Terms:
+PD                              253.424f                     1.689n
+
+DC Pin Currents:
+Ir                               -1.300n                     1.300n
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                     U2.X1.R_SF                 U2.X1.R_EN
+V                                 0.000                    530.909f
+Power DC Terms:
+PD                                0.000                  1.044E-028
+
+DC Pin Currents:
+Ir                                0.000                      0.197f
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                U2.X1.RCON_TAG3                 U2.X1.R_R7
+V                                 5.643                     39.080f
+Power DC Terms:
+PD                               31.845n                 7.636E-032
+
+DC Pin Currents:
+Ir                                5.643n                     0.002f
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                  U2.X1.R_RNOF1                U2.X1.RFUD1
+V                                 6.139                      5.643n
+Power DC Terms:
+PD                               37.681n                     0.032f
+
+DC Pin Currents:
+Ir                                6.139n                     5.643n
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                    U2.X1.RFUD2            U2.X1.RCON_TAG4
+V                                 5.643                      5.643 
+Power DC Terms:
+PD                               31.845n                    31.845n
+
+DC Pin Currents:
+Ir                                5.643n                     5.643n
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                  U2.X1.R_RNOF2               U2.X1.R_ROUT
+V                                 5.643                    -59.440p
+Power DC Terms:
+PD                               31.845n                 2.944E-020
+
+DC Pin Currents:
+Ir                                5.643n                  -495.337p
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                 U2.X1.X_U1.RRR              U2.X1.X_U1.R1
+V                                11.782                      1.129u
+Power DC Terms:
+PD                                1.388u                    12.738f
+
+DC Pin Currents:
+Ir                              117.817n                    11.286n
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                  U2.X1.X_U1.R2              U2.X1.X_U1.R3
+V                                 5.643                      0.000 
+Power DC Terms:
+PD                              318.455u                     0.000 
+
+DC Pin Currents:
+Ir                               56.432u                     0.000 
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+Instance:                 U2.X1.X_U1.RE3             U2.X1.X_U1.RE4
+V                                56.432u                   -56.432u
+Power DC Terms:
+PD                               31.846f                    31.846f
+
+DC Pin Currents:
+Ir                              564.318p                  -564.318p
+
+Device Variables:
+tc1                               0.000                      0.000 
+tc2                               0.000                      0.000 
+
+
+
+Operating Point for Devices of Type Inductor
+============================================
+Instance:                  U2.X1.X_U1.L1
+V                                 0.045f
+Power DC Terms:
+PS                            5.829E-067
+
+DC Pin Currents:
+Il                            1.300E-050
+
+Device Variables:
+ic                                0.000 
+
+
+
+Operating Point for Devices of Type Capacitor
+=============================================
+Instance:                             C1                         C2
+V                                11.782                     11.782 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                             C7                         C6
+V                                11.782                     11.782 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                             C3                         C8
+V                                11.259                     11.259 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                             C4                         C5
+V                                11.259                     10.699 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                             C9                        C10
+V                                 1.930                      6.892 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                             CB                         CD
+V                                 0.000                      2.235m
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C12                        C11
+V                                 5.649                     -1.683m
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C13                        C14
+V                                 5.662                      5.662 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C15                        C16
+V                                 0.000                      0.000 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C17                        C18
+V                                 0.000                      0.000 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C19                        C20
+V                                 0.000                      0.000 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C21                        C22
+V                                 0.000                     -1.300 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C23                        C24
+V                                 5.643                      5.643 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                            C25                   U1.X1.C2
+V                                 5.643                      5.146 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                       U1.X1.C1                 U2.X1.C_SF
+V                                 5.692                     11.782 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                   U2.X1.C_COUT              U2.X1.X_U1.C1
+V                                 5.643                     -5.643 
+Power DC Terms:
+PS                                0.000                      0.000 
+
+DC Pin Currents:
+Ic                                0.000                      0.000 
+
+Device Variables:
+ic                                0.000                      0.000 
+
+
+Instance:                  U2.X1.X_U1.C2
+V                               112.864u
+Power DC Terms:
+PS                                0.000 
+
+DC Pin Currents:
+Ic                                0.000 
+
+Device Variables:
+ic                                0.000 
+
+
+
+Operating Point for Devices of Type Function Source
+===================================================
+Instance:                  U2.X1.E_VOS2                 U2.X1.G_G1
+V                                1.300                      6.139 
+Power DC Terms:
+PG                               0.256f                   -31.613n
+
+DC Pin Currents:
+ISource                         -0.197f                     5.150n
+
+
+Instance:                    U2.X1.G_IQ              U2.X1.X_U1.E2
+V                               11.782                     56.432u
+Power DC Terms:
+PG                            -424.137m                     0.000 
+
+DC Pin Currents:
+ISource                         36.000m                     0.000 
+
+
+Instance:       U2.X1.X_U1.XLIM.X_U1.E1    U2.X1.X_U1.XLIM.X_U2.E1
+V                                5.643                      5.643 
+Power DC Terms:
+PG                              63.691n                     0.000 
+
+DC Pin Currents:
+ISource                        -11.286n                     0.000 
+
+
+
+Operating Point for Devices of Type SPICE Poly
+==============================================
+Instance:                    U2.X1.F_F3                 U2.X1.F_F2
+V                             -340.158m                    11.782 
+Power DC Terms:
+PG                               1.752n                     4.125p
+
+DC Pin Currents:
+ISource                          5.150n                  -350.158f
+
+
+Instance:                 U2.X1.X_U1.G1              U2.X1.X_U1.G2
+V                               -5.643                      5.643 
+Power DC Terms:
+PG                             318.455u                    -5.012f
+
+DC Pin Currents:
+ISource                         56.432u                     0.888f
+
+
+Instance:                 U2.X1.X_U1.E3              U2.X1.X_U1.E4
+V                               56.432u                    56.432u
+Power DC Terms:
+PG                              31.846f                    31.846f
+
+DC Pin Currents:
+ISource                       -564.318p                  -564.318p
+
+
+
+Operating Point for Devices of Type SPICE Source
+================================================
+Instance:                            V1                       VGIT
+V                               12.000                      0.000 
+Power DC Terms:
+PG                             494.731m                     0.000 
+
+DC Pin Currents:
+ISource                        -41.228m                     8.562p
+
+
+Instance:                  U2.X1.V_VOS1                U2.X1.VF_F3
+V                                1.300                      0.000 
+Power DC Terms:
+PG                               1.690n                     0.000 
+
+DC Pin Currents:
+ISource                         -1.300n                     5.150n
+
+
+Instance:                   U2.X1.VF_F2     U2.X1.X_U1.XLIM.V_VOS2
+V                                0.000                    950.000m
+Power DC Terms:
+PG                               0.000                      0.000 
+
+DC Pin Currents:
+ISource                       -350.158f                     0.000 
+
+
+Instance:        U2.X1.X_U1.XLIM.V_VOS1
+V                              950.000m
+Power DC Terms:
+PG                               0.000 
+
+DC Pin Currents:
+ISource                          0.000 
+
+
+Interpolated Waveform Values
+============================
+           F dB(v(SPK)/v(TIN)) ph(v(SPK)/v(TIN))
+        (Hz)                           (Degrees)
+   1.000E+01         9.922E+00                NA
+   1.047E+01         1.061E+01         1.378E+02
+   1.096E+01         1.129E+01         1.369E+02
+   1.148E+01         1.198E+01         1.359E+02
+   1.202E+01         1.265E+01         1.348E+02
+   1.259E+01         1.332E+01         1.337E+02
+   1.318E+01         1.397E+01         1.325E+02
+   1.380E+01         1.462E+01         1.314E+02
+   1.445E+01         1.526E+01         1.301E+02
+   1.514E+01         1.590E+01         1.288E+02
+   1.585E+01         1.652E+01         1.276E+02
+   1.660E+01         1.714E+01         1.262E+02
+   1.738E+01         1.774E+01         1.249E+02
+   1.820E+01         1.834E+01         1.235E+02
+   1.905E+01         1.892E+01         1.221E+02
+   1.995E+01         1.950E+01         1.207E+02
+   2.089E+01         2.007E+01         1.192E+02
+   2.188E+01         2.063E+01         1.177E+02
+   2.291E+01         2.118E+01         1.163E+02
+   2.399E+01         2.172E+01         1.148E+02
+   2.512E+01         2.225E+01         1.133E+02
+   2.630E+01         2.277E+01         1.118E+02
+   2.754E+01         2.328E+01         1.103E+02
+   2.884E+01         2.379E+01         1.088E+02
+   3.020E+01         2.428E+01         1.072E+02
+   3.162E+01         2.477E+01         1.057E+02
+   3.311E+01         2.525E+01         1.042E+02
+   3.467E+01         2.572E+01         1.027E+02
+   3.631E+01         2.619E+01         1.012E+02
+   3.802E+01         2.664E+01         9.963E+01
+   3.981E+01         2.709E+01         9.811E+01
+   4.169E+01         2.753E+01         9.658E+01
+   4.365E+01         2.797E+01         9.506E+01
+   4.571E+01         2.840E+01         9.353E+01
+   4.786E+01         2.882E+01         9.200E+01
+   5.012E+01         2.923E+01         9.046E+01
+   5.248E+01         2.964E+01         8.893E+01
+   5.495E+01         3.004E+01         8.739E+01
+   5.754E+01         3.043E+01         8.584E+01
+   6.026E+01         3.082E+01         8.428E+01
+   6.310E+01         3.120E+01         8.272E+01
+   6.607E+01         3.157E+01         8.116E+01
+   6.918E+01         3.194E+01         7.959E+01
+   7.244E+01         3.229E+01         7.800E+01
+   7.586E+01         3.265E+01         7.641E+01
+   7.943E+01         3.299E+01         7.481E+01
+   8.318E+01         3.332E+01         7.320E+01
+   8.710E+01         3.365E+01         7.158E+01
+   9.120E+01         3.397E+01         6.995E+01
+   9.550E+01         3.428E+01         6.832E+01
+   1.000E+02         3.458E+01         6.668E+01
+   1.047E+02         3.487E+01         6.503E+01
+   1.096E+02         3.515E+01         6.339E+01
+   1.148E+02         3.543E+01         6.173E+01
+   1.202E+02         3.569E+01         6.008E+01
+   1.259E+02         3.595E+01         5.842E+01
+   1.318E+02         3.619E+01         5.677E+01
+   1.380E+02         3.642E+01         5.513E+01
+   1.445E+02         3.665E+01         5.349E+01
+   1.514E+02         3.687E+01         5.184E+01
+   1.585E+02         3.707E+01         5.023E+01
+   1.660E+02         3.727E+01         4.862E+01
+   1.738E+02         3.745E+01         4.704E+01
+   1.820E+02         3.763E+01         4.547E+01
+   1.905E+02         3.779E+01         4.394E+01
+   1.995E+02         3.795E+01         4.241E+01
+   2.089E+02         3.810E+01         4.091E+01
+   2.188E+02         3.824E+01         3.943E+01
+   2.291E+02         3.837E+01         3.799E+01
+   2.399E+02         3.849E+01         3.658E+01
+   2.512E+02         3.860E+01         3.520E+01
+   2.630E+02         3.871E+01         3.385E+01
+   2.754E+02         3.881E+01         3.254E+01
+   2.884E+02         3.890E+01         3.126E+01
+   3.020E+02         3.899E+01         3.001E+01
+   3.162E+02         3.907E+01         2.881E+01
+   3.311E+02         3.914E+01         2.764E+01
+   3.467E+02         3.921E+01         2.650E+01
+   3.631E+02         3.928E+01         2.540E+01
+   3.802E+02         3.934E+01         2.433E+01
+   3.981E+02         3.939E+01         2.330E+01
+   4.169E+02         3.944E+01         2.231E+01
+   4.365E+02         3.949E+01         2.135E+01
+   4.571E+02         3.953E+01         2.043E+01
+   4.786E+02         3.957E+01         1.954E+01
+   5.012E+02         3.960E+01         1.868E+01
+   5.248E+02         3.964E+01         1.785E+01
+   5.495E+02         3.967E+01         1.705E+01
+   5.754E+02         3.970E+01         1.629E+01
+   6.026E+02         3.972E+01         1.555E+01
+   6.310E+02         3.975E+01         1.484E+01
+   6.607E+02         3.977E+01         1.416E+01
+   6.918E+02         3.979E+01         1.351E+01
+   7.244E+02         3.980E+01         1.288E+01
+   7.586E+02         3.982E+01         1.227E+01
+   7.943E+02         3.984E+01         1.169E+01
+   8.318E+02         3.985E+01         1.113E+01
+   8.710E+02         3.986E+01         1.059E+01
+   9.120E+02         3.987E+01         1.008E+01
+   9.550E+02         3.989E+01         9.583E+00
+   1.000E+03         3.989E+01         9.106E+00
+   1.047E+03         3.990E+01         8.649E+00
+   1.096E+03         3.991E+01         8.210E+00
+   1.148E+03         3.992E+01         7.783E+00
+   1.202E+03         3.993E+01         7.374E+00
+   1.259E+03         3.993E+01         6.978E+00
+   1.318E+03         3.994E+01         6.600E+00
+   1.380E+03         3.994E+01         6.235E+00
+   1.445E+03         3.995E+01         5.881E+00
+   1.514E+03         3.995E+01         5.536E+00
+   1.585E+03         3.996E+01         5.207E+00
+   1.660E+03         3.996E+01         4.887E+00
+   1.738E+03         3.996E+01         4.579E+00
+   1.820E+03         3.996E+01         4.279E+00
+   1.905E+03         3.997E+01         3.991E+00
+   1.995E+03         3.997E+01         3.708E+00
+   2.089E+03         3.997E+01         3.433E+00
+   2.188E+03         3.997E+01         3.164E+00
+   2.291E+03         3.998E+01         2.903E+00
+   2.399E+03         3.998E+01         2.649E+00
+   2.512E+03         3.998E+01         2.399E+00
+   2.630E+03         3.998E+01         2.156E+00
+   2.754E+03         3.998E+01         1.916E+00
+   2.884E+03         3.998E+01         1.680E+00
+   3.020E+03         3.998E+01         1.448E+00
+   3.162E+03         3.998E+01         1.219E+00
+   3.311E+03         3.998E+01         9.924E-01
+   3.467E+03         3.998E+01         7.679E-01
+   3.631E+03         3.998E+01         5.442E-01
+   3.802E+03         3.998E+01         3.226E-01
+   3.981E+03         3.998E+01         1.018E-01
+   4.169E+03         3.998E+01        -1.195E-01
+   4.365E+03         3.998E+01        -3.401E-01
+   4.571E+03         3.998E+01        -5.622E-01
+   4.786E+03         3.998E+01        -7.847E-01
+   5.012E+03         3.998E+01        -1.010E+00
+   5.248E+03         3.998E+01        -1.236E+00
+   5.495E+03         3.998E+01        -1.465E+00
+   5.754E+03         3.998E+01        -1.698E+00
+   6.026E+03         3.998E+01        -1.934E+00
+   6.310E+03         3.998E+01        -2.174E+00
+   6.607E+03         3.998E+01        -2.418E+00
+   6.918E+03         3.997E+01        -2.668E+00
+   7.244E+03         3.997E+01        -2.923E+00
+   7.586E+03         3.997E+01        -3.184E+00
+   7.943E+03         3.997E+01        -3.452E+00
+   8.318E+03         3.996E+01        -3.727E+00
+   8.710E+03         3.996E+01        -4.010E+00
+   9.120E+03         3.996E+01        -4.300E+00
+   9.550E+03         3.996E+01        -4.600E+00
+   1.000E+04         3.995E+01        -4.909E+00
+   1.047E+04         3.995E+01        -5.228E+00
+   1.096E+04         3.994E+01        -5.555E+00
+   1.148E+04         3.994E+01        -5.899E+00
+   1.202E+04         3.993E+01        -6.252E+00
+   1.259E+04         3.993E+01        -6.620E+00
+   1.318E+04         3.992E+01        -6.997E+00
+   1.380E+04         3.991E+01        -7.390E+00
+   1.445E+04         3.990E+01        -7.798E+00
+   1.514E+04         3.990E+01        -8.228E+00
+   1.585E+04         3.989E+01        -8.666E+00
+   1.660E+04         3.988E+01        -9.125E+00
+   1.738E+04         3.986E+01        -9.599E+00
+   1.820E+04         3.985E+01        -1.009E+01
+   1.905E+04         3.984E+01        -1.060E+01
+   1.995E+04         3.982E+01        -1.114E+01
+   2.089E+04         3.981E+01        -1.169E+01
+   2.188E+04         3.979E+01        -1.227E+01
+   2.291E+04         3.977E+01        -1.287E+01
+   2.399E+04         3.975E+01        -1.349E+01
+   2.512E+04         3.972E+01        -1.414E+01
+   2.630E+04         3.970E+01        -1.481E+01
+   2.754E+04         3.967E+01        -1.551E+01
+   2.884E+04         3.964E+01        -1.624E+01
+   3.020E+04         3.961E+01        -1.699E+01
+   3.162E+04         3.957E+01        -1.777E+01
+   3.311E+04         3.953E+01        -1.858E+01
+   3.467E+04         3.949E+01        -1.942E+01
+   3.631E+04         3.944E+01        -2.029E+01
+   3.802E+04         3.939E+01        -2.119E+01
+   3.981E+04         3.934E+01        -2.211E+01
+   4.169E+04         3.928E+01        -2.308E+01
+   4.365E+04         3.922E+01        -2.406E+01
+   4.571E+04         3.915E+01        -2.509E+01
+   4.786E+04         3.908E+01        -2.614E+01
+   5.012E+04         3.900E+01        -2.722E+01
+   5.248E+04         3.891E+01        -2.833E+01
+   5.495E+04         3.882E+01        -2.947E+01
+   5.754E+04         3.872E+01        -3.063E+01
+   6.026E+04         3.862E+01        -3.183E+01
+   6.310E+04         3.850E+01        -3.305E+01
+   6.607E+04         3.838E+01        -3.429E+01
+   6.918E+04         3.825E+01        -3.556E+01
+   7.244E+04         3.812E+01        -3.684E+01
+   7.586E+04         3.797E+01        -3.815E+01
+   7.943E+04         3.782E+01        -3.947E+01
+   8.318E+04         3.766E+01        -4.080E+01
+   8.710E+04         3.749E+01        -4.215E+01
+   9.120E+04         3.731E+01        -4.350E+01
+   9.550E+04         3.712E+01        -4.487E+01
+   1.000E+05         3.692E+01        -4.623E+01
+   1.047E+05         3.671E+01        -4.759E+01
+   1.096E+05         3.649E+01        -4.894E+01
+   1.148E+05         3.627E+01        -5.031E+01
+   1.202E+05         3.603E+01        -5.166E+01
+   1.259E+05         3.579E+01        -5.301E+01
+   1.318E+05         3.553E+01        -5.433E+01
+   1.380E+05         3.527E+01        -5.565E+01
+   1.445E+05         3.500E+01        -5.695E+01
+   1.514E+05         3.472E+01        -5.824E+01
+   1.585E+05         3.444E+01        -5.950E+01
+   1.660E+05         3.414E+01        -6.074E+01
+   1.738E+05         3.384E+01        -6.196E+01
+   1.820E+05         3.354E+01        -6.315E+01
+   1.905E+05         3.322E+01        -6.431E+01
+   1.995E+05         3.290E+01        -6.546E+01
+   2.089E+05         3.258E+01        -6.658E+01
+   2.188E+05         3.224E+01        -6.767E+01
+   2.291E+05         3.191E+01        -6.874E+01
+   2.399E+05         3.157E+01        -6.978E+01
+   2.512E+05         3.122E+01        -7.079E+01
+   2.630E+05         3.087E+01        -7.177E+01
+   2.754E+05         3.051E+01        -7.273E+01
+   2.884E+05         3.015E+01        -7.367E+01
+   3.020E+05         2.979E+01        -7.458E+01
+   3.162E+05         2.942E+01        -7.546E+01
+   3.311E+05         2.905E+01        -7.633E+01
+   3.467E+05         2.868E+01        -7.717E+01
+   3.631E+05         2.830E+01        -7.799E+01
+   3.802E+05         2.792E+01        -7.878E+01
+   3.981E+05         2.754E+01        -7.956E+01
+   4.169E+05         2.716E+01        -8.032E+01
+   4.365E+05         2.677E+01        -8.106E+01
+   4.571E+05         2.638E+01        -8.178E+01
+   4.786E+05         2.599E+01        -8.248E+01
+   5.012E+05         2.560E+01        -8.317E+01
+   5.248E+05         2.521E+01        -8.384E+01
+   5.495E+05         2.481E+01        -8.450E+01
+   5.754E+05         2.441E+01        -8.514E+01
+   6.026E+05         2.401E+01        -8.577E+01
+   6.310E+05         2.361E+01        -8.639E+01
+   6.607E+05         2.320E+01        -8.700E+01
+   6.918E+05         2.280E+01        -8.759E+01
+   7.244E+05         2.239E+01        -8.818E+01
+   7.586E+05         2.198E+01        -8.875E+01
+   7.943E+05         2.158E+01        -8.932E+01
+   8.318E+05         2.116E+01        -8.988E+01
+   8.710E+05         2.075E+01        -9.042E+01
+   9.120E+05         2.034E+01        -9.096E+01
+   9.550E+05         1.992E+01        -9.149E+01
+   1.000E+06         1.951E+01        -9.202E+01
+   1.047E+06         1.909E+01        -9.253E+01
+   1.096E+06         1.868E+01        -9.304E+01
+   1.148E+06         1.826E+01        -9.355E+01
+   1.202E+06         1.784E+01        -9.405E+01
+   1.259E+06         1.741E+01        -9.455E+01
+   1.318E+06         1.700E+01        -9.504E+01
+   1.380E+06         1.657E+01        -9.553E+01
+   1.445E+06         1.615E+01        -9.601E+01
+   1.514E+06         1.573E+01        -9.650E+01
+   1.585E+06         1.531E+01        -9.698E+01
+   1.660E+06         1.488E+01        -9.747E+01
+   1.738E+06         1.446E+01        -9.795E+01
+   1.820E+06         1.404E+01        -9.844E+01
+   1.905E+06         1.362E+01        -9.893E+01
+   1.995E+06         1.320E+01        -9.943E+01
+   2.089E+06         1.278E+01        -9.994E+01
+   2.188E+06         1.235E+01        -1.005E+02
+   2.291E+06         1.194E+01        -1.010E+02
+   2.399E+06         1.152E+01        -1.015E+02
+   2.512E+06         1.110E+01        -1.021E+02
+   2.630E+06         1.068E+01        -1.026E+02
+   2.754E+06         1.027E+01        -1.032E+02
+   2.884E+06         9.849E+00        -1.038E+02
+   3.020E+06         9.434E+00        -1.045E+02
+   3.162E+06         9.020E+00        -1.051E+02
+   3.311E+06         8.607E+00        -1.058E+02
+   3.467E+06         8.194E+00        -1.065E+02
+   3.631E+06         7.781E+00        -1.072E+02
+   3.802E+06         7.370E+00        -1.080E+02
+   3.981E+06         6.959E+00        -1.088E+02
+   4.169E+06         6.549E+00        -1.096E+02
+   4.365E+06         6.140E+00        -1.105E+02
+   4.571E+06         5.731E+00        -1.114E+02
+   4.786E+06         5.324E+00        -1.123E+02
+   5.012E+06         4.916E+00        -1.133E+02
+   5.248E+06         4.509E+00        -1.144E+02
+   5.495E+06         4.103E+00        -1.155E+02
+   5.754E+06         3.697E+00        -1.166E+02
+   6.026E+06         3.291E+00        -1.178E+02
+   6.310E+06         2.885E+00        -1.191E+02
+   6.607E+06         2.481E+00        -1.204E+02
+   6.918E+06         2.077E+00        -1.218E+02
+   7.244E+06         1.673E+00        -1.233E+02
+   7.586E+06         1.269E+00        -1.248E+02
+   7.943E+06         8.656E-01        -1.264E+02
+   8.318E+06         4.616E-01        -1.280E+02
+   8.710E+06         5.851E-02        -1.298E+02
+   9.120E+06        -3.439E-01        -1.316E+02
+   9.550E+06        -7.469E-01        -1.336E+02
+   1.000E+07        -1.149E+00        -1.356E+02
+

@@ -153,6 +153,10 @@ Bakır yüzü (alttan bakış):
 - Hoparlör kablosu 0,5–0,75 mm² ikili (≈50 cm); DC jak kablosu 0,5 mm² kırmızı/siyah (≈30 cm, burgulanacak); köprü teli izoleli tek damar (≈1 m); makaron; kablo bağı.
 - Kart yapımı: perklorür ya da sodyum persülfat, parlak kâğıt (toner transfer), aseton/tiner, matkap uçları 0,8 / 1,0 / 1,2 / 1,5 mm ve montaj delikleri için 3,2 mm.
 
+## Simülasyonlar
+
+Micro-Cap 12 ile yapılan DC, AC, transient, THD, gürültü, empedans/kararlılık analizleri ve diğer amfilerle karşılaştırma: [sim/README.md](sim/README.md).
+
 ## Araçlar
 
 Python 3 + numpy, scipy, Pillow, matplotlib. Komutlar `tools/` içinde çalıştırılır; çıktılar `out/` klasörüne yazılır.

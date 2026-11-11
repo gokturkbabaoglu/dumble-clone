@@ -1,0 +1,86 @@
+Ton katlari karsilastirmasi - Fender 5F6-A, Fender AB763, Marshall JMP50 1987, bizim ISF (US/UK)
+* Tum kaynaklar 1 V AC. Cikislar: OF5 (5F6-A), OBF (AB763), OMA (Marshall), ISFUS / ISFUK (bizim, ISF=0 / ISF=1)
+* FMV ayarlari: Treble/Bass/Mid = %50 dogrusal direnc (gercek potlar log; yaklasik)
+.PARAM T=0.5 B=0.5 M=0.5
+*
+* ---- Fender 5F6-A Bassman (Zsrc 1.3k katot izleyici, yuk 1M) ----
+V1 S1 0 AC 1
+RS1 S1 A1 1.3k
+C11 A1 T1 250p
+R11 A1 X1 56k
+C12 X1 B1 20n
+C13 X1 M1 20n
+RT1a T1 OF5 {250k*(1-T)+10}
+RT1b OF5 B1 {250k*T+10}
+RB1 B1 M1 {1Meg*B+10}
+RM1 M1 0 {25k*M+10}
+RL1 OF5 0 1Meg
+*
+* ---- Fender AB763 blackface (Zsrc 38k anot cikisi, mid sabit 6.8k, yuk 1M) ----
+V2 S2 0 AC 1
+RS2 S2 A2 38k
+C21 A2 T2 250p
+R21 A2 X2 100k
+C22 X2 B2 100n
+C23 X2 M2 47n
+RT2a T2 OBF {250k*(1-T)+10}
+RT2b OBF B2 {250k*T+10}
+RB2 B2 M2 {250k*B+10}
+RM2 M2 0 6.8k
+RL2 OBF 0 1Meg
+*
+* ---- Marshall JMP50 1987 (Zsrc 615 ohm katot izleyici, yuk 1M) ----
+V3 S3 0 AC 1
+RS3 S3 A3 615
+C31 A3 T3 500p
+R31 A3 X3 33k
+C32 X3 B3 22n
+C33 X3 M3 22n
+RT3a T3 OMA {220k*(1-T)+10}
+RT3b OMA B3 {220k*T+10}
+RB3 B3 M3 {1Meg*B+10}
+RM3 M3 0 {25k*M+10}
+RL3 OMA 0 1Meg
+*
+* ---- Bizim ISF agi (amfi_tasarim.cir'den, C15=253p, LM386 cikisindan surulur) ----
+* ISF=0 (US) kopyasi
+XUS S4 ISFUS ISFNET PARAMS: ISFP=0
+V4 S4 0 AC 1
+* ISF=1 (UK) kopyasi
+XUK S5 ISFUK ISFNET PARAMS: ISFP=1
+V5 S5 0 AC 1
+.SUBCKT ISFNET IN OUT PARAMS: ISFP=0.5
+C14 IN N8 4.7u
+R10 N8 0 100k
+R11 N8 N12 100k
+R12 N8 N15 10k
+C15 N8 N10 253p
+R13 N10 N31 100k
+R14 N31 N11 150k
+C16 N12 N11 100n
+R15 N11 N13 120k
+C17 N12 N13 47n
+R16 N13 0 6.8k
+R17 N15 0 4.7k
+R18 N15 N17 33k
+C18 N15 N14 470p
+R19 N14 N32 91k
+R20 N32 N16 130k
+C19 N17 N16 22n
+R21 N16 N18 470k
+C20 N17 N18 22n
+R22 N18 0 24.2k
+RV2A N31 OUT {250k*ISFP+10}
+RV2B OUT N32 {250k*(1-ISFP)+10}
+RV3A OUT N33 250k
+RV3B N33 0 250k
+R23 N33 N19 47k
+R24 N19 0 10k
+C21 N19 0 3.3n
+C22 N19 N20 1u
+RTDA N20 0 150k
+.ENDS
+*
+.AC DEC 100 20 20k
+.PRINT AC VDB(OF5) VDB(OBF) VDB(OMA) VDB(ISFUS) VDB(ISFUK)
+.END
