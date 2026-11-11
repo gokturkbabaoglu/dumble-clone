@@ -102,7 +102,7 @@ Bakır yüzü (alttan bakış):
 | 1µ | elektrolitik | 1 | C22 ★ |
 | 4,7µ | elektrolitik | 1 | C14 |
 | 10µ | elektrolitik | 2 | C11, C12 |
-| 22µ | elektrolitik | 1 | C9 (isteğe bağlı) |
+| 22µ | elektrolitik | 1 | C9 ★ (RV4 ile seri) |
 | 100µ | elektrolitik | 2 | C5, C8 |
 | 220µ | elektrolitik | 1 | C3 |
 | 470µ | elektrolitik | 1 | C23 |
@@ -120,6 +120,7 @@ Bakır yüzü (alttan bakış):
 | Sarı LED (+ R3 2,2k) | 1 | D2 |
 | 10k trimer | 1 | TR1 (drain ≈7 V'a ayarlanır) |
 | B100K / B250K / B500K pot, 16 mm (WH148 tipi) | 1/1/1 | RV1 / RV2 / RV3 |
+| B2.2K pot (lineer) | 1 | RV4 ★ DRIVE (C9 ile seri) |
 | 6,35 mm mono jak | 1 | J1 |
 | PJ-324M | 1 | J2 |
 | Vidalı klemens, 2'li | 2 | TB1, TB2 |
@@ -139,6 +140,7 @@ Bakır yüzü (alttan bakış):
 - **R20 = 120k + 10k, R22 = 22k + 2,2k**: kart bu çiftlere göre çizildi.
 - **C15a ★ = 330p (331), C15b ★ boş.** Tasarım 220p + 33p idi. 330p, tasarımın kabul aralığında (220–330p); US yığınında tiz biraz artar. 220p bulunursa geri dönülür.
 - **C22 ★ = 1 µF elektrolitik**: + ucu TDA2003 tarafına (TIN). Kartta 5 mm ve 7,5 mm iki delik var.
+- **C9 + RV4 DRIVE ★**: C9 22 µF artık takılıyor ve RV4 ile seri bağlanıyor (bu seri kol TR1'e paralel): SRC → C9 (+ ucu SRC'de) → RV4 B2.2K (değişken direnç; uç + slider birleşik) → GND. RV4 yalnızca AC kazancı ayarlar, TR1 ile kurulan DC çalışma noktası (drain ≈ 7 V) değişmez. Simülasyon: JFET kazancı ×3.1 (tam sol, normal çalmada temiz) → ×10.8 (tam sağ, overdrive); düğmenin ilk %70'i temiz–sıcak, son %30'u crunch–overdrive. Saat yönünde direnç azalacak şekilde bağlanır. **Kart yerleşimi henüz güncellenmedi** (şimdilik panel potu kabloyla bağlanabilir).
 - **Potlar B ★**: A pot alınmadı; Gain için R7 15k (slider–GND) takılır.
 - **Sigorta ★ 1 A normal (hızlı)**: tasarımda yavaş atan öngörülmüştü. Açılışta atarsa 1–2 A yavaş atan sigortaya geç.
 - **Elektrolitikler**: hepsi yeni, 25 V (en az 16 V gerekli; görünüm aynı olsun diye hepsi yenilendi).
