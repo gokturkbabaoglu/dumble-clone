@@ -92,8 +92,8 @@ Bakır yüzü (alttan bakış):
 
 | Değer | Tür | Adet | Referanslar |
 |---|---|---|---|
-| 330p (331) | seramik | 1 | C15a ★ |
-| 33p | seramik | 0 | C15b ★ boş |
+| 220p (221) | seramik | 1 | C15a |
+| 33p | seramik | 1 | C15b |
 | 470p | seramik | 2 | CB, C18 |
 | 3,3n | film | 2 | CD, C21 |
 | 22n | film | 2 | C19, C20 |
@@ -138,9 +138,8 @@ Bakır yüzü (alttan bakış):
 
 - **R5 33k → 22k + 10k seri ★**: ters U şeklinde R5 deliklerine. Tek 33k R18'e gider.
 - **R20 = 120k + 10k, R22 = 22k + 2,2k**: kart bu çiftlere göre çizildi.
-- **C15a ★ = 330p (331), C15b ★ boş.** Tasarım 220p + 33p idi. 330p, tasarımın kabul aralığında (220–330p); US yığınında tiz biraz artar. 220p bulunursa geri dönülür.
 - **C22 ★ = 1 µF elektrolitik**: + ucu TDA2003 tarafına (TIN). Kartta 5 mm ve 7,5 mm iki delik var.
-- **C9 + RV4 DRIVE ★**: C9 22 µF artık takılıyor ve RV4 ile seri bağlanıyor (bu seri kol TR1'e paralel): SRC → C9 (+ ucu SRC'de) → RV4 B2.2K (değişken direnç; uç + slider birleşik) → GND. RV4 yalnızca AC kazancı ayarlar, TR1 ile kurulan DC çalışma noktası (drain ≈ 7 V) değişmez. Simülasyon: JFET kazancı ×3.1 (tam sol, normal çalmada temiz) → ×10.8 (tam sağ, overdrive); düğmenin ilk %70'i temiz–sıcak, son %30'u crunch–overdrive. Saat yönünde direnç azalacak şekilde bağlanır. **Kart yerleşimi henüz güncellenmedi** (şimdilik panel potu kabloyla bağlanabilir).
+- **C9 + RV4 DRIVE ★**: C9 22 µF artık takılıyor ve RV4 ile seri bağlanıyor (bu seri kol TR1'e paralel): SRC → C9 (+ ucu SRC'de) → RV4 B2.2K (değişken direnç; uç + slider birleşik) → GND. RV4 yalnızca AC kazancı ayarlar, TR1 ile kurulan DC çalışma noktası (drain ≈ 7 V) değişmez. Simülasyon: JFET kazancı ×3.1 (tam sol, normal çalmada temiz) → ×10.8 (tam sağ, overdrive); düğmenin ilk %70'i temiz–sıcak, son %30'u crunch–overdrive. B2.2K pot alındı. Saat yönünde direnç azalacak şekilde bağlanır. **Kart yerleşimi henüz güncellenmedi** (şimdilik panel potu kabloyla bağlanabilir).
 - **Potlar B ★**: A pot alınmadı; Gain için R7 15k (slider–GND) takılır.
 - **Sigorta ★ 1 A normal (hızlı)**: tasarımda yavaş atan öngörülmüştü. Açılışta atarsa 1–2 A yavaş atan sigortaya geç.
 - **Elektrolitikler**: hepsi yeni, 25 V (en az 16 V gerekli; görünüm aynı olsun diye hepsi yenilendi).

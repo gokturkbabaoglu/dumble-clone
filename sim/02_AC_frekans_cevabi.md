@@ -59,7 +59,9 @@ Stepping: VOL 0.1 / 0.4 / 0.7 / 1. SPK @1 kHz: 1.5 / 8.0 / 12.1 / 17.7 dB (16 dB
 ## 2f — Tasarım ve gerçek yapım farkları — `02f_C15_R5_asbuilt`
 ISF = 0, iç içe stepping: C15V 253p / 330p × R5V 32k / 33k.
 
-- **C15 330p (gerçek yapım):** çukur 394 Hz → 347 Hz'e iniyor. 1 kHz'de ton katı +1.7 dB daha az kayıp veriyor, SPK'de +1.7 dB (10.4 → 12.2 dB). Tepe 4.2 kHz → 3.7 kHz. Yani biraz daha "dolgun orta", fark duyulabilir sınırda.
+> **Güncelleme (13.11.2026):** 220p bulundu; C15 tasarım değerine (220p + 33p ≈ 253p) döndü. Yapımda geçerli olan bu rapordaki tasarım değerli sonuçlardır, 330p satırı yalnızca karşılaştırma için.
+
+- **C15 330p (eski yapım planı):** çukur 394 Hz → 347 Hz'e iniyor. 1 kHz'de ton katı +1.7 dB daha az kayıp veriyor, SPK'de +1.7 dB (10.4 → 12.2 dB). Tepe 4.2 kHz → 3.7 kHz. Yani biraz daha "dolgun orta", fark duyulabilir sınırda.
 - **R5 32k ↔ 33k:** etkisi ≤0.01 dB. İhmal edilebilir.
 
 ## 2g — C9 (JFET kaynak bypass) — `02g_C9`
