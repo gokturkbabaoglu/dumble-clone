@@ -21,6 +21,8 @@ Amfinin (Rev 5 + RV4 DRIVE) Micro-Cap 12.2 ile yapılan analizleri. Her klasörd
 - TDA katı 151 Hz altını kısıyor (C23 470 µ / R26 2.2 Ω): bas zayıflığının ana sebebi. *(Öneri: C23 1000–2200 µF, uygulanmadı.)*
 - SNR ≈ 80–83 dB; gürültünün çoğu TDA2003 ve R24'ten.
 
+- Yapım güncellemesi (13.11.2026): C15 = 220p + 33p (tasarım değeri) ve RV4 = B2.2K pot alındı; simülasyonlar bu değerlerle yapılmıştı.
+
 ## Model ve araçlar
 - `model/amfi_tasarim.cir`: tam şema (Micro-Cap). `.DEFINE` satırları: GAIN, ISF, VOL, SW, DRIVE (RV4), C9V, C15V, R5V, HP, RSRC.
 - `model/amp_models_v4.lib`: BF245B (datasheet), LM386EE (EasyEDA), TDA2003_DS (Jim Thompson modeli + ST datasheet düzeltmeleri).
