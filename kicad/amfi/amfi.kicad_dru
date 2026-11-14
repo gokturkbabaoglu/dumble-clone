@@ -1,0 +1,14 @@
+(version 1)
+# Tek yüzlü ev yapımı kart: bakır yalnız B.Cu (alt). Üst katta yol/via/dolgu yasak.
+(rule "tek_yuz_ust_yasak"
+	(layer "F.Cu")
+	(condition "A.Type == 'track' || A.Type == 'arc' || A.Type == 'zone'")
+	(constraint disallow track zone))
+(rule "via_yok"
+	(constraint disallow via))
+# Toner transfer: en küçük bakır aralığı 0.5 mm (dolgu dahil)
+(rule "aralik"
+	(constraint clearance (min 0.5mm)))
+(rule "kenar"
+	(constraint edge_clearance (min 0.5mm)))
+# arka/sol/sağ kenarda 1 mm şerit kural alanlarıyla korunur; ön kenarda potların altından geçen yollar için 0.5 mm

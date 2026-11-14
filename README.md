@@ -2,11 +2,15 @@
 
 12 V ile çalışan, 4 Ω 6,5" full range hoparlör süren küçük bir pratik amfisi. Volume, Gain, ISF (US ↔ UK karakter) kontrolleri, Dark/Normal/Bright anahtarı ve kesicili 3,5 mm kulaklık çıkışı var. Tek yüzlü, ev yapımı (toner transfer) baskı devre üzerine kurulur; pot, jak, LED ve anahtarlar kartın ön kenarında dizilidir.
 
-**Durum:** Kart v2 çizildi ve doğrulandı: kopuk ya da kısa devre yok, en dar aralık 0,5 mm, 7 tel köprü (K1–K7). Parçalar alındı. Kart henüz basılmadı, devre henüz denenmedi. **Aşındırmadan önce:** devir raporundaki "Sorulacaklar" listesindeki ölçüler alınmalı ve 1:1 baskı üzerinde parçalar denenmeli.
+**Durum:** Basılacak kart KiCad kartıdır (aşağıda). Parçalar alındı. Kart henüz basılmadı, devre henüz denenmedi. **Teslim raporu:** [docs/kicad/TESLIM_RAPORU.md](docs/kicad/TESLIM_RAPORU.md)
 
-**Kart v3 (taslak, kullanılmayacak olabilir):** v2 üzerine ölçüm/yapım düzeltmeleri ve RV4 DRIVE'ın ön kenara alınması. Otomatik yerleşim ile 185 × 114,3 mm, 8 tel köprü (hiçbiri parça üstünden geçmiyor), DRC 0,5 mm, kopuk/kısa yok. Görseller ve 1:1 PDF `images/v3_taslak/` içinde. Kart Proteus otomatik yol çizicisiyle yeniden yapılacak; aşağıdaki v2 görselleri ve parça listesi henüz v2'yi gösterir. Ayrıntı: [Kart v3 taslağı](#kart-v3-taslağı).
+**Kart v2 (arşiv):** çizildi ve doğrulandı: kopuk ya da kısa devre yok, en dar aralık 0,5 mm, 7 tel köprü (K1–K7). **Aşındırmadan önce:** devir raporundaki "Sorulacaklar" listesindeki ölçüler alınmalı ve 1:1 baskı üzerinde parçalar denenmeli.
 
-**Devir raporu (güncel durum, sorulacak ölçüler, sonraki adımlar):** https://claude.ai/artifact/CqNFPdVpvteivkdLXzBCgm
+**Kart v3 (taslak, arşiv):** v2 üzerine ölçüm/yapım düzeltmeleri ve RV4 DRIVE'ın ön kenara alınması. Otomatik yerleşim ile 185 × 114,3 mm, 8 tel köprü (hiçbiri parça üstünden geçmiyor), DRC 0,5 mm, kopuk/kısa yok. Görseller ve 1:1 PDF `images/v3_taslak/` içinde. Yerine KiCad kartı yapıldı. Ayrıntı: [Kart v3 taslağı](#kart-v3-taslağı).
+
+**Kart KiCad (güncel, basılacak olan):** KiCad 10'da sıfırdan tasarlandı, Freerouting ile yönlendirildi. **185 × 96 mm**, tek yüz (yalnız alt bakır, via yok), alt katta GND dolgusu, **2 tel köprü** (K1, K2, 5,08 mm, düz). DRC: kopuk bağlantı yok, aralık ≥ 0,5 mm. Ayrıntı: [Kart (KiCad)](#kart-kicad). v2/v3 bölümleri arşiv olarak duruyor.
+
+**Eski devir raporu (v2/v3 dönemi):** https://claude.ai/artifact/CqNFPdVpvteivkdLXzBCgm
 
 ![Şema](images/1_devre_semasi.png)
 
@@ -14,6 +18,10 @@
 
 | Klasör / dosya | İçerik |
 |---|---|
+| `kicad/amfi/` | **Güncel KiCad 10 projesi** (şema, kart, kütüphane, kurallar) |
+| `kicad/*.py` | KiCad dosyası üreticileri, yerleşim, toplu yönlendirme, analiz, tel köprü bulucu |
+| `docs/kicad/` | Toner transfer 1:1 PDF, parça yerleşimi PDF'i ve teslim raporu |
+| `images/kicad/` | KiCad kartının görselleri |
 | `images/1_devre_semasi.png` | Devre şeması |
 | `images/2_pcb_on_yuz.png` | Parça yüzü |
 | `images/3_pcb_arka_yuz.png` | Bakır yüzü (alttan bakış) |
@@ -37,7 +45,34 @@
 - **Sinyal yolu:** gitar → Q1 BF245B → Gain + Dark/Bright → LM386 (≈38×) → ISF (iki sabit ton yığını arasında geçiş) → Volume → 47k/10k bölücü + ≈6 kHz alçak geçiren → TDA2003 (≈40 dB) → hoparlör / kulaklık
 - **Besleme:** 12 V / 2 A adaptör → panel DC jak → TB1 → 1 A sigorta → güç anahtarı → 1N5822 → V12; RC filtrelerle LM386 (100 Ω) ve JFET (1k) beslemeleri ayrılır
 
-## Baskı devre
+## Kart (KiCad)
+
+KiCad 10 projesi `kicad/amfi/` klasöründe (`amfi.kicad_pro`). Şema, sembol ve ayak izi kütüphanesi `kicad/gen_kicad.py` ile `tools/design2.py` netlistinden üretilir; elle çizilmedi.
+
+![Kart, parça yüzünden bakış](images/kicad/kart_yollar.png)
+
+| Konu | Değer |
+|---|---|
+| Boyut | 185 × 96 mm (ön kenar = panel; v3'e göre 18 mm daha kısa) |
+| Bakır | Yalnız B.Cu (alt). Üst katta yol/via yasak (kural alanı + `amfi.kicad_dru`) |
+| GND | Alt katın tamamında dolgu, padler dolguya doğrudan (termal kolsuz) bağlı. Sinyal yolları Freerouting'le çizildi, GND'yi dolgu bağlar |
+| Tel köprüler | K1 (D2 tarafındaki GND adası) ve K2 (C3 tarafındaki GND adası), ikisi de 5,08 mm, düz; parça gövdesi üstünden geçmez, sinyal netlerinde köprü yok |
+| Yol genişliği | Sinyal 1,0 mm, besleme/çıkış 1,3 mm; pinler arasından geçerken kısa süre en az 0,5 mm'ye iner |
+| Aralık / kenar | Bakır–bakır ≥ 0,5 mm; arka/sol/sağ kenarda 1 mm yolsuz şerit, ön kenarda (potların altı) 0,5 mm |
+| Vida delikleri | M3 × 5: arka kenarda 3, ön tarafta 2 (MH4 J1'in arkasında, MH5 güç anahtarının arkasında) |
+| Ön panel sırası | Değişmedi: J1, RV4, RV1, SW1, RV2, RV3, J2, LED, güç anahtarı |
+
+**Gürültü ölçütleri (seçilen kart):** giriş yolu J1 → R5 → Q1 gate 33 mm; giriş netlerine en yakın güç/çıkış yolu 110 mm; hoparlör akım döngüsü (TDA çıkışı → C25 → hoparlör → GND) 374 mm²; TDA girişi (TIN) yolu 55 mm; giriş katı solda, güç katı sağ arkada, besleme sağ kenarda.
+
+**Çıktılar:**
+- `docs/kicad/toner_alt_bakir_1e1.pdf` — toner transfer için B.Cu + kart kenarı, 1:1, vektör, delik merkez işaretli. Üstten bakışla basılmıştır; plakete yüzüstü konunca doğru yöne döner (yansıtma yapma).
+- `docs/kicad/parca_yerlesimi.pdf` — parça yüzü yerleşimi (serigrafi).
+
+**Parça adı değişiklikleri (KiCad harf sonekini kabul etmediği için):** C15a → C15, C15b → C26, R20a → R20, R20b → R30, R22a → R22, R22b → R31; KiCad'de CB → CB1, CD → CD1, anahtar kablo padleri P_SWB/P_SWC/P_SWD → P1/P2/P3, P_PW1/P_PW2 → P4/P5. Yeni: MH4, MH5 (vida), K1, K2 (tel köprü).
+
+**Nasıl üretildi:** `kicad/yerlesim.py` (elle düşünülmüş yerleşim tohumları + çakışma çözücü) → `kicad/toplu.py` (KiCad konsolunda Freerouting'i toplu, penceresiz çalıştırır) → `kicad/analiz.py` (kopuk bağlantı, GND adaları, gürültü ölçütleri) → `kicad/kopru.py` / `kopru_ekle.py` (GND adaları için en kısa düz köprü). `kicad/cikti.py` KiCad konsolunda toner (B.Cu, 1:1) ve parça yerleşimi PDF'lerini `cikti/` klasörüne üretir. Seçilen yerleşim: `KART_H=96 python kicad/yerlesim.py "K4@96#11"`. 185 mm genişlikte 114 → 84 mm arası yaklaşık 150 kart denendi; 96 mm, tamamen yönlendirilmiş ve en az köprü (2) isteyen en küçük karttı.
+
+## Baskı devre (v2, arşiv)
 
 165,1 × 114,3 mm, tek yüz bakır, 1,27 mm ızgara, boş alanlar GND dolgusu. Bakır desenden çıkarılan bağlantılar netlist ile karşılaştırıldı: kopuk ya da kısa devre yok.
 
@@ -75,17 +110,17 @@ Bakır yüzü (alttan bakış):
 | 330 Ω | 1 | R29 |
 | 1k | 1 | R2 |
 | 1,2k | 1 | R8 |
-| 2,2k | 2 | R3, R22b |
+| 2,2k | 2 | R3, R31 |
 | 4,7k | 1 | R17 |
 | 6,8k | 2 | R4, R16 |
-| 10k | 4 | R12, R24, R20b, R5b ★ |
+| 10k | 4 | R12, R24, R30, R5b ★ |
 | 15k | 1 | R7 |
-| 22k | 2 | R22a, R5a ★ |
+| 22k | 2 | R22, R5a ★ |
 | 33k | 1 | R18 |
 | 47k | 1 | R23 |
 | 91k | 1 | R19 |
 | 100k | 3 | R10, R11, R13 |
-| 120k | 2 | R15, R20a |
+| 120k | 2 | R15, R20 |
 | 150k | 1 | R14 |
 | 470k | 1 | R21 |
 | 1M | 1 | R6 |
@@ -94,8 +129,8 @@ Bakır yüzü (alttan bakış):
 
 | Değer | Tür | Adet | Referanslar |
 |---|---|---|---|
-| 220p (221) | seramik | 1 | C15a |
-| 33p | seramik | 1 | C15b |
+| 220p (221) | seramik | 1 | C15 |
+| 33p | seramik | 1 | C26 |
 | 470p | seramik | 2 | CB, C18 |
 | 3,3n | film | 2 | CD, C21 |
 | 22n | film | 2 | C19, C20 |
@@ -131,7 +166,8 @@ Bakır yüzü (alttan bakış):
 | Kırmızı ON-ON 6 bacaklı anahtar | 1 | Güç |
 | Panel DC jak, 3 uçlu | 1 | — |
 | Bakır plaket 20 × 20 cm | 1 | — |
-| M3 vida / mesafe | 3 | MH1–MH3 |
+| M3 vida / mesafe | 5 | MH1–MH5 (KiCad kartı; v2'de 3) |
+| Tel köprü (0,6 mm bakır tel) | 2 | K1, K2 — 5,08 mm (KiCad kartı) |
 | 4 Ω 6,5" full range kâğıt hoparlör | 1 | Kablolar hoparlörün üzerinde lehimlenir, karta TB2 ile bağlanır |
 | 12 V / 2 A adaptör | 1 | — |
 | Kutu ve pot düğmeleri | — | 3D baskı |
