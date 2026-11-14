@@ -71,7 +71,7 @@ def draw_parts(ax,pl,detail=True,X=lambda x:x,txtcol=LBL):
         fc={'FUSE':'#f3e6c0','TB2':'#7fb3d5'}.get(fp,'#e8eef7')
         ax.add_patch(Rectangle((cx-w/2,cy-h/2),w,h,fc=fc,ec=EC,lw=1.0,zorder=3,ls=ls))
         if fp=='TO92':
-            for i,l in enumerate(['D','S','G']):
+            for i,l in enumerate(['G','S','D']):   # Fairchild BF245B
                 p=ps[i]; ax.text(p[0]+(0 if r%180==0 else -2.3),p[1]+(-2.3 if r%180==0 else 0),l,fontsize=5,ha='center',va='center',color='#c0392b',fontweight='bold',zorder=9)
         if fp=='DIP8':
             ax.add_patch(Circle(ps[0],1.4,fill=False,ec='#c0392b',lw=1,zorder=9))
@@ -89,6 +89,9 @@ if __name__=='__main__':
     D=pickle.load(open(sys.argv[1],'rb'))
     pl=D['pl']; items=D.get('items'); g=D.get('g')
     jumpers=[(n,d) for n,k,d in (items or []) if k=='jumper']
+    # köprüler soldan sağa, arkadan öne numaralanır (K1, K2, …)
+    jumpers.sort(key=lambda t:(round(min(t[1][0][0],t[1][1][0])/10),min(t[1][0][1],t[1][1][1])))
+    def jlen(a,b): return math.hypot(a[0]-b[0],a[1]-b[1])
     cu=(raster(items,lambda n:n!='GND')|g) if items else None
     def holes(ax,X=lambda x:x,col='white'):
         for n,k,d in items:
@@ -107,14 +110,25 @@ if __name__=='__main__':
             if k=='pad': ax.add_patch(Circle(d[0],d[1]/2,fc='#d9a441',ec='#7a5a12',lw=0.4,zorder=5))
         holes(ax)
         for i,(n,(a,b)) in enumerate(jumpers):
-            ax.plot([a[0],b[0]],[a[1],b[1]],color='#c0392b',lw=2.6,zorder=10,solid_capstyle='round')
-            if abs(a[1]-b[1])<0.01: ax.text(min(a[0],b[0])-1.8,a[1],f'K{i+1}',fontsize=6.3,color='#c0392b',fontweight='bold',ha='right',va='center',zorder=11,bbox=dict(boxstyle='round,pad=0.1',fc='white',ec='none',alpha=0.85))
-            else: ax.text(a[0],min(a[1],b[1])-1.8,f'K{i+1}',fontsize=6.3,color='#c0392b',fontweight='bold',ha='center',va='bottom',zorder=11,bbox=dict(boxstyle='round,pad=0.1',fc='white',ec='none',alpha=0.85))
+            # köprü = ayrı parça: gövde (izoleli tel) + iki delik + etiket
+            hor=abs(a[1]-b[1])<0.01; L=jlen(a,b)
+            x0,x1=sorted([a[0],b[0]]); y0,y1=sorted([a[1],b[1]])
+            if hor: ax.add_patch(FancyBboxPatch((x0+1.2,a[1]-0.9),L-2.4,1.8,boxstyle='round,pad=0,rounding_size=0.9',fc='#f6d4cf',ec='#c0392b',lw=1.0,zorder=9))
+            else: ax.add_patch(FancyBboxPatch((a[0]-0.9,y0+1.2),1.8,L-2.4,boxstyle='round,pad=0,rounding_size=0.9',fc='#f6d4cf',ec='#c0392b',lw=1.0,zorder=9))
+            ax.plot([a[0],b[0]],[a[1],b[1]],color='#c0392b',lw=1.4,zorder=10,solid_capstyle='round')
+            lab=f'K{i+1}\n{n} {L:.1f}'
+            if hor: ax.text((x0+x1)/2,a[1]-1.4,lab,fontsize=5.0,color='#8e1f12',fontweight='bold',ha='center',va='bottom',zorder=11,linespacing=0.9,bbox=dict(boxstyle='round,pad=0.1',fc='white',ec='none',alpha=0.85))
+            else: ax.text(a[0]+1.4,(y0+y1)/2,lab,fontsize=5.0,color='#8e1f12',fontweight='bold',ha='left',va='center',zorder=11,linespacing=0.9,bbox=dict(boxstyle='round,pad=0.1',fc='white',ec='none',alpha=0.85))
+        # köprü listesi (malzeme listesi için)
+        with open(f'{OUT}/kopru_listesi.csv','w',encoding='utf-8') as f:
+            f.write('köprü;net;delik arası (mm);yön;önerilen tel boyu (mm)\n')
+            for i,(n,(a,b)) in enumerate(jumpers):
+                L=jlen(a,b); f.write(f'K{i+1};{n};{L:.1f};{"yatay" if abs(a[1]-b[1])<0.01 else "dikey"};{L+8:.0f}\n')
     frame(ax)
-    ax.text(0,-24,'Baskı Devre v2 — ÖN YÜZ (parça tarafı, üstten bakış)',fontsize=13,fontweight='bold',va='top')
-    jl='  '.join(f'K{i+1}: {n}, {math.hypot(a[0]-b[0],a[1]-b[1]):.0f} mm' for i,(n,(a,b)) in enumerate(jumpers))
-    ax.text(0,-18.5,f'Kart {BW:.1f} × {BH:.1f} mm, tek yüz. Pot, jak ve LED kartın ön kenarına lehimlenir; gri çıkıntılar ön panelden geçen kısımlar. Tel köprüler ({len(jumpers)} adet, izoleli tel): {jl}',fontsize=7,va='top')
-    ax.text(0,-15,'SW1 ve güç anahtarı panele vidalanır, turuncu etiketli pedlere kısa burgulu kabloyla bağlanır. Kesikli çerçeve: JP1 (giriş susturma köprüsü, ölçüp doğruladıktan sonra) ve C9 (isteğe bağlı).',fontsize=7,va='top')
+    ax.text(0,-24,'Baskı Devre v3 — ÖN YÜZ (parça tarafı, üstten bakış)',fontsize=13,fontweight='bold',va='top')
+    jl='  '.join(f'K{i+1}: {n} {jlen(a,b):.1f} mm' for i,(n,(a,b)) in enumerate(jumpers))
+    ax.text(0,-18.5,f'Kart {BW:.1f} × {BH:.1f} mm, tek yüz. Pot, jak ve LED kartın ön kenarına lehimlenir; gri çıkıntılar ön panelden geçen kısımlar. Tel köprüler (ayrı parça, {len(jumpers)} adet, izoleli tek damar, entegre/büyük parça üstünden geçmez): {jl}',fontsize=7,va='top')
+    ax.text(0,-15,'SW1 ve güç anahtarı panele vidalanır, turuncu etiketli pedlere kısa burgulu kabloyla bağlanır. Kesikli çerçeve: JP1 (giriş susturma köprüsü, isteğe bağlı). Kenarlardaki geniş bakır şerit GND hattıdır.',fontsize=7,va='top')
     ax.text(BW/2,BH+19,'▼ ÖN PANEL ▼',fontsize=8,ha='center',color='#2b7bb9')
     fig.savefig(f'{OUT}/2_pcb_on_yuz.png',dpi=240,bbox_inches='tight',facecolor='white')
     if not items: sys.exit()
@@ -129,8 +143,8 @@ if __name__=='__main__':
     for i,(n,(a,b)) in enumerate(jumpers):
         for p in (a,b): ax.text(X(p[0]),p[1]+2.2,f'K{i+1}',fontsize=5.3,color='#ffdede',ha='center',fontweight='bold',zorder=11)
     frame(ax)
-    ax.text(0,-24,'Baskı Devre v2 — ARKA YÜZ (bakır tarafı, alttan bakış)',fontsize=13,fontweight='bold',va='top')
-    ax.text(0,-18.5,'Yollar 1.0 mm (sinyal) / 1.3 mm (besleme, çıkış). Boş alanlar GND dolgusu. Delikler: 0.8–0.9 mm küçük parçalar, 1.1 mm büyük elko ve pot, 1.3 mm klemens/sigorta/diyot,',fontsize=7,va='top')
+    ax.text(0,-24,'Baskı Devre v3 — ARKA YÜZ (bakır tarafı, alttan bakış)',fontsize=13,fontweight='bold',va='top')
+    ax.text(0,-18.5,'Yollar 1.0 mm (sinyal) / 1.3 mm (besleme, çıkış). Boş alanlar GND dolgusu. Delikler: 0.7–1.0 mm elkolar (çapa göre), 0.8–0.9 mm küçük parçalar, 1.3 mm pot, 1.3 mm klemens/sigorta/diyot,',fontsize=7,va='top')
     ax.text(0,-15,'1.6 mm PJ-324M, 2.3 mm (ya da iki küçük delik birleştirilerek yarık) 6.35 jak. Toner transferi için ayrı 1:1 PDF\'i kullan.',fontsize=7,va='top')
     ax.text(BW/2,BH+19,'▼ ÖN PANEL ▼',fontsize=8,ha='center',color='#2b7bb9')
     fig.savefig(f'{OUT}/3_pcb_arka_yuz.png',dpi=240,bbox_inches='tight',facecolor='white')
@@ -138,18 +152,18 @@ if __name__=='__main__':
     fig=plt.figure(figsize=(210/25.4,297/25.4)); ox,oy=(210-BW)/2,40
     ax=fig.add_axes([ox/210,1-(oy+BH)/297,BW/210,BH/297])
     im=np.ones(cu.shape+(3,)); im[cu]=0
-    ax.imshow(im,extent=(0,BW,BH,0),interpolation='nearest')
+    ax.imshow(im,extent=(0,BW,BH,0),interpolation='none')   # tam çözünürlük (≈508 dpi), yeniden örnekleme yok
     for n,k,d in items:
         if k=='pad': ax.add_patch(Circle(d[0],0.35,fc='white',ec='none'))
         if k=='hole': ax.add_patch(Circle(d[0],1.6,fc='white',ec='black',lw=0.3))
     ax.add_patch(Rectangle((0,0),BW,BH,fill=False,ec='black',lw=0.4))
     ax.set_xlim(0,BW); ax.set_ylim(BH,0); ax.axis('off')
-    fig.text(0.5,1-15/297,'12V Gitar Amfisi v2 — BAKIR KATMANI, TONER TRANSFERİ İÇİN (1:1)',ha='center',fontsize=11,fontweight='bold')
+    fig.text(0.5,1-15/297,'12V Gitar Amfisi v3 — BAKIR KATMANI, TONER TRANSFERİ İÇİN (1:1)',ha='center',fontsize=11,fontweight='bold')
     fig.text(0.5,1-22/297,'Yazdırırken ölçeklendirme KAPALI (%100 / Gerçek boyut). 50 mm cetvelini kumpasla kontrol et.',ha='center',fontsize=8)
     fig.text(0.5,1-27/297,'Bu görüntü zaten doğru yönde: kâğıt yüzü bakıra gelecek şekilde konunca bakırda alttan bakış oluşur.',ha='center',fontsize=7)
     ax2=fig.add_axes([ox/210,1-(oy+BH+20)/297,50/210,6/297]); ax2.set_xlim(0,50); ax2.set_ylim(0,6); ax2.axis('off')
     ax2.plot([0,50],[3,3],color='k',lw=1)
     for i in range(0,51,10): ax2.plot([i,i],[1.5,4.5],color='k',lw=0.8); ax2.text(i,5,str(i),fontsize=5,ha='center')
     fig.text(0.5,1-(oy+BH+32)/297,'Kart ölçüsü: %.1f × %.1f mm.  Delmeden önce: jakları, potları ve büyük elkoları bu çıktının ön yüz görseliyle karşılaştır.'%(BW,BH),ha='center',fontsize=7)
-    fig.savefig(f'{OUT}/6_toner_transfer_1e1.pdf')
+    fig.savefig(f'{OUT}/6_toner_transfer_1e1.pdf',dpi=600)
     print('drawn',len(jumpers))
