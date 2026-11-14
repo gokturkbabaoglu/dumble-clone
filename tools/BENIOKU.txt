@@ -1,0 +1,31 @@
+AMFİ KART ARAMA — 12V gitar amfisi kart v3 yerleşim arama programı
+====================================================================
+
+ÇALIŞTIRMA
+  baslat.bat dosyasına çift tıklayın. İlk seferde gerekli Python paketlerini kurar.
+  (Python yoksa python.org'dan Python 3 kurun; "Add python.exe to PATH" kutusunu işaretleyin.)
+
+KULLANIM
+  1. Ayarlar: varsayılanlar önerilen değerlerdir (kart 185 mm, 10 zincir, köprü ≤ 8 hücre ≈ 10 mm,
+     kenar GND şeridi 2 hücre).
+  2. "Başlat / Devam et": her çekirdekte bir arama zinciri çalışır. Zincirler tablosunda
+     her zincirin en iyi durumu görünür ("tam çizildi, N köprü" ya da neyin çizilemediği).
+  3. Tamamen çizilmiş her yeni iyi kart "Kaydedilen sonuçlar" listesine eklenir (en iyisi üstte).
+     Tıklayınca önizlemesi açılır; "Büyük aç" resmi tam boy açar. Kırmızı çizgiler tel köprülerdir
+     (K1, K2… ağ adı ve uzunluğu yazılı).
+  4. Kapatırsanız ilerleme kaydedilir. Tekrar açıp "Başlat"a basınca kaldığı yerden devam eder.
+     Kart eni / köprü ayarları değişirse zincirler başlangıç yerleşimlerinden yeniden başlar.
+  5. "Başlangıçlara ekle": seçili sonucu yeni zincirlerin başlangıç noktası yapar.
+
+PUAN
+  Düşük puan iyidir. Her köprü 60, parça üstünden geçen köprü +100 puan; yol uzunluğu küçük katkı.
+  Çizilemeyen sinyal netleri 1000+, bağlanamayan GND adaları 300+ puan.
+
+SONUÇLARI GÖNDERME
+  Beğendiğiniz sonucun sonuclar klasöründeki .json (ve isterseniz .png) dosyasını Claude'a verin.
+  Son yönlendirme, 0.5 mm aralık kontrolü (DRC), kart görselleri ve 1:1 toner PDF'i oradan üretilir.
+
+KLASÖRLER
+  sonuclar\   kaydedilen kartlar (.json yerleşim, .png önizleme, .txt puan ve ayarlar)
+  durum\      zincirlerin kaldığı yer (silmek için "Durumu sıfırla")
+  baslangic\  başlangıç yerleşimleri (185 mm için üç tane hazır)

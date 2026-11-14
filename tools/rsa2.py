@@ -6,10 +6,10 @@ def evaluate(pl, ords):
     best=None
     for o in ords:
         r,f=route_eval(pl,o)
-        if r is None: sc=(500+100*len(f),99,0)
+        if r is None: sc=((300+80*len(f)) if set(f)=={'GND'} else (1000+100*len(f)),99,0)
         else:
             nj=sum(len(v) for v in r.jumps.values()); L=sum(len(p) for s in r.paths.values() for p in s)
-            bj=bad_jumps(r); sc=(nj*10+bj*40+L*0.02,nj,bj)
+            bj=bad_jumps(r); sc=(nj*60+bj*100+L*0.02,nj,bj)
         if best is None or sc[0]<best[0]: best=sc
     return best
 def legal(pl,ref):

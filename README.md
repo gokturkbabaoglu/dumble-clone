@@ -4,6 +4,8 @@
 
 **Durum:** Kart v2 çizildi ve doğrulandı: kopuk ya da kısa devre yok, en dar aralık 0,5 mm, 7 tel köprü (K1–K7). Parçalar alındı. Kart henüz basılmadı, devre henüz denenmedi. **Aşındırmadan önce:** devir raporundaki "Sorulacaklar" listesindeki ölçüler alınmalı ve 1:1 baskı üzerinde parçalar denenmeli.
 
+**Kart v3 (taslak, kullanılmayacak olabilir):** v2 üzerine ölçüm/yapım düzeltmeleri ve RV4 DRIVE'ın ön kenara alınması. Otomatik yerleşim ile 185 × 114,3 mm, 8 tel köprü (hiçbiri parça üstünden geçmiyor), DRC 0,5 mm, kopuk/kısa yok. Görseller ve 1:1 PDF `images/v3_taslak/` içinde. Kart Proteus otomatik yol çizicisiyle yeniden yapılacak; aşağıdaki v2 görselleri ve parça listesi henüz v2'yi gösterir. Ayrıntı: [Kart v3 taslağı](#kart-v3-taslağı).
+
 **Devir raporu (güncel durum, sorulacak ölçüler, sonraki adımlar):** https://claude.ai/artifact/CqNFPdVpvteivkdLXzBCgm
 
 ![Şema](images/1_devre_semasi.png)
@@ -151,6 +153,24 @@ Bakır yüzü (alttan bakış):
 - TDA2003 için termal macun, M3 vida/somun; kartı kutuya sabitlemek için M3 aralayıcılar.
 - Hoparlör kablosu 0,5–0,75 mm² ikili (≈50 cm); DC jak kablosu 0,5 mm² kırmızı/siyah (≈30 cm, burgulanacak); köprü teli izoleli tek damar (≈1 m); makaron; kablo bağı.
 - Kart yapımı: perklorür ya da sodyum persülfat, parlak kâğıt (toner transfer), aseton/tiner, matkap uçları 0,8 / 1,0 / 1,2 / 1,5 mm ve montaj delikleri için 3,2 mm.
+
+## Kart v3 taslağı
+
+v3'te netleşen tasarım/yapım kararları (Proteus'ta da geçerli):
+
+| Konu | v3 kararı |
+|---|---|
+| Elektrolitikler | En yakın standart kılıf; bacaklar gövde dibindeki aralıkla delinir, hepsi karta tam oturur (bükümler düzeltilir). 2200 µF Ø12,5 / 5,0 mm · 1000 µF Ø10 / 5,0 · 470 µF Ø8 / 3,5 · 220 µF Ø6,3 / 2,5 · 100/22/10/4,7/1 µF Ø5 / 2,0 mm |
+| C22 1 µF | Elektrolitik, tek delik çifti (2,0 mm); + ucu TDA2003 girişine (TIN) |
+| Q1 BF245B | Parça Fairchild (F logolu): **1 = G, 2 = S, 3 = D** (NXP düzeninin tersi) |
+| RV4 DRIVE | B2.2K pot, ön kenarda J1 ile Gain arasında; C9: + JFET source, − RV4 3. bacak, 1–2. bacak GND (saat yönü = daha çok kazanç) |
+| J1 6,35 mm jak | 3 numara (en arkadaki) uç olarak doğrulandı |
+| Kart eni | 185 mm (RV4 için +20 mm); ön kenar: J1 12 · RV4 34 · RV1 56 · SW1 77 · RV2 99 · RV3 123 · J2 145 · D2 160 · SW2 175 mm |
+| Parazit | Arka/sol/sağ kenarda kesintisiz GND şeridi; TDA2003 soğutucusunun altı yalnız GND; giriş katı solda, güç katı sağda |
+| Tel köprüler | Ayrı parça (K1–K8), yalnız yatay/dikey, ≤ 12,7 mm, entegre ya da başka parça üstünden geçmez; liste `images/v3_taslak/kopru_listesi.csv` |
+| C23, C19/C20 | Değişmedi (470 µF; 22n) |
+
+Araçlar artık `tools/ayarlar.json` dosyasını okur (kart eni, köprü kuralları, GND şeridi). v3 yerleşimi `tools/v3_yerlesim.json`, son geometri `tools/final_geom_kart-v3.zip`. `tools/kart_ara.py` (+ `baslat.bat`) çok çekirdekli yerleşim arama arayüzüdür; bu kart için yeterli sonuç vermedi, kayıt için duruyor. v2'yi yeniden üretmek için `ayarlar.json` içinde `kart_eni` 165, `ring` 0 yapılmalı ve f0ccc7e commit'indeki araçlar kullanılmalı (v2 geometrisi `final_geom_kart-v2.zip`).
 
 ## Simülasyonlar
 

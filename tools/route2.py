@@ -6,7 +6,17 @@ NETS=nets
 def pins_of(ref,pl): return pins_cell(ref,pl)
 DIRS=[(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
 DCOST=[1,1.414,1,1.414,1,1.414,1,1.414]
-JCOST=45
+from ayarlar import A as _A
+JCOST=_A['jcost']   # v3: tel köprüden olabildiğince kaçın
+JMAX=_A['jmax']      # en uzun köprü 8 hücre (≈10 mm), yalnız yatay/dikey
+RING=_A['ring']      # v3: arka/sol/sağ kenarda GND şeridi (hücre); 0 = yok
+def ring_cells():
+    out=[]
+    if RING<=0: return out
+    for x in range(1,W):
+        for y in range(1,H):
+            if x<=RING or x>=W-RING or y<=RING: out.append((x,y))
+    return out
 def build(pl):
     netnames=sorted(NETS)
     nid={n:i for i,n in enumerate(netnames)}
@@ -27,6 +37,17 @@ class Router:
         s.paths={}; s.jumps={}; s.tcells={}
         for n,cells in s.pincells.items():
             for c in cells: s.add(s.nid[n],c)
+        s.ring=ring_cells()
+        for c in s.ring: s.add(s.nid['GND'],c)
+        # v3: TDA2003 soğutucusunun altı (bacak sırasının arkası) yalnız GND: sinyal geçmez,
+        # GND bacağı doğrudan arka kenar şeridine bağlanır
+        if RING>0 and _A.get('sogutucu_gnd',False):
+            for ref,(fp,v,ns) in C.items():
+                if FP[fp]['body'] and FP[fp]['body'][0]=='pw':
+                    pc=pins_cell(ref,pl); yrow=min(p[1] for p in pc); xs=[p[0] for p in pc]
+                    for x in range(min(xs)-1,max(xs)+2):
+                        for y in range(1,yrow-1):
+                            s.add(s.nid['GND'],(x,y))
         # jump restrictions: no endpoints near any pin, no jump over component bodies
         s.nojump=np.zeros((W+1,H+1),bool)
         for n,cells in s.pincells.items():
@@ -91,7 +112,7 @@ class Router:
         segs=[]; jumps=[]; ok=True
         while rem:
             res=s.dijkstra(k,tree,set(rem))
-            if res is None: ok=False; break
+            if res is None: ok=False; s.unrouted=len(rem); break
             path,js,end=res
             segs.append(path); jumps+=js
             for (a,b) in js:
@@ -147,15 +168,16 @@ class Router:
                     dist[st]=ng; prev[st]=((c,d),False); heapq.heappush(pq,(ng+h(nc),ng,nc,nd))
             # jumps (orthogonal)
             gnd=(s.netnames[k]=='GND')
-            if s.pinmask[c] or (s.pnt[c]-s.pn[k][c])>0 or (s.body[c] and not gnd) or s.jpath[c]: continue
+            GB=gnd and _A.get('kopru_govde',False)   # GND köprüsü küçük parça üstünden geçebilir
+            if s.pinmask[c] or (s.pnt[c]-s.pn[k][c])>0 or (s.body[c] and not GB) or s.jpath[c]: continue
             for nd in (0,2,4,6):
                 dx,dy=DIRS[nd]
                 if d!=8 and d!=nd: continue
-                for L in range(1,11):
+                for L in range(1,JMAX+1):
                     nc=(c[0]+dx*L,c[1]+dy*L)
                     if not (0<=nc[0]<=W and 0<=nc[1]<=H): break
-                    if (s.big[nc] and not gnd) or s.pinmask[nc] or s.jpath[nc]: break
-                    if L<3 or (s.body[nc] and not gnd) or (s.pnt[nc]-s.pn[k][nc])>0 or not free(k,nc): continue
+                    if s.big[nc] or s.pinmask[nc] or s.jpath[nc]: break   # entegre/büyük parça üstünden asla
+                    if L<3 or (s.body[nc] and not GB) or (s.pnt[nc]-s.pn[k][nc])>0 or not free(k,nc): continue
                     ng=g+JCOST+L
                     st=(nc,nd)
                     if ng<dist.get(st,1e18):

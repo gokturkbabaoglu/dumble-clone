@@ -1,6 +1,8 @@
 # ======================= PARAMETRELER (ölçüler netleşince buradan değiştir) =======================
 # Tüm ölçüler mm. Görüntü koordinatı: X sağa, Y aşağı (ön kenar = Y büyük).
-BW, BH = 165.1, 114.3            # kart boyutu
+from ayarlar import A as _A
+EXTRA_W = 20.32 if _A['kart_eni'] >= 180 else 0.0   # v3: RV4 için genişletme (0 = 165.1 mm kart)
+BW, BH = 165.1 + EXTRA_W, 114.3  # kart boyutu
 # --- 6.35 mm giriş jakı (mono, kesicili) ---
 J635_PIN_FROM_FRONT = (7.5, 15.0, 22.5)   # gövde ön yüzünden pin 1,2,3'e
 J635_LATERAL = (-1.25, 1.25, 1.25)        # eksenden yanal kayma (pin 1,2,3); ters çıkarsa işaretleri değiştir
@@ -22,12 +24,18 @@ FUSE_BODY = (23.0, 9.0); FUSE_PITCH = 10.0; FUSE_HOLE = 1.3; FUSE_PAD = 2.8
 # --- Vidalı klemens ---
 TB_PITCH = 5.08; TB_BODY = (10.2, 7.6); TB_HOLE = 1.3; TB_PAD = 2.8
 # --- Elektrolitikler (25 V tahmini ölçüler: çap, bacak aralığı) ---
-ELKO = {'4.7µ':(5.0,2.54),'10µ':(5.0,2.54),'22µ':(5.0,2.54),'100µ':(6.3,2.54),'220µ':(8.0,3.81),
-        '470µ':(10.0,5.08),'1000µ':(12.5,5.08),'2200µ':(16.0,5.08)}
-ELKO_ALT = {'2200µ':7.62}      # ikinci delik seçeneği (7.5 mm aralık)
-FILM_1U_ALT = 7.62              # 1 µF film için ikinci delik (5 mm + 7.5 mm)
+# Kart v3: kullanıcının ölçtüğü çaplara en yakın standart kılıf (gövde çapı, bacak aralığı).
+# Bacaklar gövde dibindeki aralığa göre delinir; parçalar karta tam oturur (bükümler düzeltilir).
+ELKO = {'1µ':(5.0,2.0),'4.7µ':(5.0,2.0),'10µ':(5.0,2.0),'22µ':(5.0,2.0),'100µ':(5.0,2.0),'220µ':(6.3,2.5),
+        '470µ':(8.0,3.5),'1000µ':(10.0,5.0),'2200µ':(12.5,5.0)}
+# pad çapı / delik (bacak aralığına göre; padler arası en az 0.5 mm)
+ELKO_PAD = {2.0:(1.5,0.7), 2.5:(1.8,0.8), 3.5:(2.0,0.9), 5.0:(2.4,1.0)}
 # --- TDA2003 + klipsli soğutucu ---
 HS_KEEPOUT = (22.0, 16.0)       # soğutucunun kart üstündeki izdüşümü (en x derinlik), tab tarafında
 # --- Panel (ön) yerleşimi: ekseni X (mm) ---
-FRONT_X = {'J1':12.0, 'RV1':36.0, 'SW1':57.0, 'RV2':79.0, 'RV3':103.0, 'J2':125.0, 'D2':140.0, 'SW2':155.0}
+_e = EXTRA_W
+if EXTRA_W > 0:
+  FRONT_X = {'J1':12.0, 'RV4':34.0, 'RV1':36.0+_e, 'SW1':57.0+_e, 'RV2':79.0+_e, 'RV3':103.0+_e, 'J2':125.0+_e, 'D2':140.0+_e, 'SW2':155.0+_e}
+else:
+  FRONT_X = {'J1':11.0, 'RV4':31.0, 'RV1':51.0, 'SW1':70.0, 'RV2':89.0, 'RV3':109.0, 'J2':128.0, 'D2':142.0, 'SW2':155.0}
 R3_LED = '2.2k'                 # LED rengine göre (sarı/yeşil 2.2k ~4.5 mA)
