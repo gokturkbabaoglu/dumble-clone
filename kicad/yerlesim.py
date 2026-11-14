@@ -113,14 +113,51 @@ def K2():
     })
     return P
 
-LAYOUTS = {'K1': K1, 'K2': K2}
+H0 = 114.3
+def olcekle(P, h):
+    """K1 tohumlarını (H0 derinlik) yeni derinliğe taşır: ön bölge öne yapışık, arka bölge sabit, orta ölçekli."""
+    Q = {}
+    for r, (x, y, a) in P.items():
+        if y >= H0 - 40: y2 = y + (h - H0)
+        elif y <= 30: y2 = y
+        else: y2 = 30 + (y - 30) * ((h - 40) - 30) / ((H0 - 40) - 30)
+        Q[r] = (x, y2, a)
+    return Q
+
+def K3():
+    """K1'in ton yığınları yer değiştirmiş hali: UK arkada, US önde; ton parçaları daha sıkı."""
+    P = K1()
+    us = ['R10', 'R11', 'C15', 'C26', 'C16', 'C17', 'R13', 'R14', 'R15', 'R16']
+    uk = ['R12', 'R17', 'R18', 'C18', 'C19', 'C20', 'R19', 'R20', 'R30', 'R21', 'R22', 'R31']
+    for r in us: x, y, a = P[r]; P[r] = (x, y + 34, a)
+    for r in uk: x, y, a = P[r]; P[r] = (x, y - 40, a)
+    return P
+
+def K4():
+    """Ton yığınları yatay (eksenel parçalar 0°) iki blok; LM386 biraz sağda."""
+    P = K1()
+    for r in ['R10', 'R11', 'C15', 'C26', 'R13', 'R14', 'R15', 'R16', 'R12', 'R17', 'R18', 'C18', 'C19', 'C20', 'R19', 'R20', 'R30']:
+        x, y, a = P[r]; P[r] = (x, y, 0)
+    x, y, a = P['U1']; P['U1'] = (x + 4, y, a)
+    return P
+
+def K5():
+    """K4 + ön pot düğümleri sabitlendi: VOLW (R23) RV3 silecinin hemen arkasında, USOUT (R14) ve UKOUT (R20)
+    RV2'nin uç pinlerinin hemen arkasında. Yüksek empedanslı ton çıkışları kısa kalır."""
+    P = K4()
+    h = H0
+    P.update({'R23': (123, h - 13, 90), 'R14': (94, h - 13, 90), 'R20': (104, h - 13, 90),
+              'R13': (90, h - 13, 90), 'R19': (108, h - 13, 90)})
+    return P
+
+LAYOUTS = {'K1': K1, 'K2': K2, 'K3': K3, 'K4': K4, 'K5': K5}
 
 def legalize(P, prio=None, gap=1.5, rmax=40.0):
     """İstenen konumları sırayla (öncelik listesi) en yakın boş yere kaydırır; dönüş korunur."""
     import math
     fixed = GP.fixed()
-    occ = [GP.rect_of(r, *P[r]) for r in fixed] + list(GP.keepouts())
-    out = {r: P[r] for r in fixed}
+    occ = [GP.rect_of(r, *fixed[r]) for r in fixed] + list(GP.keepouts())
+    out = dict(fixed)
     order = list(dict.fromkeys([r for r in (prio or []) if r not in fixed] + [r for r in P if r not in fixed]))
     step = 0.635
     offs = sorted({(i * step, j * step) for i in range(-int(rmax / step), int(rmax / step) + 1)
@@ -140,7 +177,7 @@ def legalize(P, prio=None, gap=1.5, rmax=40.0):
             raise SystemExit('yerleşmedi: ' + r)
     return out, moved
 
-PRIO = ['U2', 'C6', 'C7', 'R25', 'R26', 'R27', 'C22', 'TB1', 'TB2', 'D1', 'F1', 'C1', 'C25', 'U1', 'Q1', 'R5', 'R6', 'R1', 'C22', 'C6', 'C4', 'C12', 'R26', 'C23', 'C14']
+PRIO = ['R23', 'R14', 'R20', 'R13', 'R19', 'U2', 'C6', 'C7', 'R25', 'R26', 'R27', 'C22', 'TB1', 'TB2', 'D1', 'F1', 'C1', 'C25', 'U1', 'Q1', 'R5', 'R6', 'R1', 'C22', 'C6', 'C4', 'C12', 'R26', 'C23', 'C14']
 
 def check(P, gap=0.6):
     R = {r: GP.rect_of(r, *P[r]) for r in P}
@@ -159,8 +196,17 @@ def check(P, gap=0.6):
 
 if __name__ == '__main__':
     import sys, os
-    for name in (sys.argv[1:] or LAYOUTS):
-        P, moved = legalize(LAYOUTS[name](), PRIO)
+    for arg in (sys.argv[1:] or LAYOUTS):
+        arg, _, rs = arg.partition('#')
+        base_name, _, hs = arg.partition('@')
+        seed = LAYOUTS[base_name]()
+        if hs: seed = olcekle(seed, float(hs))
+        name = base_name + ('_%s' % hs.replace('.', '') if hs else '') + ('s%s' % rs if rs else '')
+        if rs:   # rastgele küçük oynatma (aynı tohumla tekrar üretilebilir)
+            import random
+            rnd = random.Random(int(rs)); fx = GP.fixed()
+            seed = {r: (x + rnd.uniform(-4, 4), y + rnd.uniform(-4, 4), a) if r not in fx and r not in ('R23', 'R14', 'R20', 'R13', 'R19') else (x, y, a) for r, (x, y, a) in seed.items()}
+        P, moved = legalize(seed, PRIO)
         print('kaydırılan:', moved)
         bad, miss = check(P, 1.4)
         print(name, 'eksik:', sorted(miss), 'çakışma:', bad)

@@ -145,3 +145,42 @@ if __name__ == '__main__':
     D = load(sys.argv[1]); c = connectivity(D); s = score(D, c)
     print(json.dumps(s, ensure_ascii=False, indent=1))
     if len(sys.argv) > 2: draw(D, sys.argv[2], os.path.basename(sys.argv[1]))
+
+def islands(D):
+    """Kopuk netler için adalar arası en kısa pad-pad mesafesi (tel köprü boyu tahmini)."""
+    import itertools
+    par = {}
+    def fnd(a):
+        while par.setdefault(a, a) != a: par[a] = par[par[a]]; a = par[a]
+        return a
+    out = {}
+    nets = {}
+    for i, p in enumerate(D['pads']):
+        if p[3]: nets.setdefault(p[3], []).append(i)
+    segs_by = {}
+    for j, s in enumerate(D['segs']): segs_by.setdefault(s[4], []).append(j)
+    for n, pids in nets.items():
+        par.clear()
+        sl = segs_by.get(n, [])
+        def near(pt, s, tol):
+            (ax, ay), (bx, by) = s[0], s[1]; vx, vy = bx - ax, by - ay; L = vx * vx + vy * vy
+            t = 0 if L == 0 else max(0, min(1, ((pt[0] - ax) * vx + (pt[1] - ay) * vy) / L))
+            return math.dist(pt, (ax + t * vx, ay + t * vy)) <= tol
+        for j in sl:
+            s = D['segs'][j]
+            for k in pids:
+                p = D['pads'][k]
+                if any(math.dist(e, p[:2]) <= p[2] / 2 for e in (s[0], s[1])) or near(p[:2], s, 0.05): par[fnd(('s', j))] = fnd(('p', k))
+            for j2 in sl:
+                if j2 > j:
+                    s2 = D['segs'][j2]
+                    if any(near(e, s2, 0.02) for e in (s[0], s[1])) or any(near(e, s, 0.02) for e in (s2[0], s2[1])): par[fnd(('s', j))] = fnd(('s', j2))
+        grp = {}
+        for k in pids: grp.setdefault(fnd(('p', k)), []).append(k)
+        if len(grp) > 1:
+            G = list(grp.values()); best = []
+            for a, b in itertools.combinations(range(len(G)), 2):
+                d, pa, pb = min((math.dist(D['pads'][x][:2], D['pads'][y][:2]), x, y) for x in G[a] for y in G[b])
+                best.append((round(d, 1), '%s.%s' % D['pads'][pa][4:6], '%s.%s' % D['pads'][pb][4:6]))
+            out[n] = sorted(best)[:len(G) - 1]
+    return out

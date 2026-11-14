@@ -27,7 +27,7 @@ def fixed(front=FX):
     P['P1'] = (sw1 - 4, H - 23, 0); P['P2'] = (sw1, H - 23, 0); P['P3'] = (sw1 + 4, H - 23, 0)
     P['P4'] = (sw2 - 2.5, H - 25, 0); P['P5'] = (sw2 + 2.5, H - 25, 0)
     P['MH1'] = (6, 6, 0); P['MH2'] = (W - 6, 6, 0); P['MH3'] = (92, 6, 0)
-    P['MH4'] = (6, H - 31, 0); P['MH5'] = (W - 5.5, H - 39, 0)   # ön taraf (kullanıcı isteği)
+    P['MH4'] = (6, H - 34, 0); P['MH5'] = (W - 5.5, H - 39, 0)   # ön taraf (kullanıcı isteği)
     return P
 # panel anahtar gövdeleri (kartın üstünde, parça konmaz): (x0,y0,x1,y1)
 def keepouts(front=FX):
