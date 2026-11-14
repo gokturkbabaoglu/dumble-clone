@@ -2,13 +2,15 @@
 
 12 V ile çalışan, 4 Ω 6,5" full range hoparlör süren küçük bir pratik amfisi. Volume, Gain, ISF (US ↔ UK karakter) kontrolleri, Dark/Normal/Bright anahtarı ve kesicili 3,5 mm kulaklık çıkışı var. Tek yüzlü, ev yapımı (toner transfer) baskı devre üzerine kurulur; pot, jak, LED ve anahtarlar kartın ön kenarında dizilidir.
 
-**Durum:** Kart v2 çizildi ve doğrulandı: kopuk ya da kısa devre yok, en dar aralık 0,5 mm, 7 tel köprü (K1–K7). Parçalar alındı. Kart henüz basılmadı, devre henüz denenmedi. **Aşındırmadan önce:** devir raporundaki "Sorulacaklar" listesindeki ölçüler alınmalı ve 1:1 baskı üzerinde parçalar denenmeli.
+**Durum:** Basılacak kart KiCad kartıdır (aşağıda). Parçalar alındı. Kart henüz basılmadı, devre henüz denenmedi. **Teslim raporu:** [docs/kicad/TESLIM_RAPORU.md](docs/kicad/TESLIM_RAPORU.md)
 
-**Kart v3 (taslak, kullanılmayacak olabilir):** v2 üzerine ölçüm/yapım düzeltmeleri ve RV4 DRIVE'ın ön kenara alınması. Otomatik yerleşim ile 185 × 114,3 mm, 8 tel köprü (hiçbiri parça üstünden geçmiyor), DRC 0,5 mm, kopuk/kısa yok. Görseller ve 1:1 PDF `images/v3_taslak/` içinde. Kart Proteus otomatik yol çizicisiyle yeniden yapılacak; aşağıdaki v2 görselleri ve parça listesi henüz v2'yi gösterir. Ayrıntı: [Kart v3 taslağı](#kart-v3-taslağı).
+**Kart v2 (arşiv):** çizildi ve doğrulandı: kopuk ya da kısa devre yok, en dar aralık 0,5 mm, 7 tel köprü (K1–K7). **Aşındırmadan önce:** devir raporundaki "Sorulacaklar" listesindeki ölçüler alınmalı ve 1:1 baskı üzerinde parçalar denenmeli.
+
+**Kart v3 (taslak, arşiv):** v2 üzerine ölçüm/yapım düzeltmeleri ve RV4 DRIVE'ın ön kenara alınması. Otomatik yerleşim ile 185 × 114,3 mm, 8 tel köprü (hiçbiri parça üstünden geçmiyor), DRC 0,5 mm, kopuk/kısa yok. Görseller ve 1:1 PDF `images/v3_taslak/` içinde. Yerine KiCad kartı yapıldı. Ayrıntı: [Kart v3 taslağı](#kart-v3-taslağı).
 
 **Kart KiCad (güncel, basılacak olan):** KiCad 10'da sıfırdan tasarlandı, Freerouting ile yönlendirildi. **185 × 96 mm**, tek yüz (yalnız alt bakır, via yok), alt katta GND dolgusu, **2 tel köprü** (K1, K2, 5,08 mm, düz). DRC: kopuk bağlantı yok, aralık ≥ 0,5 mm. Ayrıntı: [Kart (KiCad)](#kart-kicad). v2/v3 bölümleri arşiv olarak duruyor.
 
-**Devir raporu (güncel durum, sorulacak ölçüler, sonraki adımlar):** https://claude.ai/artifact/CqNFPdVpvteivkdLXzBCgm
+**Eski devir raporu (v2/v3 dönemi):** https://claude.ai/artifact/CqNFPdVpvteivkdLXzBCgm
 
 ![Şema](images/1_devre_semasi.png)
 
@@ -18,7 +20,7 @@
 |---|---|
 | `kicad/amfi/` | **Güncel KiCad 10 projesi** (şema, kart, kütüphane, kurallar) |
 | `kicad/*.py` | KiCad dosyası üreticileri, yerleşim, toplu yönlendirme, analiz, tel köprü bulucu |
-| `docs/kicad/` | Toner transfer 1:1 PDF ve parça yerleşimi PDF'i |
+| `docs/kicad/` | Toner transfer 1:1 PDF, parça yerleşimi PDF'i ve teslim raporu |
 | `images/kicad/` | KiCad kartının görselleri |
 | `images/1_devre_semasi.png` | Devre şeması |
 | `images/2_pcb_on_yuz.png` | Parça yüzü |
