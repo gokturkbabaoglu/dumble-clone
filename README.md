@@ -68,7 +68,7 @@ KiCad 10 projesi `kicad/amfi/` klasöründe (`amfi.kicad_pro`). Şema, sembol ve
 
 **Parça adı değişiklikleri (KiCad harf sonekini kabul etmediği için):** C15a → C15, C15b → C26, R20a → R20, R20b → R30, R22a → R22, R22b → R31; KiCad'de CB → CB1, CD → CD1, anahtar kablo padleri P_SWB/P_SWC/P_SWD → P1/P2/P3, P_PW1/P_PW2 → P4/P5. Yeni: MH4, MH5 (vida), K1, K2 (tel köprü).
 
-**Nasıl üretildi:** `kicad/yerlesim.py` (elle düşünülmüş yerleşim tohumları + çakışma çözücü) → `kicad/toplu.py` (KiCad konsolunda Freerouting'i toplu, penceresiz çalıştırır) → `kicad/analiz.py` (kopuk bağlantı, GND adaları, gürültü ölçütleri) → `kicad/kopru.py` / `kopru_ekle.py` (GND adaları için en kısa düz köprü). Seçilen yerleşim: `KART_H=96 python kicad/yerlesim.py "K4@96#11"`. 185 mm genişlikte 114 → 84 mm arası yaklaşık 150 kart denendi; 96 mm, tamamen yönlendirilmiş ve en az köprü (2) isteyen en küçük karttı.
+**Nasıl üretildi:** `kicad/yerlesim.py` (elle düşünülmüş yerleşim tohumları + çakışma çözücü) → `kicad/toplu.py` (KiCad konsolunda Freerouting'i toplu, penceresiz çalıştırır) → `kicad/analiz.py` (kopuk bağlantı, GND adaları, gürültü ölçütleri) → `kicad/kopru.py` / `kopru_ekle.py` (GND adaları için en kısa düz köprü). `kicad/cikti.py` KiCad konsolunda toner (B.Cu, 1:1) ve parça yerleşimi PDF'lerini `cikti/` klasörüne üretir. Seçilen yerleşim: `KART_H=96 python kicad/yerlesim.py "K4@96#11"`. 185 mm genişlikte 114 → 84 mm arası yaklaşık 150 kart denendi; 96 mm, tamamen yönlendirilmiş ve en az köprü (2) isteyen en küçük karttı.
 
 ## Baskı devre (v2, arşiv)
 
