@@ -23,6 +23,9 @@ PARTS = {}
 for ref, (fp, val, nets) in D.C.items():
     if ref in SKIP: continue
     PARTS[REN.get(ref, ref)] = (fp, val, nets)
+# kullanıcı isteği: ön tarafa ek M3 vida delikleri (eskiler hep arka kenardaydı)
+PARTS['MH4'] = ('MH', 'M3', ['NC_MH4'])
+PARTS['MH5'] = ('MH', 'M3', ['NC_MH5'])
 
 # ---------------- ayak izi adları ----------------
 def fpname(fp):
@@ -61,13 +64,14 @@ def _rot(x, y, r):
     return x * c + y * sn, -x * sn + y * c
 
 def fp_extent(fp):
-    """Avlu dikdörtgeni (yerel): x0,y0,x1,y1"""
-    d = D.FP[fp]; bb = body_box(fp); pins = d['pins']
-    xs = [p[0] for p in pins]; ys = [p[1] for p in pins]
+    """Avlu dikdörtgeni (yerel): gövde ile pad halkalarının birleşimi + 0.25 mm."""
+    d = D.FP[fp]; bb = body_box(fp); pins = d['pins']; r = d['pad'] / 2
+    xs = [p[0] - r for p in pins] + [p[0] + r for p in pins]
+    ys = [p[1] - r for p in pins] + [p[1] + r for p in pins]
     if bb:
         if bb[0] == 'c': xs += [bb[1] - bb[3], bb[1] + bb[3]]; ys += [bb[2] - bb[3], bb[2] + bb[3]]
         else: xs += [bb[0], bb[2]]; ys += [bb[1], bb[3]]
-    m = d['pad'] / 2 + 0.25
+    m = 0.25
     return min(xs) - m, min(ys) - m, max(xs) + m, max(ys) + m
 
 def fp_items(fp, rot=0, nets=None, netnum=None, key=''):
@@ -235,7 +239,7 @@ BLOCKS = [
     ('ISF + VOLUME + TDA2003 GİRİŞİ', ['RV2', 'RV3', 'R23', 'R24', 'C21', 'C22']),
     ('TDA2003 GÜÇ KATI', ['U2', 'R25', 'R26', 'C23', 'R27', 'C24']),
     ('ÇIKIŞ: HOPARLÖR / KULAKLIK', ['C25', 'J2', 'R28', 'R29', 'TB2']),
-    ('MONTAJ DELİKLERİ', ['MH1', 'MH2', 'MH3']),
+    ('MONTAJ DELİKLERİ', ['MH1', 'MH2', 'MH3', 'MH4', 'MH5']),
 ]
 _all = sum((b[1] for b in BLOCKS), [])
 assert sorted(_all) == sorted(PARTS), set(PARTS) ^ set(_all)
@@ -313,7 +317,7 @@ def project():
             "defaults": {"board_outline_line_width": 0.1, "copper_line_width": 0.2},
             "rules": {"min_clearance": 0.5, "min_track_width": 0.8, "min_copper_edge_clearance": 1.0,
                       "min_through_hole_diameter": 0.6, "min_hole_to_hole": 0.5, "min_hole_clearance": 0.25,
-                      "min_via_diameter": 2.0, "min_via_annular_width": 0.5, "min_connection": 0.5,
+                      "min_via_diameter": 2.0, "min_via_annular_width": 0.35, "min_connection": 0.5,
                       "allow_blind_buried_vias": False, "allow_microvias": False, "solder_mask_to_copper_clearance": 0.0},
             "track_widths": [0.0, 1.0, 1.3, 2.0], "via_dimensions": [{"diameter": 0.0, "drill": 0.0}],
         }},

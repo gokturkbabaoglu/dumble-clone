@@ -8,11 +8,14 @@ import gen_kicad as G
 D = G.D
 f, q, uid = G.f, G.q, G.uid
 
-W, H = 185.0, 114.3          # kart (mm); ön kenar y = H
+W = 185.0
+H = float(os.environ.get('KART_H', '114.3'))   # kart derinliği (mm); ön kenar y = H
 OX, OY = 30.0, 30.0           # KiCad sayfasındaki kayma
 GAP = 2.54                    # avlular arası boşluk (aradan bir yol geçsin)
 EDGE = 1.0
 STRIP = 2.5                   # kenar GND şeridi (yol yok)
+GND_RING = 0.0                # kenar GND yolu eksen uzaklığı (0 = yok)
+RING_W = 1.5
 
 # ------------------------------ sabit parçalar ------------------------------
 FX = {'J1': 12, 'RV4': 34, 'RV1': 56, 'SW1': 77, 'RV2': 99, 'RV3': 123, 'J2': 145, 'D2': 160, 'SW2': 175}
@@ -24,6 +27,7 @@ def fixed(front=FX):
     P['P1'] = (sw1 - 4, H - 23, 0); P['P2'] = (sw1, H - 23, 0); P['P3'] = (sw1 + 4, H - 23, 0)
     P['P4'] = (sw2 - 2.5, H - 25, 0); P['P5'] = (sw2 + 2.5, H - 25, 0)
     P['MH1'] = (6, 6, 0); P['MH2'] = (W - 6, 6, 0); P['MH3'] = (92, 6, 0)
+    P['MH4'] = (6, H - 31, 0); P['MH5'] = (W - 5.5, H - 39, 0)   # ön taraf (kullanıcı isteği)
     return P
 # panel anahtar gövdeleri (kartın üstünde, parça konmaz): (x0,y0,x1,y1)
 def keepouts(front=FX):
@@ -225,18 +229,15 @@ def write_pcb(vname, P, path, with_gnd_zone=False):
     # panel anahtar gövdeleri: parça yok (yol serbest)
     for i, k in enumerate(keepouts()):
         s += zone_rule('anahtar_govdesi_%d' % (i + 1), 'F.Cu', rectpts(*k), tracks=True, pour=True, fps=False, key=vname + str(i))
-    # TDA2003 soğutucusunun kart üstündeki izdüşümü: B.Cu'da yol yok (yalnız GND dolgusu)
-    ux, uy, _ = P['U2']; hw, hd = D.HS_KEEPOUT
-    top = uy + G.body_box('PW5')[1]
-    if top > EDGE:
-        s += zone_rule('sogutucu_alti', 'B.Cu', rectpts(ux - hw / 2, 0, ux + hw / 2, top), tracks=False, pour=True, key=vname)
-    # kenarda kesintisiz GND şeridi için B.Cu'da yol yasak şerit (dolgu serbest); J2'nin 1. pini önde şeride taşar
-    S = STRIP
-    jx = P['J2'][0]
-    strips = [('serit_arka', rectpts(0, 0, W, S)), ('serit_sol', rectpts(0, 0, S, H)), ('serit_sag', rectpts(W - S, 0, W, H)),
-              ('serit_on_1', rectpts(0, H - S, jx - 5, H)), ('serit_on_2', rectpts(jx + 5, H - S, W, H))]
-    for nm, pts in strips:
-        s += zone_rule(nm, 'B.Cu', pts, tracks=False, pour=True, key=vname)
+    # Kenarda kesintisiz GND yolu (kilitli; Freerouting dokunmaz). Ön kenarda J2'nin 1. pini kenara taştığı için
+    # ön kenar şeridi J2'nin solunda biter; sağ ön köşe sağ kenardan beslenir.
+    if GND_RING:
+        g = GND_RING; wd = RING_W; jx = P['J2'][0]
+        pts = [(jx - 6, H - g), (g, H - g), (g, g), (W - g, g), (W - g, H - g), (jx + 6, H - g)]
+        for i in range(len(pts) - 1):
+            (x1, y1), (x2, y2) = pts[i], pts[i + 1]
+            s += '\t(segment (start %s %s) (end %s %s) (width %s) (layer "B.Cu") (locked yes) (net %d) (uuid %s))\n' % (
+                f(x1 + OX), f(y1 + OY), f(x2 + OX), f(y2 + OY), f(wd), netnum['GND'], q(uid('ring', vname, i)))
     if with_gnd_zone:
         s += ('\t(zone (net %d) (net_name "GND") (layer "B.Cu") (uuid %s) (name "GND") (hatch edge 0.5)\n'
               '\t\t(connect_pads (clearance 0.5)) (min_thickness 0.5) (filled_areas_thickness no)\n'
