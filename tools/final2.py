@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage
 from geom import *
-from route2 import Router
+from route2 import Router, ring_cells, RING
 PX = 20
 def wid(n): return 1.3 if n in POWER_NETS else 1.0
 def cell_mm(c): return (c[0]*U, c[1]*U)
@@ -19,6 +19,12 @@ def build_geom(pl, r):
             items.append((n,'pad',(pm[i],d,FP[fp]['hole']))); padpos[(ref,i)]=pm[i]
             if abs(pm[i][0]-pc[i][0]*U)>0.05 or abs(pm[i][1]-pc[i][1]*U)>0.05:
                 items.append((n,'seg',(cell_mm(pc[i]),pm[i],min(wid(n),1.0))))
+    if RING>0:
+        # şerit = 1..RING hücreleri (+ yol yarı genişliği); router ile aynı alan
+        c=(1+RING)/2*U; w=(RING-1)*U+1.0
+        a=c; b=W*U-c; t=c; yb=(H-1)*U
+        for p,q in (((a,t),(b,t)),((a,t),(a,yb)),((b,t),(b,yb))):
+            items.append(('GND','seg',(p,q,w)))
     for n,segs in r.paths.items():
         js=set((tuple(a),tuple(b)) for a,b in r.jumps.get(n,[]))
         for path in segs:
@@ -110,7 +116,7 @@ def route_eval(pl, order):
     r.pincells['GND']=list(reps.values())+iso
     ok=r.route_net('GND'); r.pincells['GND']=full
     r.paths['GND']=bbp+r.paths.get('GND',[]); r.jumps['GND']=bbj+r.jumps.get('GND',[])
-    if not ok: return None,['GND']
+    if not ok: return None,['GND']*(1+getattr(r,'unrouted',1))
     return r,[]
 def bad_jumps(r):
     n=0
@@ -141,7 +147,7 @@ if __name__=='__main__':
         nj=sum(len(v) for v in r.jumps.values()); L=sum(len(p) for s in r.paths.values() for p in s)
         print(t,'jumps',nj,'L',L,flush=True)
         bj=bad_jumps(r)
-        if best is None or nj*100+bj*150+L<best[0]: best=(nj*100+bj*150+L,r); print('  best so far',nj,bj)
+        if best is None or nj*1000+bj*1500+L<best[0]: best=(nj*1000+bj*1500+L,r); print('  best so far',nj,bj)
     r=best[1]; items,padpos=build_geom(pl,r); g=pour(items)
     print('VERIFY',verify(items,padpos,g))
     pickle.dump({'pl':pl,'items':items,'padpos':padpos,'g':g},open('final_geom.pkl','wb'))

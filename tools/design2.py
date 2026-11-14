@@ -7,12 +7,10 @@ def mk(pins, body, pad, hole=None, shape='rect'):
 FP = {}
 FP['R'] = mk([(0,0),(10.16,0)], ('rect',6.5,2.6), 2.0, 0.9)
 FP['CF'] = mk([(0,0),(5.08,0)], ('rect',7.2,3.5), 2.0, 0.9)
-FP['CF1U'] = mk([(0,0),(5.08,0),(FILM_1U_ALT,0)], ('rect',10.0,4.5), 2.0, 0.9)
 FP['CC'] = mk([(0,0),(5.08,0)], ('rect',5.0,3.0), 1.9, 0.8)   # seramik pF
 for k,(d,p) in ELKO.items():
-    pins=[(0,0),(p,0)]
-    if k in ELKO_ALT: pins.append((ELKO_ALT[k],0))
-    FP['E'+k] = mk(pins, ('circ',d), 2.0 if d<8 else 2.4, 0.9 if d<8 else 1.1)
+    pad,hole=ELKO_PAD[p]
+    FP['E'+k] = mk([(0,0),(p,0)], ('circ',d), pad, hole)
 FP['TO92'] = mk([(0,0),(2.54,0),(5.08,0)], ('to92',5.0,4.0), 1.7, 0.8)
 FP['TRIM'] = mk([(0,0),(2.54,0),(5.08,0)], ('rect',9.8,4.9), 1.7, 0.8)
 FP['DIP8'] = mk([(0,0),(2.54,0),(5.08,0),(7.62,0),(7.62,-7.62),(5.08,-7.62),(2.54,-7.62),(0,-7.62)], ('dip',10.2,6.6), 1.7, 0.8)
@@ -39,7 +37,7 @@ C = {
  'TB1':('TB2','DC giriş',['DCIN','GND']),
  'F1':('FUSE','1A',['DCIN','FUSED']),
  'D1':('DO201','1N5822',['VIN','V12']),
- 'C1':('E2200µ','2200µ',['V12','GND','GND']),
+ 'C1':('E2200µ','2200µ',['V12','GND']),
  'C2':('CF','100n',['V12','GND']),
  'R1':('R','100',['V12','V2']),
  'C3':('E220µ','220µ',['V2','GND']),
@@ -54,9 +52,10 @@ C = {
  'JP1':('JMP','sus*',['INDET','GND']),
  'R5':('R','33k',['IN','GATE']),
  'R6':('R','1M',['GATE','GND']),
- 'Q1':('TO92','BF245B',['DRAIN','SRC','GATE']),     # NXP pinout 1=D 2=S 3=G (kontrol et)
+ 'Q1':('TO92','BF245B',['GATE','SRC','DRAIN']),     # Fairchild (parça üzerinde F logosu): 1=G 2=S 3=D
  'TR1':('TRIM','10k',['SRC','GND','GND']),
- 'C9':('E22µ','22µ*',['SRC','GND']),
+ 'C9':('E22µ','22µ',['SRC','DRV']),
+ 'RV4':('POT','DRIVE B2.2K',['GND','GND','DRV']),   # saat yönü = direnç azalır = daha çok kazanç
  'R4':('R','6.8k',['V3','DRAIN']),
  'C10':('CF','100n',['DRAIN','GAININ']),
  # gain + sw1
@@ -103,7 +102,7 @@ C = {
  'R23':('R','47k',['VOLW','Z']),
  'R24':('R','10k',['Z','GND']),
  'C21':('CF','3.3n',['Z','GND']),
- 'C22':('CF1U','1µ',['Z','TIN','TIN']),
+ 'C22':('E1µ','1µ',['TIN','Z']),          # elektrolitik: + (1. bacak) TIN tarafı
  # TDA
  'U2':('PW5','TDA2003',['TIN','TNEG','GND','TOUT','V12']),
  'R25':('R','220',['TNEG','TOUT']),
@@ -113,7 +112,7 @@ C = {
  'C24':('CF','100n',['ZOB2','GND']),
  'C6':('CF','100n',['V12','GND']),
  'C7':('E1000µ','1000µ',['V12','GND']),
- 'C25':('E2200µ','2200µ',['TOUT','SPK','SPK']),
+ 'C25':('E2200µ','2200µ',['TOUT','SPK']),
  # headphone / speaker
  'J2':('PJ324','KULAKLIK',['HPS','HPNC2','SPK','SPK','SPKT']),   # 1 sleeve,2 ring-NC,3 ring,4 tip,5 tip-NC
  'R28':('R','10',['SPK','HPS']),

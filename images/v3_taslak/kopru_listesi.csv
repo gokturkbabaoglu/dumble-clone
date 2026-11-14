@@ -1,0 +1,9 @@
+köprü;net;delik arası (mm);yön;önerilen tel boyu (mm)
+K1;GND;12.7;dikey;21
+K2;GND;5.1;dikey;13
+K3;USOUT;6.3;yatay;14
+K4;GND;5.1;yatay;13
+K5;V12;7.6;yatay;16
+K6;V12;5.1;yatay;13
+K7;V12;5.1;yatay;13
+K8;V12;11.4;yatay;19
