@@ -4,3 +4,4 @@ __pycache__/
 tools/pl_*.json
 tools/rsa_*.json
 tools/base*.json
+__pycache__/

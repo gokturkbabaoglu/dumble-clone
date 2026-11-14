@@ -184,3 +184,67 @@ def islands(D):
                 best.append((round(d, 1), '%s.%s' % D['pads'][pa][4:6], '%s.%s' % D['pads'][pb][4:6]))
             out[n] = sorted(best)[:len(G) - 1]
     return out
+
+def gnd_islands(path):
+    """Dolgulu kartta GND padlerinin hangi dolgu parçasına değdiğini bulur; ana parçaya değmeyen padler için
+    ana parçaya en kısa düz mesafeyi (köprü boyu) ve arada kaç yol kesildiğini verir."""
+    B = sexp(open(path, encoding='utf-8').read())
+    D = load(path)
+    polys = []
+    for z in find(B, 'zone'):
+        nn = one(z, 'net'); nm = nn[1] if nn and len(nn) > 1 else ''
+        nname = one(z, 'net_name')
+        name = (nname[1] if nname else nm)
+        if name != 'GND' and nm != 'GND': continue
+        for fp in find(z, 'filled_polygon'):
+            pts = [(float(p[1]), float(p[2])) for p in one(fp, 'pts') if isinstance(p, list) and p[0] == 'xy']
+            polys.append(pts)
+    def inside(pt, P):
+        x, y = pt; c = False
+        for i in range(len(P)):
+            (x1, y1), (x2, y2) = P[i], P[i - 1]
+            if (y1 > y) != (y2 > y) and x < (x2 - x1) * (y - y1) / (y2 - y1) + x1: c = not c
+        return c
+    def edist(pt, P):
+        best = 1e9
+        for i in range(len(P)):
+            (ax, ay), (bx, by) = P[i - 1], P[i]; vx, vy = bx - ax, by - ay; L = vx * vx + vy * vy
+            t = 0 if L == 0 else max(0, min(1, ((pt[0] - ax) * vx + (pt[1] - ay) * vy) / L))
+            best = min(best, math.dist(pt, (ax + t * vx, ay + t * vy)))
+        return best
+    areas = []
+    for P in polys:
+        a = 0
+        for i in range(len(P)): a += P[i - 1][0] * P[i][1] - P[i][0] * P[i - 1][1]
+        areas.append(abs(a) / 2)
+    gp = [p for p in D['pads'] if p[3] == 'GND']
+    owner = {}
+    for p in gp:
+        for k, P in enumerate(polys):
+            if inside(p[:2], P) or edist(p[:2], P) <= p[2] / 2 + 0.15:
+                owner.setdefault((p[4], p[5]), set()).add(k)
+    # parçaları padler üzerinden birleştir (tek pad iki parçaya değiyorsa)
+    par = list(range(len(polys)))
+    def f_(a):
+        while par[a] != a: par[a] = par[par[a]]; a = par[a]
+        return a
+    for ks in owner.values():
+        ks = list(ks)
+        for k in ks[1:]: par[f_(k)] = f_(ks[0])
+    # GND yollarıyla bağlı padleri de birleştir
+    comp_area = {}
+    for k in range(len(polys)): comp_area[f_(k)] = comp_area.get(f_(k), 0) + areas[k]
+    main = max(comp_area, key=comp_area.get) if comp_area else None
+    mainpolys = [polys[k] for k in range(len(polys)) if f_(k) == main]
+    res = []
+    for p in gp:
+        ks = owner.get((p[4], p[5]), set())
+        if ks and any(f_(k) == main for k in ks): continue
+        d = min(edist(p[:2], P) for P in mainpolys) - p[2] / 2 if mainpolys else 99
+        grp = f_(min(ks)) if ks else ('pad', p[4], p[5])
+        res.append(('%s.%s' % (p[4], p[5]), round(d, 1), grp))
+    # her ada için en kısa köprü
+    best = {}
+    for name, d, g in res:
+        if g not in best or d < best[g][1]: best[g] = (name, d)
+    return sorted(best.values(), key=lambda x: x[1]), len(polys), round(comp_area.get(main, 0))

@@ -10,4 +10,5 @@
 (rule "aralik"
 	(constraint clearance (min 0.5mm)))
 (rule "kenar"
-	(constraint edge_clearance (min 1.0mm)))
+	(constraint edge_clearance (min 0.5mm)))
+# arka/sol/sağ kenarda 1 mm şerit kural alanlarıyla korunur; ön kenarda potların altından geçen yollar için 0.5 mm

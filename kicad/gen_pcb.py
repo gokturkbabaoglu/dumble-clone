@@ -238,10 +238,16 @@ def write_pcb(vname, P, path, with_gnd_zone=False):
             (x1, y1), (x2, y2) = pts[i], pts[i + 1]
             s += '\t(segment (start %s %s) (end %s %s) (width %s) (layer "B.Cu") (locked yes) (net %d) (uuid %s))\n' % (
                 f(x1 + OX), f(y1 + OY), f(x2 + OX), f(y2 + OY), f(wd), netnum['GND'], q(uid('ring', vname, i)))
+    # kenar payı: Freerouting 1 mm kenar kuralını bilmediği için B.Cu'da 1 mm yol yasağı şeridi (dolgu serbest);
+    # J2'nin 1. pini kenara taştığı için ön şerit J2 hizasında kesilir
+    e = 1.0; jx = P['J2'][0]
+    # ön kenarda şerit yok: potların altından geçen yollar için kanal gerekiyor (ön kenar payı 0.5 mm, DRC kuralı)
+    for nm, pts in [('kenar_arka', rectpts(0, 0, W, e)), ('kenar_sol', rectpts(0, 0, e, H)), ('kenar_sag', rectpts(W - e, 0, W, H))]:
+        s += zone_rule(nm, 'B.Cu', pts, tracks=False, pour=True, key=vname)
     if with_gnd_zone:
         s += ('\t(zone (net %d) (net_name "GND") (layer "B.Cu") (uuid %s) (name "GND") (hatch edge 0.5)\n'
-              '\t\t(connect_pads (clearance 0.5)) (min_thickness 0.5) (filled_areas_thickness no)\n'
-              '\t\t(fill yes (thermal_gap 0.5) (thermal_bridge_width 1.0) (island_removal_mode 1))\n'
+              '\t\t(connect_pads yes (clearance 0.5)) (min_thickness 0.5) (filled_areas_thickness no)\n'
+              '\t\t(fill yes (thermal_gap 0.5) (thermal_bridge_width 1.0) (island_removal_mode 0))\n'
               '\t\t(polygon (pts %s)))\n') % (netnum['GND'], q(uid('gndzone', vname)),
                                              ' '.join('(xy %s %s)' % (f(x + OX), f(y + OY)) for x, y in rectpts(EDGE, EDGE, W - EDGE, H - EDGE)))
     s += ')\n'

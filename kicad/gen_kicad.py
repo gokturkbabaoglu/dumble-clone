@@ -16,7 +16,7 @@ def q(s): return '"' + str(s).replace('\\', '\\\\').replace('"', '\\"') + '"'
 
 # ---------------- referans adları (KiCad'in sayı bekleyen adları için) ----------------
 # a/b sonekli çiftler: KiCad harf sonekini çok birimli parça sanar -> yeni numara (kullanıcı kararı)
-REN = {'C15a': 'C15', 'C15b': 'C26', 'R20a': 'R20', 'R20b': 'R30', 'R22a': 'R22', 'R22b': 'R31',
+REN = {
        'CB': 'CB1', 'CD': 'CD1', 'P_SWB': 'P1', 'P_SWC': 'P2', 'P_SWD': 'P3', 'P_PW1': 'P4', 'P_PW2': 'P5'}
 SKIP = {'KO_SW1', 'KO_SW2'}          # panel anahtar gövdeleri: PCB'de yasak bölge olarak çizilir
 PARTS = {}
@@ -26,9 +26,17 @@ for ref, (fp, val, nets) in D.C.items():
 # kullanıcı isteği: ön tarafa ek M3 vida delikleri (eskiler hep arka kenardaydı)
 PARTS['MH4'] = ('MH', 'M3', ['NC_MH4'])
 PARTS['MH5'] = ('MH', 'M3', ['NC_MH5'])
+# Tel köprüler (GND adalarını ana dolguya bağlar). kicad/kopruler.json: [{"ref": "K1", "L": 5.08}, ...]
+_kj = os.path.join(HERE, 'kopruler.json')
+KOPRULER = json.load(open(_kj, encoding='utf-8')) if os.path.exists(_kj) else []
+for _k in KOPRULER:
+    _key = 'KOPRU%g' % _k['L']
+    D.FP[_key] = dict(pins=[(0, 0), (_k['L'], 0)], body=('rect', _k['L'], 1.0), pad=2.0, hole=0.9, shape='rect')
+    PARTS[_k['ref']] = (_key, 'tel köprü %g mm' % _k['L'], ['GND', 'GND'])
 
 # ---------------- ayak izi adları ----------------
 def fpname(fp):
+    if fp.startswith('KOPRU'): return 'Kopru_P%s' % fp[5:]
     if fp.startswith('E'):
         d, p = D.ELKO[fp[1:]]
         return 'CP_D%s_P%s' % (f(d), f(p))
@@ -207,6 +215,7 @@ SYM['MH'] = ('\t\t\t(circle (center 0 0) (radius 1.524) (stroke (width 0.254) (t
 
 def symtype(ref, fp, val):
     if fp.startswith('E'): return 'CP'
+    if fp.startswith('KOPRU'): return 'JMP'
     return {'R': 'R', 'CF': 'C', 'CC': 'C', 'TO92': 'NJFET', 'TRIM': 'POT', 'POT': 'POT', 'DIP8': 'LM386',
             'PW5': 'TDA2003', 'DO201': 'D', 'LED': 'LED', 'J635': 'JACK3', 'PJ324': 'PJ324', 'TB2': 'TB2',
             'FUSE': 'FUSE', 'PAD': 'PAD', 'JMP': 'JMP', 'MH': 'MH'}[fp]
@@ -241,6 +250,8 @@ BLOCKS = [
     ('ÇIKIŞ: HOPARLÖR / KULAKLIK', ['C25', 'J2', 'R28', 'R29', 'TB2']),
     ('MONTAJ DELİKLERİ', ['MH1', 'MH2', 'MH3', 'MH4', 'MH5']),
 ]
+if KOPRULER:
+    BLOCKS.append(('TEL KÖPRÜLER (GND dolgu adaları)', [k['ref'] for k in KOPRULER]))
 _all = sum((b[1] for b in BLOCKS), [])
 assert sorted(_all) == sorted(PARTS), set(PARTS) ^ set(_all)
 
@@ -315,9 +326,9 @@ def project():
     return {
         "board": {"design_settings": {
             "defaults": {"board_outline_line_width": 0.1, "copper_line_width": 0.2},
-            "rules": {"min_clearance": 0.5, "min_track_width": 0.8, "min_copper_edge_clearance": 1.0,
+            "rules": {"min_clearance": 0.5, "min_track_width": 0.5, "min_copper_edge_clearance": 0.5,
                       "min_through_hole_diameter": 0.6, "min_hole_to_hole": 0.5, "min_hole_clearance": 0.25,
-                      "min_via_diameter": 2.0, "min_via_annular_width": 0.35, "min_connection": 0.5,
+                      "min_via_diameter": 2.0, "min_via_annular_width": 0.3, "min_connection": 0.5,
                       "allow_blind_buried_vias": False, "allow_microvias": False, "solder_mask_to_copper_clearance": 0.0},
             "track_widths": [0.0, 1.0, 1.3, 2.0], "via_dimensions": [{"diameter": 0.0, "drill": 0.0}],
         }},
@@ -354,7 +365,8 @@ DRU = '''(version 1)
 (rule "aralik"
 \t(constraint clearance (min 0.5mm)))
 (rule "kenar"
-\t(constraint edge_clearance (min 1.0mm)))
+\t(constraint edge_clearance (min 0.5mm)))
+# arka/sol/sağ kenarda 1 mm şerit kural alanlarıyla korunur; ön kenarda potların altından geçen yollar için 0.5 mm
 '''
 
 def main():

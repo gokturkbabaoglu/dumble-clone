@@ -213,7 +213,7 @@ if __name__ == '__main__':
         m, E = GP.metrics(P)
         GP.preview(name, P, E, m, os.path.join(GP.HERE, 'onizleme_%s.png' % name))
         print(m)
-        GP.write_pcb(name, P, os.path.join(GP.HERE, 'amfi', 'amfi_%s.kicad_pcb' % name))
+        GP.write_pcb(name, P, os.path.join(GP.HERE, 'amfi', 'amfi_%s.kicad_pcb' % name), with_gnd_zone=True)
         import json, shutil
         d = json.load(open(os.path.join(GP.HERE, 'amfi', 'amfi.kicad_pro'), encoding='utf-8')); d['meta']['filename'] = 'amfi_%s.kicad_pro' % name
         json.dump(d, open(os.path.join(GP.HERE, 'amfi', 'amfi_%s.kicad_pro' % name), 'w', encoding='utf-8'), indent=2, ensure_ascii=False)
