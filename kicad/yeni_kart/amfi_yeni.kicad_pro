@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "filename": "amfi_yeni.kicad_pro",
+    "version": 3
+  },
+  "schematic": {
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  },
+  "sheets": [
+    [
+      "da6de08c-d5a8-5e6f-b86a-551ec556571b",
+      "Root"
+    ]
+  ],
+  "text_variables": {}
+}
