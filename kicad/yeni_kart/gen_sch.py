@@ -1,4 +1,4 @@
-"""Yeni KiCad projesinin şemasını üretir (KiCad standart sembolleriyle).
+"""Yeni KiCad projesi: netlist (design2) ve KiCad standart sembol yardımcıları.
 
 Devre: tools/design2.py netlisti (kicad/amfi/amfi.kicad_sch ile aynı), aynı referans adları
 ve değerler. K1/K2 tel köprüleri ve KO_SW* yasak bölgeleri devrenin parçası olmadığı için alınmadı.
@@ -213,95 +213,7 @@ def connect(pinmap, nets, stub=STUB):
         else:
             label(net, e, d)
 
-# ------------------------------------------------------------------ yerleşim
-BLOCKS = [
-    ('BESLEME', ['TB1', 'F1', 'P4', 'P5', 'D1', 'C1', 'C2', 'C7', 'C6', 'R1', 'C3', 'C8', 'C4', 'R2', 'C5', 'R3', 'D2']),
-    ('GİRİŞ + JFET', ['J1', 'Q1', 'TR1', 'RV4', 'JP1', 'R5', 'R6', 'R4', 'C9', 'C10']),
-    ('GAIN + SW1 (panel anahtarı, P1-P3 kablo padleri)', ['RV1', 'R7', 'CB1', 'CD1', 'P1', 'P2', 'P3']),
-    ('LM386', ['U1', 'R8', 'C11', 'C12', 'R9', 'C13', 'C14']),
-    ('US TON YIĞINI', ['R10', 'R11', 'C15', 'C26', 'C16', 'C17', 'R13', 'R14', 'R15', 'R16']),
-    ('UK TON YIĞINI', ['R12', 'R17', 'R18', 'C18', 'C19', 'C20', 'R19', 'R20', 'R30', 'R21', 'R22', 'R31']),
-    ('ISF + VOLUME', ['RV2', 'RV3', 'R23', 'R24', 'C21', 'C22']),
-    ('GÜÇ KATI (TDA2003)', ['U2', 'R25', 'R26', 'C23', 'R27', 'C24', 'C25']),
-    ('KULAKLIK / HOPARLÖR', ['J2', 'TB2', 'R28', 'R29']),
-    ('MEKANİK', ['MH1', 'MH2', 'MH3', 'MH4', 'MH5']),
-]
-BIG = {'TO92', 'TRIM', 'POT', 'DIP8', 'PW5', 'J635', 'PJ324', 'TB2'}
-SMALL_W, SMALL_H = 38.1, 12.7
-BIG_W, BIG_H = 57.15, 27.94
-COL_W = 3 * SMALL_W + 7.62
-PAGE_W, PAGE_H = 594.0, 420.0          # A2
-X0, Y0, YMAX = 15.24, 20.32, PAGE_H - 45.0
-
-def place_part(ref, cx, cy):
-    p = PARTS[ref]; fp = p['fp']
-    lib = p['lib']; r = 0; rp = vp = None
-    if fp in ('R', 'CF', 'CC', 'FUSE') or fp.startswith('E'):
-        r = 90
-        rp = (cx, cy - 3.81, 0, None); vp = (cx, cy + 3.81, 0, None)
-    elif fp in ('POT', 'TRIM'):
-        if p['pins'].get('1') == 'GND':
-            r = 180
-    elif fp in ('PAD', 'JMP', 'LED', 'DO201'):
-        rp = (cx, cy - 3.81, 0, None); vp = (cx, cy + 3.81, 0, None)
-    elif fp == 'MH':
-        rp = (cx + 3.81, cy - 1.27, 0, 'left'); vp = (cx + 3.81, cy + 1.27, 0, 'left')
-    pm = sym_instance(ref, lib, p['value'], cx, cy, r, None, rp, vp)
-    connect(pm, p['pins'], 7.62 if fp in ('J635', 'PJ324') else STUB)
-
-def layout():
-    x, y = X0, Y0
-    for title, refs in BLOCKS:
-        bigs = [r for r in refs if PARTS[r]['fp'] in BIG]
-        smalls = [r for r in refs if r not in bigs]
-        nb_rows = math.ceil(len(bigs) / 2)
-        ns_rows = math.ceil(len(smalls) / 3)
-        h = 7.62 + nb_rows * BIG_H + ns_rows * SMALL_H + 2.54
-        if y + h > YMAX:
-            x += COL_W + 5.08; y = Y0
-        rect(x - 2.54, y - 2.54, x + COL_W - 2.54, y + h - 2.54)
-        text(title, x, y + 2.54)
-        yy = y + 7.62
-        for i, r in enumerate(bigs):
-            cx = x + (i % 2) * (COL_W / 2) + COL_W / 4 - 2.54
-            cy = yy + (i // 2) * BIG_H + BIG_H / 2
-            place_part(r, snap(cx), snap(cy))
-        yy += nb_rows * BIG_H
-        for i, r in enumerate(smalls):
-            cx = x + (i % 3) * SMALL_W + SMALL_W / 2
-            cy = yy + (i // 3) * SMALL_H + SMALL_H / 2
-            place_part(r, snap(cx), snap(cy))
-        y += h + 5.08
-    return x, y
-
-def snap(v, g=2.54): return round(round(v / g) * g, 3)
-
-def flags(x, y):
-    """Besleme bayrakları (ERC: güç girişleri sürülüyor)."""
-    text('PWR_FLAG', x, y, size=1.5, bold=False)
-    for i, net in enumerate(['V12', 'V2', 'GND']):
-        px, py = snap(x + 5.08 + i * 15.24), snap(y + 7.62)
-        sym_instance('#FLG%02d' % (i + 1), 'power:PWR_FLAG', 'PWR_FLAG', px, py, 0, None,
-                     refpos=(px, py - 5.08, 0, None), valpos=(px, py - 3.81, 0, None), hide_ref=True)
-        e = (px, round(py + 2.54, 3)); wire((px, py), e)
-        if net == 'GND':
-            gnd(e)
-        else:
-            label(net, e, (1, 0))
-
-def build():
-    lx, ly = layout()
-    flags(lx, ly)
-    ls = [S('lib_symbols')] + [SYMS_USED[k] for k in sorted(SYMS_USED)]
-    sch = [S('kicad_sch'), [S('version'), S('20250114')], [S('generator'), 'eeschema'], [S('generator_version'), '9.0'],
-           [S('uuid'), ROOT], [S('paper'), 'A2'],
-           [S('title_block'), [S('title'), '12 V Gitar Amfisi — yeni kart'], [S('date'), '2026-11-19'], [S('rev'), 'v4-şema'],
-            [S('comment'), S('1'), 'Kaynak: tools/design2.py netlisti (kicad/amfi/amfi.kicad_sch ile aynı devre)'],
-            [S('comment'), S('2'), 'SW1 ve güç anahtarı panelde; kartta P1-P5 kablo padleri. Bağlantılar net etiketleriyle.']],
-           ls] + ITEMS + [[S('sheet_instances'), [S('path'), '/', [S('page'), '1']]], [S('embedded_fonts'), S('no')]]
-    return sch
+# Şemanın çizimi (tellerle) gen_sema.py'de. Bu dosya netlist + sembol yardımcılarını sağlar.
 
 if __name__ == '__main__':
-    sch = build()
-    open(os.path.join(HERE, PRJ + '.kicad_sch'), 'w', encoding='utf-8', newline='\n').write(dump(sch) + '\n')
-    print('parça', len(PARTS), 'öğe', len(ITEMS))
+    import runpy; runpy.run_path(os.path.join(HERE, 'gen_sema.py'), run_name='__main__')

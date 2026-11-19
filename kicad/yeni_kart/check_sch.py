@@ -5,6 +5,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from sexp import parse, find, first
 import gen_sch as G
+import gen_sema as GS
 
 sch = parse(open(os.path.join(HERE, G.PRJ + '.kicad_sch'), encoding='utf-8').read())
 libs = {s[1]: s for s in find(first(sch, 'lib_symbols'), 'symbol')}
@@ -30,9 +31,10 @@ for s in find(sch, 'symbol'):
     X, Y, r = float(at[1]), float(at[2]), int(float(at[3]))
     ref = [p for p in find(s, 'property') if p[1] == 'Reference'][0][2]
     val = [p for p in find(s, 'property') if p[1] == 'Value'][0][2]
+    mir = first(s, 'mirror'); mir = mir[1] if mir else None
     for num, (px, py, pa) in G.pins_of(libs[libid]).items():
-        (pt, d) = G.pin_world(X, Y, r, px, py, pa)
-        pt = P(*pt)
+        (dx, dy), _ = GS.xf(px, py, pa, r, mir)
+        pt = P(X + dx * 1.27, Y + dy * 1.27)
         pinpts[(ref, num)] = pt
         if libid == 'power:GND':
             uni(('pt', pt), ('net', 'GND'))
@@ -44,16 +46,31 @@ for (a, b) in wires:
             if (a[0] == b[0] == p[0]) or (a[1] == b[1] == p[1]):
                 uni(('pt', p), ('pt', a))
 
-def netof(ref, num):
-    root = fnd(('pt', pinpts[(ref, num)]))
-    names = [k[1] for k in parent if k[0] == 'net' and fnd(k) == root]
-    return names
+def grp(ref, num):
+    return fnd(('pt', pinpts[(ref, num)]))
+def names(root):
+    return sorted(k[1] for k in parent if k[0] == 'net' and fnd(k) == root)
 bad = 0
+net2grp, grp2net = {}, {}
 for ref, p in G.PARTS.items():
     for num, net in p['pins'].items():
-        got = netof(ref, num)
-        if got != [net]:
-            print('HATA', ref, num, 'beklenen', net, 'bulunan', got); bad += 1
+        g = grp(ref, num)
+        if net in net2grp and net2grp[net] != g:
+            print('KOPUK', net, ref, num); bad += 1
+        net2grp.setdefault(net, g)
+        if g in grp2net and grp2net[g] != net:
+            print('KISA DEVRE', net, grp2net[g], ref, num); bad += 1
+        grp2net.setdefault(g, net)
+for net, g in net2grp.items():
+    nm = names(g)
+    if nm and nm != [net]:
+        print('ETİKET UYUŞMAZ', net, nm); bad += 1
+# yalnız tek pine bağlı tel/etiket grupları (sarkan uç) kontrolü
+cnt = {}
+for (ref, num), pt in pinpts.items():
+    cnt[fnd(('pt', pt))] = cnt.get(fnd(('pt', pt)), 0) + 1
+for (a, b) in wires:
+    if fnd(('pt', a)) not in cnt: print('SARKAN TEL', a, b); bad += 1
 # şemadaki her bileşen pini bağlı mı?
 for (ref, num), pt in pinpts.items():
     if ref.startswith('#'): continue
@@ -80,9 +97,13 @@ if len(sys.argv) > 2:
     from matplotlib.patches import Arc
     fig, ax = plt.subplots(figsize=(594 / 25.4 * 1.6, 420 / 25.4 * 1.6), dpi=110)
     ax.set_xlim(0, 594); ax.set_ylim(420, 0); ax.set_aspect('equal'); ax.axis('off')
+    MIR = [None]
     def T(X, Y, r, x, y):
+        if MIR[0] == 'x': y = -y
+        if MIR[0] == 'y': x = -x
         a, b = G.rot(x, y, r); return X + a, Y - b
-    def draw_sym(sym, X, Y, r):
+    def draw_sym(sym, X, Y, r, mir=None):
+        MIR[0] = mir
         for u in find(sym, 'symbol'):
             for g in u:
                 if not isinstance(g, list): continue
@@ -120,7 +141,7 @@ if len(sys.argv) > 2:
     for s in find(sch, 'symbol'):
         libid = first(s, 'lib_id')[1]; at = first(s, 'at')
         X, Y, r = float(at[1]), float(at[2]), int(float(at[3]))
-        draw_sym(libs[libid], X, Y, r)
+        mir = first(s, 'mirror'); draw_sym(libs[libid], X, Y, r, mir[1] if mir else None)
         for p in find(s, 'property'):
             if p[1] not in ('Reference', 'Value'): continue
             eff = first(p, 'effects')
@@ -136,6 +157,8 @@ if len(sys.argv) > 2:
         ha = 'left' if ang in (0, 90) else 'right'
         ax.text(float(at[1]), float(at[2]) - 0.3, l[1], fontsize=4.5, ha=ha, va='bottom',
                 rotation=(ang if ang in (0, 90) else ang - 180), rotation_mode='anchor', color='navy')
+    for jn in find(sch, 'junction'):
+        at = first(jn, 'at'); ax.add_patch(plt.Circle((float(at[1]), float(at[2])), 0.5, color='green'))
     for t in find(sch, 'text'):
         at = first(t, 'at'); ax.text(float(at[1]), float(at[2]), t[1], fontsize=7, weight='bold', va='bottom')
     for rc in find(sch, 'rectangle'):
