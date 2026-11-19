@@ -1,0 +1,125 @@
+(footprint "Pot_WH148_16mm_OnKenar"
+	(version 20260206)
+	(generator "amfi_gen")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "WH148 16 mm döner pot, 3 bacak 5,0 mm aralık, ön kenara (y=0) dayalı; delik 1,3 mm")
+	(tags "amfi_yeni")
+	(property "Reference" "REF**"
+		(at 0 -11 0)
+		(layer "F.SilkS")
+		(uuid "ab470b7f-66cd-59f1-b5dd-51c87301c80f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Pot_WH148_16mm_OnKenar"
+		(at 0 1.5 0)
+		(layer "F.Fab")
+		(uuid "fd9e3304-03d1-5fc8-b4b5-e0b990f081f5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "095c3332-318c-5360-8652-f173c974c887")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "WH148 16 mm döner pot, 3 bacak 5,0 mm aralık, ön kenara (y=0) dayalı; delik 1,3 mm"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ce822853-1a88-51b6-a4cb-64aeed7561f8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_rect
+		(start -8.5 -9.5)
+		(end 8.5 0)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "c9b20660-8594-573b-af4b-fd9e8b921d9e")
+	)
+	(fp_rect
+		(start -8.5 -9.5)
+		(end 8.5 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "55538875-d75d-5a02-b5d0-01a5ff987d99")
+	)
+	(fp_text user "ön kenar"
+		(at 0 1.2 0)
+		(layer "F.Fab")
+		(uuid "0656fd7d-c810-59c0-ac8e-de4356ddc762")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_rect
+		(start -8.75 -9.75)
+		(end 8.75 0.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "b5d4d985-74ba-52f1-b283-3ced361b350d")
+	)
+	(pad "1" thru_hole circle
+		(at -5 -5)
+		(size 3.6 3.6)
+		(drill 1.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "12b72701-a502-5c4c-8389-50a5ae97bb50")
+	)
+	(pad "2" thru_hole circle
+		(at 0 -5)
+		(size 3.6 3.6)
+		(drill 1.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "e74cc400-8391-5fb1-b8d5-346d02fe10e6")
+	)
+	(pad "3" thru_hole circle
+		(at 5 -5)
+		(size 3.6 3.6)
+		(drill 1.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "98a85af1-84fe-510e-ac06-673f9113c3b9")
+	)
+	(embedded_fonts no)
+)

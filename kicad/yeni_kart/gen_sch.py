@@ -50,8 +50,22 @@ for ref, (fp, val, nets) in D.C.items():
     else:
         pins = {str(i + 1): n for i, n in enumerate(nets)}
     PARTS[r] = dict(lib=lib, value=val, pins=pins, fp=fp)
+FPN = {'R': 'R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal', 'CF': 'C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2',
+       'CC': 'C_Disc_D5.0mm_W2.5mm_P5.00mm', 'TO92': 'TO-92_Inline_Wide', 'TRIM': 'Potentiometer_Bourns_3296W_Vertical',
+       'POT': 'Pot_WH148_16mm_OnKenar', 'DIP8': 'DIP-8_W7.62mm_Socket', 'DO201': 'D_DO-201AD_P15.24mm_Horizontal',
+       'PW5': 'TO-220-5_P3.4x3.7mm_StaggerOdd_Lead3.8mm_Vertical', 'PAD': 'SolderWire-0.5sqmm_1x01_D0.9mm_OD2.1mm',
+       'MH': 'MountingHole_3.2mm_M3_Pad', 'JMP': 'Tel_Kopru_P5.08mm', 'J635': 'Jak_6.35mm_Mono_Kesicili',
+       'PJ324': 'PJ-324M', 'LED': 'LED_D5.0mm_Dik90_OnKenar', 'FUSE': 'Sigorta_Yuvasi_23x9mm_P10mm',
+       'TB2': 'TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal'}
+ELKO_FP = {(5.0, 2.0): 'CP_Radial_D5.0mm_P2.00mm', (6.3, 2.5): 'CP_Radial_D6.3mm_P2.50mm', (8.0, 3.5): 'CP_Radial_D8.0mm_P3.50mm',
+           (10.0, 5.0): 'CP_Radial_D10.0mm_P5.00mm', (12.5, 5.0): 'CP_Radial_D12.5mm_P5.00mm'}
+def footprint(fp):
+    n = ELKO_FP[D.ELKO[fp[1:]]] if fp.startswith('E') else FPN[fp]
+    return 'amfi_yeni:' + n
 PARTS['MH4'] = dict(lib='Mechanical:MountingHole', value='M3', pins={}, fp='MH')
 PARTS['MH5'] = dict(lib='Mechanical:MountingHole', value='M3', pins={}, fp='MH')
+for _p in PARTS.values():
+    _p['footprint'] = footprint(_p['fp'])
 
 # ------------------------------------------------------------------ sembol kütüphanesi
 _libcache = {}

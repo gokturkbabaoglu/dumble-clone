@@ -28,7 +28,7 @@ def xf(px, py, pa, r, mir):
     x, y = x * c - y * s, x * s + y * c
     return (round(x / U), round(-y / U)), (a + r) % 360
 
-def place(ref, libid, value, c, r=0, mir=None, refpos=None, valpos=None, hide_ref=False, hide_val=False):
+def place(ref, libid, value, c, r=0, mir=None, refpos=None, valpos=None, hide_ref=False, hide_val=False, fpname=''):
     sym = SYMS.setdefault(libid, get_sym(libid))
     X, Y = mm(c)
     def ppos(key, given):
@@ -60,7 +60,7 @@ def place(ref, libid, value, c, r=0, mir=None, refpos=None, valpos=None, hide_re
         x, y, a, j = pos
         return [S('property'), key, val, [S('at'), F(x), F(y), F(a)], effects(j, hide)]
     e += [P('Reference', ref, rp, hide_ref), P('Value', value, vp, hide_val),
-          P('Footprint', '', (X, Y, 0, None), True), P('Datasheet', '~', (X, Y, 0, None), True),
+          P('Footprint', fpname, (X, Y, 0, None), True), P('Datasheet', '~', (X, Y, 0, None), True),
           P('Description', '', (X, Y, 0, None), True)]
     pins = pins_of(sym)
     for num in pins:
@@ -78,7 +78,7 @@ def place(ref, libid, value, c, r=0, mir=None, refpos=None, valpos=None, hide_re
 
 def part(ref, c, r=0, mir=None, **kw):
     p = G.PARTS[ref]
-    return place(ref, p['lib'], p['value'], c, r, mir, **kw)
+    return place(ref, p['lib'], p['value'], c, r, mir, fpname=p['footprint'], **kw)
 
 def two(ref, A, B, side=1):
     """İki bacaklı parça: 1. pin A tarafında, A-B arası düz (yatay/dikey); kalan kısım tel."""
@@ -100,7 +100,7 @@ def two(ref, A, B, side=1):
         rp, vp = (0, -3, None), (0, 3, None)
     else:
         rp, vp = ((2, -1, 'left'), (2, 1, 'left')) if side > 0 else ((-2, -1, 'right'), (-2, 1, 'right'))
-    pm = place(ref, p['lib'], p['value'], c, r, None, refpos=rp, valpos=vp)
+    pm = place(ref, p['lib'], p['value'], c, r, None, refpos=rp, valpos=vp, fpname=p['footprint'])
     if pm['1'] != A: w(A, pm['1'])
     if pm['2'] != B: w(pm['2'], B)
     return pm
