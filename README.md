@@ -20,7 +20,7 @@
 |---|---|
 | `kicad/amfi/` | **Güncel KiCad 10 projesi** (şema, kart, kütüphane, kurallar) |
 | `kicad/*.py` | KiCad dosyası üreticileri, yerleşim, toplu yönlendirme, analiz, tel köprü bulucu |
-| `docs/kicad/` | Toner transfer 1:1 PDF, parça yerleşimi PDF'i ve teslim raporu |
+| `docs/kicad/` | Toner transfer A4 1:1 PDF, parça yerleşimi PDF'i, lazer dosyaları (`lazer/`) ve teslim raporu |
 | `images/kicad/` | KiCad kartının görselleri |
 | `images/1_devre_semasi.png` | Devre şeması |
 | `images/2_pcb_on_yuz.png` | Parça yüzü |
@@ -57,7 +57,7 @@ KiCad 10 projesi `kicad/amfi/` klasöründe (`amfi.kicad_pro`). Şema, sembol ve
 | Bakır | Yalnız B.Cu (alt). Üst katta yol/via yasak (kural alanı + `amfi.kicad_dru`) |
 | GND | Alt katın tamamında dolgu, padler dolguya doğrudan (termal kolsuz) bağlı. Sinyal yolları Freerouting'le çizildi, GND'yi dolgu bağlar |
 | Tel köprüler | K1 (D2 tarafındaki GND adası) ve K2 (C3 tarafındaki GND adası), ikisi de 5,08 mm, düz; parça gövdesi üstünden geçmez, sinyal netlerinde köprü yok |
-| Yol genişliği | Sinyal 1,0 mm, besleme/çıkış 1,3 mm; pinler arasından geçerken kısa süre en az 0,5 mm'ye iner |
+| Yol genişliği | **Kalınlaştırıldı (18 Kasım):** yerleşim aynı, her yol 0,5 mm aralığı bozmadan sığdığı kadar genişletildi — uzunluğun %43'ü 2–2,5 mm, %16'sı 1,5–2 mm, %38'i 1,0–1,5 mm (sıkışık bölgeler), %2'si 1 mm altı (eski dar pin girişleri). Padler sığan yerlerde 1 mm halkaya büyütüldü. Harita: `images/kicad/yol_kalinlik_haritasi.png` |
 | Aralık / kenar | Bakır–bakır ≥ 0,5 mm; arka/sol/sağ kenarda 1 mm yolsuz şerit, ön kenarda (potların altı) 0,5 mm |
 | Vida delikleri | M3 × 5: arka kenarda 3, ön tarafta 2 (MH4 J1'in arkasında, MH5 güç anahtarının arkasında) |
 | Ön panel sırası | Değişmedi: J1, RV4, RV1, SW1, RV2, RV3, J2, LED, güç anahtarı |
@@ -65,8 +65,13 @@ KiCad 10 projesi `kicad/amfi/` klasöründe (`amfi.kicad_pro`). Şema, sembol ve
 **Gürültü ölçütleri (seçilen kart):** giriş yolu J1 → R5 → Q1 gate 33 mm; giriş netlerine en yakın güç/çıkış yolu 110 mm; hoparlör akım döngüsü (TDA çıkışı → C25 → hoparlör → GND) 374 mm²; TDA girişi (TIN) yolu 55 mm; giriş katı solda, güç katı sağ arkada, besleme sağ kenarda.
 
 **Çıktılar:**
-- `docs/kicad/toner_alt_bakir_1e1.pdf` — toner transfer için B.Cu + kart kenarı, 1:1, vektör, delik merkez işaretli. Üstten bakışla basılmıştır; plakete yüzüstü konunca doğru yöne döner (yansıtma yapma).
-- `docs/kicad/parca_yerlesimi.pdf` — parça yüzü yerleşimi (serigrafi).
+- `docs/kicad/toner_alt_bakir_1e1_A4.pdf` — toner transfer için B.Cu, A4, 1:1, vektör, delik merkez işaretli. Aynalamadan, %100 bas.
+- `docs/kicad/parca_yerlesimi_A4.pdf` — parça yüzü yerleşimi (serigrafi), A4.
+- `docs/kicad/lazer/` — lazerle boya yakma / kazıma için 1:1 dosyalar: aynalı 1000 dpi PNG ve SVG, üstten SVG, DXF; açıklama `OKUBENI.txt`.
+
+![Yol kalınlıkları](images/kicad/yol_kalinlik_haritasi.png)
+
+**Kalınlaştırma betikleri:** `kicad/kalinlastir.py` (yolları/padleri aralığı koruyarak büyütür, GND dolgusunun bölünmemesini `kicad/dolgu.py` ile denetler), `kicad/son.py` (KiCad konsolunda dolgu + DRC + A4 PDF), `kicad/gorsel.py` (önizleme ve lazer dosyaları), `kicad/genislet.py` (yardımcı geometri).
 
 **Parça adı değişiklikleri (KiCad harf sonekini kabul etmediği için):** C15a → C15, C15b → C26, R20a → R20, R20b → R30, R22a → R22, R22b → R31; KiCad'de CB → CB1, CD → CD1, anahtar kablo padleri P_SWB/P_SWC/P_SWD → P1/P2/P3, P_PW1/P_PW2 → P4/P5. Yeni: MH4, MH5 (vida), K1, K2 (tel köprü).
 
