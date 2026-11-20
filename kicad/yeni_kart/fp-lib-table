@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "amfi_yeni")(type "KiCad")(uri "${KIPRJMOD}/amfi_yeni.pretty")(options "")(descr "amfi yeni kart: büyük padli ayak izleri"))
+)

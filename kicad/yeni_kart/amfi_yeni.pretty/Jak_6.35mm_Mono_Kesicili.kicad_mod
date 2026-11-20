@@ -1,0 +1,114 @@
+(footprint "Jak_6.35mm_Mono_Kesicili"
+	(version 20260206)
+	(generator "amfi_gen")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "6,35 mm mono PCB jak, kesicili; S=şase, T=uç, TN=uç kesicisi; yassı bacak için 2,3 mm delik")
+	(tags "amfi_yeni")
+	(property "Reference" "REF**"
+		(at 0 -26.5 0)
+		(layer "F.SilkS")
+		(uuid "52ddba59-e0e9-5d31-baba-6ce0ba6b57bc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Jak_6.35mm_Mono_Kesicili"
+		(at 0 1.5 0)
+		(layer "F.Fab")
+		(uuid "553050af-257b-5098-a302-270e1a632e87")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "095c3332-318c-5360-8652-f173c974c887")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "6,35 mm mono PCB jak, kesicili; S=şase, T=uç, TN=uç kesicisi; yassı bacak için 2,3 mm delik"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b2b86cf2-8a36-50f8-9b07-e647ae9a10c5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_rect
+		(start -7 -25)
+		(end 7 0)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "b01b3e01-96ed-5be9-b1c4-355e4c1f376a")
+	)
+	(fp_rect
+		(start -7 -25)
+		(end 7 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "27f9d125-4272-508a-9ef0-9f728cba7af3")
+	)
+	(fp_rect
+		(start -7.25 -25.25)
+		(end 7.25 0.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "15b1f0f3-421c-50c9-b9f5-a502c2a6ae5f")
+	)
+	(pad "S" thru_hole circle
+		(at 1.25 -7.5)
+		(size 4 4)
+		(drill 2.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "dafec49f-131a-524b-a959-37095edd80f3")
+	)
+	(pad "TN" thru_hole circle
+		(at -1.25 -15)
+		(size 4 4)
+		(drill 2.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "19c6931a-b6ae-5664-b7ff-3c58ffd0ad79")
+	)
+	(pad "T" thru_hole circle
+		(at -1.25 -22.5)
+		(size 4 4)
+		(drill 2.3)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "139a36ff-bc03-5144-abcf-1352c410a6b7")
+	)
+	(embedded_fonts no)
+)

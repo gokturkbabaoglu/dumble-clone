@@ -1,0 +1,106 @@
+(footprint "Tel_Kopru_P5.08mm"
+	(version 20260206)
+	(generator "amfi_gen")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Tel köprü / jumper, 5,08 mm, delik 0,9 mm")
+	(tags "amfi_yeni")
+	(property "Reference" "REF**"
+		(at 2.54 -2.6 0)
+		(layer "F.SilkS")
+		(uuid "3f08ee7f-e421-5128-8bfa-024777d7b4f6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Tel_Kopru_P5.08mm"
+		(at 2.54 2.6 0)
+		(layer "F.Fab")
+		(uuid "7833fe93-dcbc-5e0b-96c5-7190042c20b0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "095c3332-318c-5360-8652-f173c974c887")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Tel köprü / jumper, 5,08 mm, delik 0,9 mm"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "06b322ec-2e7b-5972-926e-fd989f11b0f4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_rect
+		(start 1 -0.5)
+		(end 4.08 0.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "2c9b5582-4e24-5d27-814f-518a5684cdfe")
+	)
+	(fp_rect
+		(start 1 -0.5)
+		(end 4.08 0.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "033c39e3-0f0d-56e5-a5b0-4b951ea884d2")
+	)
+	(fp_rect
+		(start -1.85 -1.85)
+		(end 6.93 1.85)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "89f45bda-2474-5db9-9478-4dbd927e25b2")
+	)
+	(pad "1" thru_hole circle
+		(at 0 0)
+		(size 3.2 3.2)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d2df3a0f-989e-5ad7-b311-4fe5b0daa254")
+	)
+	(pad "2" thru_hole circle
+		(at 5.08 0)
+		(size 3.2 3.2)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "30acd030-e9d1-50ba-8bf3-fb04a132f7af")
+	)
+	(embedded_fonts no)
+)
