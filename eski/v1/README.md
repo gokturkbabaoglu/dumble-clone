@@ -1,10 +1,10 @@
 # 12 V gitar amfisi — BF245B + LM386 + TDA2003, ISF ton kontrolü
 
-> **Eski sürüm (kart v1).** Bu klasör yalnızca arşiv içindir; güncel kart, parça listesi ve araçlar ana klasörde ([../../README.md](../../README.md)).
+> **Eski sürüm (kart v1).** Bu klasör yalnızca arşiv içindir; güncel kart `guncel/` klasöründe, parça listesi ana sayfada ([../../README.md](../../README.md)).
 
 12 V ile çalışan, 4 Ω 6,5" full range hoparlör süren küçük bir pratik amfisi. Volume, Gain, ISF (US ↔ UK karakter) kontrolleri, Dark/Normal/Bright anahtarı ve kesicili 3,5 mm kulaklık çıkışı var. Devre tek yüzlü baskı devre üzerine kurulur; pot, anahtar ve jaklar ön panelde, karta kabloyla bağlanır.
 
-**Durum:** Eski. Yerini ana klasördeki kart v2 aldı.
+**Durum:** Eski. Yerini kart v2 aldı ([../v2_v3/](../v2_v3/README.md)).
 
 ![Şema](images/1_devre_semasi.png)
 

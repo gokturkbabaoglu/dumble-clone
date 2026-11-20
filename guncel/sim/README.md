@@ -26,6 +26,6 @@ Amfinin (Rev 5 + RV4 DRIVE) Micro-Cap 12.2 ile yapılan analizleri. Her klasörd
 ## Model ve araçlar
 - `model/amfi_tasarim.cir`: tam şema (Micro-Cap). `.DEFINE` satırları: GAIN, ISF, VOL, SW, DRIVE (RV4), C9V, C15V, R5V, HP, RSRC.
 - `model/amp_models_v4.lib`: BF245B (datasheet), LM386EE (EasyEDA), TDA2003_DS (Jim Thompson modeli + ST datasheet düzeltmeleri).
-- `.cir` dosyalarındaki `.LIB` satırı kütüphaneyi mutlak yolla arar (`C:\Users\ASUS\Desktop\Yeni klasör (3)\amp_models_v4.lib`). Başka bir bilgisayarda bu satırı düzeltin.
+- `.cir` dosyalarındaki `.LIB` satırı kütüphaneyi mutlak yolla arar (`C:\Users\ASUS\Desktop\Yeni klasör (3)\amp_models_v4.lib`). Bu klasörün adı masaüstünde artık **`amfi son`**; Micro-Cap'te açarken (ya da başka bir bilgisayarda) bu satırı yeni yola göre düzeltin.
 - `araclar/`: varyant `.cir` dosyalarını üreten ve `.ANO`/`.TNO` çıktılarından tablo, THD ve gürültü katkısı çıkaran Python betikleri. Betikler o oturumun dosya yollarıyla yazıldı; yeniden kullanmadan önce yollar düzenlenmeli.
 - `07_C9/07c_C9_gurultu.ANO` (18 MB) boyutu nedeniyle eklenmedi; sonuçları `07c_C9_gurultu.csv` içinde.

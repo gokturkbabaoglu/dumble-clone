@@ -4,7 +4,7 @@ Kaynak: tools/design2.py (netlist) ve tools/params.py (ölçüler). Çıktı: ki
 """
 import os, sys, uuid, json, math
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, '..', 'tools'))
+sys.path.insert(0, os.path.join(HERE, '..', 'v2_v3', 'araclar'))
 import design2 as D
 
 OUT = os.path.join(HERE, 'amfi')

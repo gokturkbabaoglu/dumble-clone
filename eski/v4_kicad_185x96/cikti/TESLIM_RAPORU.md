@@ -1,5 +1,7 @@
 # Teslim raporu — KiCad kartı (12 V gitar amfisi)
 
+> **Arşiv (kart v4).** Bu rapordaki yollar eski repo düzenine göredir: `kicad/amfi/` → `eski/v4_kicad_185x96/amfi/`, `docs/kicad/` → `eski/v4_kicad_185x96/cikti/`, `kicad/*.py` → `eski/v4_kicad_185x96/*.py`. Güncel kart: `guncel/kicad/`.
+
 Tarih: 15 Kasım 2026 · Proje: `kicad/amfi/amfi.kicad_pro` (KiCad 10)
 
 ## Ne teslim edildi
@@ -37,8 +39,9 @@ Freerouting ile 185 mm genişlikte, 114 mm'den 84 mm'ye kadar yaklaşık 150 yer
 | Dosya | Ne için |
 |---|---|
 | `kicad/amfi/` | KiCad projesi (şema, kart, kütüphane, kurallar) |
-| `docs/kicad/toner_alt_bakir_1e1.pdf` | Toner transfer: alt bakır + kart kenarı, 1:1 |
-| `docs/kicad/parca_yerlesimi.pdf` | Parça yerleşimi (parça yüzünden bakış) |
+| `docs/kicad/toner_alt_bakir_1e1_A4.pdf` | Toner transfer: alt bakır, A4, 1:1 (kalın yollu sürüm) |
+| `docs/kicad/parca_yerlesimi_A4.pdf` | Parça yerleşimi (parça yüzünden bakış), A4 |
+| `docs/kicad/lazer/` | Lazer için aynalı PNG/SVG, DXF |
 | `kicad/*.py` | Üretim, yerleşim, toplu yönlendirme, analiz, köprü ve PDF betikleri |
 
 Aynı proje ve PDF'ler bilgisayarda `Masaüstü\Yeni klasör (3)\kicad_amfi\` (PDF'ler `cikti\` içinde) klasöründe de var. PDF'ler KiCad'in kendi çizim işleviyle (`kicad/cikti.py`) üretildi.
@@ -71,3 +74,9 @@ C15a → C15, C15b → C26, R20a → R20, R20b → R30, R22a → R22, R22b → R
 - Kart henüz basılmadı, devre denenmedi.
 - A4 sayfaya ortalanmış PDF istenirse üretilecek.
 - v2/v3 bölümleri README'de arşiv olarak duruyor.
+
+## Güncelleme — 18 Kasım: kalın yollar
+
+Yerleşim ve kart boyu (185 × 96 mm) aynı. Yollar 0,5 mm aralık korunarak sığdığı kadar kalınlaştırıldı (uzunluğun ~%60'ı ≥ 1,5 mm, ~%40'ı sıkışık bölgelerde 1,0–1,5 mm). Padler büyütüldü. KiCad DRC (konsol): bağlanmamış öğe yok; GND dolgusunda 0,47 mm'lik iki dar boğaz uyarısı. Kullanıcı kendi DRC'sinde bir GND dolgu parçasının ana dolguya bağlanmadığını bildirdi — açık iş.
+
+Aynı kartı 1,5–2 mm yollarla Freerouting'le yeniden yönlendirme denendi (~400 yerleşim, 96–150 mm derinlik): hiçbiri tam yönlendirilemedi; bu yoldan vazgeçildi.

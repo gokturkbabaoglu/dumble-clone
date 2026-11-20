@@ -1,0 +1,28 @@
+12 V gitar amfisi - kalın yollu kart (185 x 96 mm, alt bakır)
+=============================================================
+
+Ölçek: hepsi 1:1. Kart 185 x 96 mm; bakır alan kenardan yaklaşık 1 mm (önde 0,5 mm) içeride.
+
+LAZER İÇİN (bakır yüzü yukarı bakarken doğrudan kazıma)
+- lazer_boya_yakma_AYNALI_1000dpi.png / lazer_boya_yakma_AYNALI.svg
+    Boya (sprey) yakma yöntemi: bakırı mat siyah boyayla boya, SİYAH alanları lazerle yak
+    (boya kalkar), sonra perklorürde ask. Beyaz kalan yerler bakır olarak kalır.
+- lazer_bakir_siyah_AYNALI_1000dpi.png / lazer_bakir_siyah_AYNALI.svg
+    Aynı görüntünün tersi (siyah = kalacak bakır). Yazılımın "siyahı yak" yerine
+    "beyazı yak" mantığıyla çalışıyorsa bunu kullan.
+- AYNALI: lazer bakır yüzüne yukarıdan baktığı için görüntü aynalanmıştır, bu doğrudur.
+  Tekrar aynalama.
+- PNG'ler 1000 dpi'dir. LaserGRBL'de içe aktarırken boyutu 185 x 96 mm olarak kilitle.
+- Delik yerlerinde küçük işaret noktaları var, matkap ucu kaymaz.
+
+TONER TRANSFER İÇİN
+- toner_alt_bakir_1e1_A4.pdf : A4, %100 / gerçek boyut bas, AYNALAMA.
+- toner_bakir_siyah_1000dpi.png : aynı görüntü, resim olarak.
+
+DİĞER
+- bakir_siyah_ustten.svg, boya_yakma_negatif_ustten.svg : üstten bakış (KiCad görünümü), vektör.
+- bakir_hatlari_ustten.dxf : bakır dış hatları + delikler (CAD / bazı lazer yazılımları için).
+- parca_yerlesimi_A4.pdf : parça yüzü yerleşimi (yalnız bakmak için).
+- yol_kalinlik_haritasi.png : hangi yolun ne kalınlıkta olduğunu renkle gösterir.
+
+Tel köprüler K1 ve K2 eski kartta olduğu gibi duruyor (ikisi de GND, 5,08 mm).

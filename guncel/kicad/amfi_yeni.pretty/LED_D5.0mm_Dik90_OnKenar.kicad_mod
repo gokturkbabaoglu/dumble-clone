@@ -1,0 +1,128 @@
+(footprint "LED_D5.0mm_Dik90_OnKenar"
+	(version 20260206)
+	(generator "amfi_gen")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "5 mm LED, bacaklar 90° bükülü, ön kenara dayalı; 1=K (kısa bacak), 2=A; 2,54 mm aralık")
+	(tags "amfi_yeni")
+	(property "Reference" "REF**"
+		(at 0 -8.8 0)
+		(layer "F.SilkS")
+		(uuid "b455e327-c6e4-5c17-83ef-f6d2cc68429b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "LED_D5.0mm_Dik90_OnKenar"
+		(at 0 1.5 0)
+		(layer "F.Fab")
+		(uuid "17ba2ce8-f854-59e6-9103-c42ab778e47f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "095c3332-318c-5360-8652-f173c974c887")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "5 mm LED, bacaklar 90° bükülü, ön kenara dayalı; 1=K (kısa bacak), 2=A; 2,54 mm aralık"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "43f17b8a-d1a9-5c23-b25d-745efe3b0bcc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_rect
+		(start -3 -3.5)
+		(end 3 0)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "76937f14-368c-5b73-9140-54b4e9a9b038")
+	)
+	(fp_rect
+		(start -3 -3.5)
+		(end 3 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "f7fd4061-d0dd-556b-b979-56c9eb5bf0c8")
+	)
+	(fp_text user "K"
+		(at 1.27 -7.3 0)
+		(layer "F.SilkS")
+		(uuid "83db3a33-baac-5995-bd1a-6c79bfc9e830")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_text user "A"
+		(at -1.27 -7.3 0)
+		(layer "F.SilkS")
+		(uuid "2cf1e47f-6abe-5c70-a746-e07e20192480")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_rect
+		(start -3.25 -6.75)
+		(end 3.25 0.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "9abcedb1-9258-54e9-8b53-9f23cc7d2e7a")
+	)
+	(pad "1" thru_hole oval
+		(at 1.27 -5)
+		(size 1.9 3)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0ada8792-1479-53fa-bad9-60184cf26f15")
+	)
+	(pad "2" thru_hole oval
+		(at -1.27 -5)
+		(size 1.9 3)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "4ce33f22-56aa-5f02-8d4f-91af1710746b")
+	)
+	(embedded_fonts no)
+)
