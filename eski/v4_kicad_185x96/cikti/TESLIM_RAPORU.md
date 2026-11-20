@@ -1,5 +1,7 @@
 # Teslim raporu — KiCad kartı (12 V gitar amfisi)
 
+> **Arşiv (kart v4).** Bu rapordaki yollar eski repo düzenine göredir: `kicad/amfi/` → `eski/v4_kicad_185x96/amfi/`, `docs/kicad/` → `eski/v4_kicad_185x96/cikti/`, `kicad/*.py` → `eski/v4_kicad_185x96/*.py`. Güncel kart: `guncel/kicad/`.
+
 Tarih: 15 Kasım 2026 · Proje: `kicad/amfi/amfi.kicad_pro` (KiCad 10)
 
 ## Ne teslim edildi

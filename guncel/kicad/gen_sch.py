@@ -9,7 +9,7 @@ ve değerler. K1/K2 tel köprüleri ve KO_SW* yasak bölgeleri devrenin parças�
 import os, sys, math, uuid
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-sys.path.append(os.path.join(HERE, '..', '..', 'tools'))
+sys.path.append(os.path.join(HERE, '..', '..', 'eski', 'v2_v3', 'araclar'))  # netlist: design2.py
 from sexp import parse, dump, Sym, find, first
 import design2 as D
 

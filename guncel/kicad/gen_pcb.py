@@ -10,7 +10,7 @@ sys.path.insert(0, HERE)
 from sexp import parse, dump, Sym as S, find, first
 import gen_sch as G
 
-OLD = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'amfi', 'amfi.kicad_pcb')
+OLD = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', '..', 'eski', 'v4_kicad_185x96', 'amfi', 'amfi.kicad_pcb')
 LIBDIR = os.path.join(HERE, 'amfi_yeni.pretty')
 NS = uuid.UUID('4d0c2b7e-2a61-4f39-9b7c-3c1e6f0a9d55')
 def uid(*k): return str(uuid.uuid5(NS, '/'.join(map(str, k))))
